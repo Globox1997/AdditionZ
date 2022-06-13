@@ -8,8 +8,9 @@
     "Globox_Z"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/additionz",
+    "sources": "https://github.com/Globox1997/AdditionZ",
+    "issues": "https://github.com/Globox1997/AdditionZ/issues"
   },
   "license": "MIT",
   "icon": "assets/additionz/icon.png",
