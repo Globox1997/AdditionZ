@@ -19,6 +19,9 @@
     "main": [
       "net.additionz.AdditionMain"
     ],
+    "client": [
+      "net.additionz.AdditionClient"
+    ],
     "modmenu": [
       "net.additionz.config.ModMenuIntegration"
     ]
