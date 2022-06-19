@@ -3,9 +3,11 @@
     "text.autoconfig.additionz.option.feather_falling_trample": "Feather Falling Trample",
     "text.autoconfig.additionz.option.enderman_particles": "Enderman Particles",
     "text.autoconfig.additionz.option.block_pearcing_enchantment": "Block Piercing Enchantment",
+    "text.autoconfig.additionz.option.stampede_enchantment": "Stampede Enchantment",
     "text.autoconfig.additionz.option.polar_star": "Polar Star",
     "text.autoconfig.additionz.option.other_stars": "Other Stars",
     "text.autoconfig.additionz.option.custom_item_name_non_despawn": "Custom Item Name Non Despawn",
 
-    "enchantment.minecraft.block_piercing": "Block Piercing"
+    "enchantment.minecraft.block_piercing": "Block Piercing",
+    "enchantment.minecraft.stampede": "Stampede"
 }
