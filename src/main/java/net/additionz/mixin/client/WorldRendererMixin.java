@@ -37,6 +37,7 @@ public class WorldRendererMixin {
     private static final Identifier POLAR_STAR = new Identifier("additionz", "textures/environment/star.png");
     private static final Identifier BLUE_STAR = new Identifier("additionz", "textures/environment/blue_star.png");
     private static final Identifier RED_STAR = new Identifier("additionz", "textures/environment/red_star.png");
+    private static final Identifier GREEN_STAR = new Identifier("additionz", "textures/environment/green_star.png");
 
     @Shadow
     @Mutable
@@ -85,6 +86,18 @@ public class WorldRendererMixin {
             RenderSystem.setShaderTexture(0, RED_STAR);
             bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
             k = 2; // size
+            bufferBuilder.vertex(matrix4fStar, -k, 100.0f, -k).texture(0.0f, 0.0f).next();
+            bufferBuilder.vertex(matrix4fStar, k, 100.0f, -k).texture(1.0f, 0.0f).next();
+            bufferBuilder.vertex(matrix4fStar, k, 100.0f, k).texture(1.0f, 1.0f).next();
+            bufferBuilder.vertex(matrix4fStar, -k, 100.0f, k).texture(0.0f, 1.0f).next();
+            BufferRenderer.drawWithShader(bufferBuilder.end());
+
+            matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(i * j + 90.0f));
+            matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(i * j + 90.0f));
+            matrix4fStar = matrices.peek().getPositionMatrix();
+            RenderSystem.setShaderTexture(0, GREEN_STAR);
+            bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
+            k = 1; // size
             bufferBuilder.vertex(matrix4fStar, -k, 100.0f, -k).texture(0.0f, 0.0f).next();
             bufferBuilder.vertex(matrix4fStar, k, 100.0f, -k).texture(1.0f, 0.0f).next();
             bufferBuilder.vertex(matrix4fStar, k, 100.0f, k).texture(1.0f, 1.0f).next();
