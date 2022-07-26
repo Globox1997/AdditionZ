@@ -10,7 +10,8 @@
     "ItemEntityMixin",
     "ShieldItemMixin",
     "ItemStackMixin",
-    "EvokerEntityMixin"
+    "EvokerEntityMixin",
+    "SpyglassItemMixin"
   ],
   "client": [
     "client.WorldRendererMixin"

@@ -20,6 +20,8 @@ public class AdditionConfig implements ConfigData {
     public boolean block_pearcing_enchantment = true;
     @ConfigEntry.Gui.RequiresRestart
     public boolean stampede_enchantment = true;
+    @ConfigEntry.Gui.RequiresRestart
+    public boolean eagle_eyed_enchantment = true;
     public boolean polar_star = true;
     @Comment("Only visible through spy glass")
     public boolean other_stars = true;
