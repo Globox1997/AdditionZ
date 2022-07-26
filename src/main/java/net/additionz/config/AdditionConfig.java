@@ -25,5 +25,7 @@ public class AdditionConfig implements ConfigData {
     public boolean other_stars = true;
     public boolean custom_item_name_non_despawn = true;
     public boolean totem_of_non_breaking = true;
+    @Comment("0.1 = 10% chance")
+    public float evoker_use_totem_chance = 0.1F;
 
 }

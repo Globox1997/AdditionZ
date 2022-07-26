@@ -9,7 +9,8 @@
     "FarmlandBlockMixin",
     "ItemEntityMixin",
     "ShieldItemMixin",
-    "ItemStackMixin"
+    "ItemStackMixin",
+    "EvokerEntityMixin"
   ],
   "client": [
     "client.WorldRendererMixin"
