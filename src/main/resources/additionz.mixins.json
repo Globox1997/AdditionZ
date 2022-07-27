@@ -11,7 +11,8 @@
     "ShieldItemMixin",
     "ItemStackMixin",
     "EvokerEntityMixin",
-    "SpyglassItemMixin"
+    "SpyglassItemMixin",
+    "LookAtEntityGoalMixin"
   ],
   "client": [
     "client.WorldRendererMixin"
