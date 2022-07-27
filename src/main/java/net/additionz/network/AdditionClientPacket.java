@@ -22,10 +22,11 @@ public class AdditionClientPacket {
         });
     }
 
-    public static void writeC2SStampedeDamagePacket(int entityId, int enchantmentLevel) {
+    public static void writeC2SStampedeDamagePacket(int entityId, int enchantmentLevel, boolean offhand) {
         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
         buf.writeInt(entityId);
         buf.writeInt(enchantmentLevel);
+        buf.writeBoolean(offhand);
         CustomPayloadC2SPacket packet = new CustomPayloadC2SPacket(AdditionServerPacket.STAMPEDE_DAMAGE_PACKET, buf);
         MinecraftClient.getInstance().getNetworkHandler().sendPacket(packet);
     }

@@ -47,7 +47,7 @@ public abstract class ShieldItemMixin extends Item {
                     if (!list.isEmpty())
                         for (int i = 0; i < list.size(); i++)
                             if (list.get(i) instanceof LivingEntity) {
-                                AdditionClientPacket.writeC2SStampedeDamagePacket(list.get(i).getId(), EnchantmentHelper.getLevel(AdditionMain.STAMPEDE_ENCHANTMENT, stack));
+                                AdditionClientPacket.writeC2SStampedeDamagePacket(list.get(i).getId(), EnchantmentHelper.getLevel(AdditionMain.STAMPEDE_ENCHANTMENT, stack), slot == 0);
                                 entity.setVelocity(0.0D, 0.0D, 0.0D);
                                 stampedeCooldown = 109;
                             }

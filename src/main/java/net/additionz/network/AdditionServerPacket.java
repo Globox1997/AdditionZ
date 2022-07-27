@@ -21,11 +21,15 @@ public class AdditionServerPacket {
             if (player != null) {
                 int entityId = buffer.readInt();
                 int enchantmentLevel = buffer.readInt();
+                boolean offhand = buffer.readBoolean();
                 player.world.getEntityById(entityId).damage(DamageSource.player(player), (float) enchantmentLevel * 2.0F);
                 ((LivingEntity) player.world.getEntityById(entityId)).takeKnockback((float) enchantmentLevel * 0.5f, MathHelper.sin(player.getYaw() * ((float) Math.PI / 180)),
                         -MathHelper.cos(player.getYaw() * ((float) Math.PI / 180)));
                 if (!player.isCreative())
-                    player.getOffHandStack().damage(2, player, e -> e.sendEquipmentBreakStatus(EquipmentSlot.OFFHAND));
+                    if (offhand)
+                        player.getOffHandStack().damage(1, player, e -> e.sendEquipmentBreakStatus(EquipmentSlot.OFFHAND));
+                    else
+                        player.getMainHandStack().damage(1, player, e -> e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
 
             }
         });
