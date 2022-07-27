@@ -92,8 +92,8 @@ public class WorldRendererMixin {
             bufferBuilder.vertex(matrix4fStar, -k, 100.0f, k).texture(0.0f, 1.0f).next();
             BufferRenderer.drawWithShader(bufferBuilder.end());
 
-            matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(i * j + 90.0f));
-            matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(i * j + 90.0f));
+            matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(i * j + 45.0f));
+            matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(i * j + 180.0f));
             matrix4fStar = matrices.peek().getPositionMatrix();
             RenderSystem.setShaderTexture(0, GREEN_STAR);
             bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
