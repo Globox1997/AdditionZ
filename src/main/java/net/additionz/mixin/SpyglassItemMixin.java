@@ -4,6 +4,7 @@ import org.spongepowered.asm.mixin.Mixin;
 
 import net.additionz.AdditionMain;
 import net.minecraft.block.OreBlock;
+import net.minecraft.block.RedstoneBlock;
 import net.minecraft.client.util.ParticleUtil;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
@@ -35,10 +36,11 @@ public abstract class SpyglassItemMixin extends Item {
 
         if (world.isClient && user instanceof PlayerEntity player && AdditionMain.CONFIG.eagle_eyed_enchantment && stack.hasEnchantments()
                 && EnchantmentHelper.getLevel(AdditionMain.EAGLE_EYED_ENCHANTMENT, stack) > 0) {
-            HitResult hit = user.raycast(64, 0, false);
+            HitResult hit = user.raycast(128, 0, false);
             BlockPos pos = ((BlockHitResult) hit).getBlockPos();
 
-            if (hit.getType() == HitResult.Type.BLOCK && world.random.nextFloat() < 0.1F && world.getBlockState(pos).getBlock() instanceof OreBlock) {
+            if (hit.getType() == HitResult.Type.BLOCK && world.random.nextFloat() < 0.1F
+                    && (world.getBlockState(pos).getBlock() instanceof OreBlock || world.getBlockState(pos).getBlock() instanceof RedstoneBlock)) {
                 for (Direction direction : Direction.values()) {
                     ParticleUtil.spawnParticles(world, pos, ParticleTypes.END_ROD, UniformIntProvider.create(0, 2), direction, () -> getRandomVelocity(world.random), 0.55D);
                 }
