@@ -12,7 +12,10 @@
     "ItemStackMixin",
     "EvokerEntityMixin",
     "SpyglassItemMixin",
-    "LookAtEntityGoalMixin"
+    "LookAtEntityGoalMixin",
+    "LivingEntityMixin",
+    "GuardianEntityMixin",
+    "PufferfishEntityMixin"
   ],
   "client": [
     "client.WorldRendererMixin"

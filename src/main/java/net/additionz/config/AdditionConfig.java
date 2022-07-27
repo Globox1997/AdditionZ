@@ -30,6 +30,7 @@ public class AdditionConfig implements ConfigData {
     @Comment("0.1 = 10% chance")
     public float evoker_use_totem_chance = 0.1F;
     public boolean not_look_at_invisible = true;
+    public boolean chainmail_spike_protection = true;
     // public boolean iron_golem_repair_friendly = true;
 
 }
