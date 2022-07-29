@@ -39,12 +39,16 @@ public abstract class SpyglassItemMixin extends Item {
             HitResult hit = user.raycast(128, 0, false);
             BlockPos pos = ((BlockHitResult) hit).getBlockPos();
 
-            if (hit.getType() == HitResult.Type.BLOCK && world.random.nextFloat() < 0.1F
-                    && (world.getBlockState(pos).getBlock() instanceof OreBlock || world.getBlockState(pos).getBlock() instanceof RedstoneBlock)) {
-                for (Direction direction : Direction.values()) {
-                    ParticleUtil.spawnParticles(world, pos, ParticleTypes.END_ROD, UniformIntProvider.create(0, 2), direction, () -> getRandomVelocity(world.random), 0.55D);
-                }
-            }
+            if (hit.getType() == HitResult.Type.BLOCK)
+                for (int k = -2; k < 3; k++)
+                    for (int i = -2; i < 3; i++)
+                        for (int u = -2; u < 3; u++) {
+                            BlockPos otherPos = pos.up(k).north(i).east(u);
+                            if ((world.getBlockState(otherPos).getBlock() instanceof OreBlock || world.getBlockState(otherPos).getBlock() instanceof RedstoneBlock) && world.random.nextFloat() < 0.1F)
+                                for (Direction direction : Direction.values())
+                                    ParticleUtil.spawnParticles(world, otherPos, ParticleTypes.END_ROD, UniformIntProvider.create(0, 2), direction, () -> getRandomVelocity(world.random), 0.55D);
+
+                        }
         }
     }
 
