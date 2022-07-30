@@ -30,4 +30,11 @@ public class AdditionClientPacket {
         CustomPayloadC2SPacket packet = new CustomPayloadC2SPacket(AdditionServerPacket.STAMPEDE_DAMAGE_PACKET, buf);
         MinecraftClient.getInstance().getNetworkHandler().sendPacket(packet);
     }
+
+    public static void writeC2SConsumeXpPacket(int amount) {
+        PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
+        buf.writeInt(amount);
+        CustomPayloadC2SPacket packet = new CustomPayloadC2SPacket(AdditionServerPacket.CONSUME_EXPERIENCE_PACKET, buf);
+        MinecraftClient.getInstance().getNetworkHandler().sendPacket(packet);
+    }
 }

@@ -15,6 +15,7 @@ public class AdditionServerPacket {
 
     public static final Identifier STAMPEDE_DAMAGE_PACKET = new Identifier("additionz", "stampede_damage");
     public static final Identifier TOTEM_OF_NON_BREAKING_PACKET = new Identifier("additionz", "totem_of_non_breaking");
+    public static final Identifier CONSUME_EXPERIENCE_PACKET = new Identifier("additionz", "consume_experience");
 
     public static void init() {
         ServerPlayNetworking.registerGlobalReceiver(STAMPEDE_DAMAGE_PACKET, (server, player, handler, buffer, sender) -> {
@@ -30,6 +31,15 @@ public class AdditionServerPacket {
                         player.getOffHandStack().damage(1, player, e -> e.sendEquipmentBreakStatus(EquipmentSlot.OFFHAND));
                     else
                         player.getMainHandStack().damage(1, player, e -> e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
+
+            }
+        });
+        ServerPlayNetworking.registerGlobalReceiver(CONSUME_EXPERIENCE_PACKET, (server, player, handler, buffer, sender) -> {
+            if (player != null) {
+                int amount = buffer.readInt();
+                if (!player.isCreative())
+                    // player.addExperienceLevels(-amount);
+                    player.addExperience(-amount);
 
             }
         });

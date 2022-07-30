@@ -6,11 +6,14 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.additionz.AdditionMain;
+import net.additionz.network.AdditionClientPacket;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.OreBlock;
 import net.minecraft.block.RedstoneBlock;
 import net.minecraft.client.MinecraftClient;
@@ -33,23 +36,27 @@ public class InGameHudMixin {
     @Mutable
     private MinecraftClient client;
 
+    @Unique
+    private int spyglassUsage = 0;
+
     @Inject(method = "renderCrosshair", at = @At("TAIL"))
     private void renderCrosshairMixin(MatrixStack matrices, CallbackInfo info) {
-        renderOreIcon(matrices);
+        if (!renderOreIcon(matrices) && this.spyglassUsage != 0)
+            this.spyglassUsage = 0;
     }
 
-    private void renderOreIcon(MatrixStack matrixStack) {
-        if (AdditionMain.CONFIG.eagle_eyed_enchantment && this.client.player.isUsingSpyglass() && this.client.player.getActiveItem().hasEnchantments()
-                && EnchantmentHelper.getLevel(AdditionMain.EAGLE_EYED_ENCHANTMENT, this.client.player.getActiveItem()) > 0) {
-
+    private boolean renderOreIcon(MatrixStack matrixStack) {
+        if (AdditionMain.CONFIG.eagle_eyed_enchantment && this.client.player.isUsingSpyglass() && (this.client.player.experienceLevel > 0 || this.client.player.isCreative())
+                && this.client.player.getActiveItem().hasEnchantments() && EnchantmentHelper.getLevel(AdditionMain.EAGLE_EYED_ENCHANTMENT, this.client.player.getActiveItem()) > 0) {
             HitResult hit = this.client.player.raycast(128, 0, false);
             BlockPos pos = ((BlockHitResult) hit).getBlockPos();
             if (hit.getType() == HitResult.Type.BLOCK)
-                for (int k = -2; k < 3; k++)
-                    for (int i = -2; i < 3; i++)
-                        for (int u = -2; u < 3; u++) {
+                for (int k = -1; k < 2; k++)
+                    for (int i = -1; i < 2; i++)
+                        for (int u = -1; u < 2; u++) {
                             BlockPos otherPos = pos.up(k).north(i).east(u);
-                            if ((this.client.world.getBlockState(otherPos).getBlock() instanceof OreBlock || this.client.world.getBlockState(otherPos).getBlock() instanceof RedstoneBlock)) {
+                            if ((this.client.world.getBlockState(otherPos).getBlock() instanceof OreBlock || this.client.world.getBlockState(otherPos).getBlock() instanceof RedstoneBlock
+                                    || this.client.world.getBlockState(otherPos).isOf(Blocks.ANCIENT_DEBRIS))) {
                                 int scaledWidth = this.client.getWindow().getScaledWidth();
                                 int scaledHeight = this.client.getWindow().getScaledHeight();
                                 RenderSystem.enableBlend();
@@ -57,11 +64,17 @@ public class InGameHudMixin {
                                 RenderSystem.setShaderTexture(0, ORE_TEXTURE);
                                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
                                 DrawableHelper.drawTexture(matrixStack, (scaledWidth / 2), (scaledHeight / 2) - 16, 0.0F, 0.0F, 16, 16, 16, 16);
-                                break;
+
+                                if (this.spyglassUsage == 0)
+                                    AdditionClientPacket.writeC2SConsumeXpPacket(1);
+
+                                this.spyglassUsage++;
+                                return true;
                             }
 
                         }
         }
+        return false;
 
     }
 }
