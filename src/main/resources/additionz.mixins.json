@@ -15,7 +15,8 @@
     "LookAtEntityGoalMixin",
     "LivingEntityMixin",
     "GuardianEntityMixin",
-    "PufferfishEntityMixin"
+    "PufferfishEntityMixin",
+    "CreeperEntityMixin"
   ],
   "client": [
     "client.WorldRendererMixin",
