@@ -13,6 +13,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Degradable;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 
@@ -25,14 +26,15 @@ public interface DegradableMixin {
             boolean hasFire = false;
             boolean hasWater = false;
             for (int i = 0; i < AdditionMain.DIRECTIONS.size(); i++) {
-                if (world.getBlockState(pos.offset(AdditionMain.DIRECTIONS.get(i))).isOf(Blocks.FIRE) || world.getBlockState(pos.offset(AdditionMain.DIRECTIONS.get(i))).isOf(Blocks.LAVA))
+                if (world.getBlockState(pos.offset(AdditionMain.DIRECTIONS.get(i))).isIn(BlockTags.FIRE) || world.getBlockState(pos.offset(AdditionMain.DIRECTIONS.get(i))).isOf(Blocks.LAVA))
                     hasFire = true;
                 if (world.getBlockState(pos.offset(AdditionMain.DIRECTIONS.get(i))).isOf(Blocks.WATER))
                     hasWater = true;
                 if (hasFire && hasWater)
                     break;
             }
-            if (hasFire && hasWater && random.nextFloat() < 0.8F) {
+
+            if (hasFire && hasWater && random.nextFloat() < 0.5F) {
                 this.getDegradationResult(state2).ifPresent(state -> world.setBlockState(pos, (BlockState) state));
                 info.cancel();
             }
