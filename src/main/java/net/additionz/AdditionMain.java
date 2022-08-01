@@ -1,5 +1,8 @@
 package net.additionz;
 
+import java.util.Arrays;
+import java.util.List;
+
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.additionz.config.AdditionConfig;
@@ -17,6 +20,7 @@ import net.minecraft.loot.LootTables;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.provider.number.BinomialLootNumberProvider;
 import net.minecraft.util.Rarity;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 
 public class AdditionMain implements ModInitializer {
@@ -28,6 +32,8 @@ public class AdditionMain implements ModInitializer {
     public static final Enchantment EAGLE_EYED_ENCHANTMENT = new EagleEyedEnchantment(Enchantment.Rarity.RARE, EnchantmentTarget.VANISHABLE, EquipmentSlot.MAINHAND);
 
     public static final Item TOTEM_OF_NON_BREAKING = new Item(new Item.Settings().maxCount(1).group(ItemGroup.COMBAT).rarity(Rarity.UNCOMMON));
+
+    public static final List<Direction> DIRECTIONS = Arrays.asList(Direction.DOWN, Direction.UP, Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH);
 
     @Override
     public void onInitialize() {
