@@ -34,6 +34,7 @@ public class AdditionConfig implements ConfigData {
     public boolean not_look_at_invisible = true;
     public boolean chainmail_spike_protection = true;
     public float charged_creeper_spawn_chance = 0.005F;
+    public boolean creeper_on_fire = true;
     public boolean fast_oxidization = true;
     // public boolean iron_golem_repair_friendly = true;
 
