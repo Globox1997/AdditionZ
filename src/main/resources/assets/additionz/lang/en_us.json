@@ -15,10 +15,12 @@
     "text.autoconfig.additionz.option.chainmail_spike_protection": "Chainmail Spike Protection",
     "text.autoconfig.additionz.option.charged_creeper_spawn_chance": "Charged Creeper Spawn Chance",
     "text.autoconfig.additionz.option.fast_oxidization": "Fast Oxidization",
+    "text.autoconfig.additionz.option.inaccuracy_curse_enchantment": "Inaccuracy Curse Enchantment",
 
     "enchantment.additionz.block_piercing": "Block Piercing",
     "enchantment.additionz.stampede": "Stampede",
     "enchantment.additionz.eagle_eyed": "Eagle Eyed",
+    "enchantment.additionz.inaccuracy_curse": "Curse of Inaccuracy",
 
     "item.additionz.totem_of_non_breaking": "Totem of Non Breaking"
 }

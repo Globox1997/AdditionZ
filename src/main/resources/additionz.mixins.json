@@ -17,7 +17,8 @@
     "GuardianEntityMixin",
     "PufferfishEntityMixin",
     "CreeperEntityMixin",
-    "DegradableMixin"
+    "DegradableMixin",
+    "ProjectileEntityMixin"
   ],
   "client": [
     "client.WorldRendererMixin",
