@@ -18,7 +18,8 @@
     "PufferfishEntityMixin",
     "CreeperEntityMixin",
     "DegradableMixin",
-    "ProjectileEntityMixin"
+    "ProjectileEntityMixin",
+    "SpectralArrowEntityMixin"
   ],
   "client": [
     "client.WorldRendererMixin",
