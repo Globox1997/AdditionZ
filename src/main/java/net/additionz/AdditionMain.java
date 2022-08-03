@@ -10,6 +10,7 @@ import net.additionz.misc.*;
 import net.additionz.network.AdditionServerPacket;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
@@ -35,6 +36,8 @@ public class AdditionMain implements ModInitializer {
     public static final Item TOTEM_OF_NON_BREAKING = new Item(new Item.Settings().maxCount(1).group(ItemGroup.COMBAT).rarity(Rarity.UNCOMMON));
 
     public static final List<Direction> DIRECTIONS = Arrays.asList(Direction.DOWN, Direction.UP, Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH);
+
+    public static final boolean isLevelzLoaded = FabricLoader.getInstance().isModLoaded("levelz");
 
     @Override
     public void onInitialize() {
