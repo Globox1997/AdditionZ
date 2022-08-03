@@ -3,6 +3,7 @@
   "minVersion": "0.8",
   "package": "net.additionz.mixin",
   "compatibilityLevel": "JAVA_17",
+  "plugin": "net.additionz.mixin.AdditionzMixinPlugin",
   "mixins": [
     "PersistentProjectileEntityMixin",
     "EndermanEntityMixin",
@@ -19,7 +20,8 @@
     "CreeperEntityMixin",
     "DegradableMixin",
     "ProjectileEntityMixin",
-    "SpectralArrowEntityMixin"
+    "SpectralArrowEntityMixin",
+    "IronGolemEntityMixin"
   ],
   "client": [
     "client.WorldRendererMixin",

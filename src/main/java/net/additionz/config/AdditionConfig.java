@@ -4,6 +4,7 @@ import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
+import net.additionz.AdditionMain;
 
 @Config(name = "additionz")
 @Config.Gui.Background("minecraft:textures/block/stone.png")
@@ -22,8 +23,9 @@ public class AdditionConfig implements ConfigData {
     public boolean stampede_enchantment = true;
     @ConfigEntry.Gui.RequiresRestart
     public boolean eagle_eyed_enchantment = true;
+    @Comment("Disable when LevelZ mod installed")
     @ConfigEntry.Gui.RequiresRestart
-    public boolean inaccuracy_curse_enchantment = true;
+    public boolean inaccuracy_curse_enchantment = AdditionMain.isLevelzLoaded ? false : true;
     public boolean polar_star = true;
     @Comment("Only visible through spy glass")
     public boolean other_stars = true;
@@ -37,6 +39,6 @@ public class AdditionConfig implements ConfigData {
     public boolean creeper_on_fire = true;
     public boolean fast_oxidization = true;
     public boolean spectral_arrow_light = true;
-    // public boolean iron_golem_repair_friendly = true;
+    public boolean iron_golem_repair_friendly = true;
 
 }
