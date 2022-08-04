@@ -21,7 +21,8 @@
     "DegradableMixin",
     "ProjectileEntityMixin",
     "SpectralArrowEntityMixin",
-    "IronGolemEntityMixin"
+    "IronGolemEntityMixin",
+    "SkeletonEntityMixin"
   ],
   "client": [
     "client.WorldRendererMixin",
