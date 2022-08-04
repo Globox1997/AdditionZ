@@ -1,5 +1,7 @@
 package net.additionz.mixin;
 
+import java.util.UUID;
+
 import org.spongepowered.asm.mixin.Mixin;
 
 import net.additionz.AdditionMain;
@@ -21,6 +23,7 @@ public abstract class SkeletonEntityMixin extends AbstractSkeletonEntity {
     @Override
     public void attack(LivingEntity target, float pullProgress) {
         if (this.getMainHandStack().getItem() instanceof BowItem) {
+            System.out.println(UUID.randomUUID());
             if (AdditionMain.CONFIG.skeleton_bow_damaged)
                 this.getMainHandStack().damage(1, this, e -> e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
             if (AdditionMain.CONFIG.break_skeleton_bow_chance > 0.001F && world.getRandom().nextFloat() <= AdditionMain.CONFIG.break_skeleton_bow_chance) {
