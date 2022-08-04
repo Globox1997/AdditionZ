@@ -11,6 +11,7 @@ import net.additionz.network.AdditionServerPacket;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
@@ -20,6 +21,8 @@ import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTables;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.provider.number.BinomialLootNumberProvider;
+import net.minecraft.tag.TagKey;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
@@ -36,6 +39,8 @@ public class AdditionMain implements ModInitializer {
     public static final Item TOTEM_OF_NON_BREAKING = new Item(new Item.Settings().maxCount(1).group(ItemGroup.COMBAT).rarity(Rarity.UNCOMMON));
 
     public static final List<Direction> DIRECTIONS = Arrays.asList(Direction.DOWN, Direction.UP, Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH);
+
+    public static final TagKey<Block> PATH_BLOCKS = TagKey.of(Registry.BLOCK_KEY, new Identifier("additionz", "path_blocks"));
 
     public static final boolean isLevelzLoaded = FabricLoader.getInstance().isModLoaded("levelz");
 

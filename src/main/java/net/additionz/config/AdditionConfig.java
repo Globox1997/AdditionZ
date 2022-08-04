@@ -42,5 +42,6 @@ public class AdditionConfig implements ConfigData {
     public boolean iron_golem_repair_friendly = true;
     public boolean skeleton_bow_damaged = true;
     public float break_skeleton_bow_chance = 0.005F;
+    public boolean path_block_speed_boost = true;
 
 }

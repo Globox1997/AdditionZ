@@ -20,6 +20,7 @@
     "text.autoconfig.additionz.option.spectral_arrow_light": "Spectral Arrow Light",
     "text.autoconfig.additionz.option.skeleton_bow_damaged": "Skeleton Bow Damaged",
     "text.autoconfig.additionz.option.break_skeleton_bow_chance": "Break Skeleton Bow Chance",
+    "text.autoconfig.additionz.option.path_block_speed_boost": "Path Block Speed Boost",
 
     "enchantment.additionz.block_piercing": "Block Piercing",
     "enchantment.additionz.stampede": "Stampede",
