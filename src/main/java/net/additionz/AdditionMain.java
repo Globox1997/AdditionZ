@@ -41,6 +41,7 @@ public class AdditionMain implements ModInitializer {
     public static final List<Direction> DIRECTIONS = Arrays.asList(Direction.DOWN, Direction.UP, Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH);
 
     public static final TagKey<Block> PATH_BLOCKS = TagKey.of(Registry.BLOCK_KEY, new Identifier("additionz", "path_blocks"));
+    public static final TagKey<Item> PASSIVE_AGE_ITEMS = TagKey.of(Registry.ITEM_KEY, new Identifier("additionz", "passive_age_items"));
 
     public static final boolean isLevelzLoaded = FabricLoader.getInstance().isModLoaded("levelz");
 

@@ -38,5 +38,11 @@
   },
   "suggests": {
     "another-mod": "*"
+  },
+  "custom": {
+    "waila:plugins": {
+      "id": "additionz:plugin",
+      "initializer": "net.additionz.waila.AgeWailaPlugin"
+    }
   }
 }

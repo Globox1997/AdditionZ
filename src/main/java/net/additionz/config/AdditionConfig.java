@@ -43,5 +43,18 @@ public class AdditionConfig implements ConfigData {
     public boolean skeleton_bow_damaged = true;
     public float break_skeleton_bow_chance = 0.005F;
     public boolean path_block_speed_boost = true;
+    public boolean passive_entity_modifications = true;
+
+    @ConfigEntry.Gui.CollapsibleObject
+    public PassiveEntityConfig passiveEntityConfig = new PassiveEntityConfig();
+
+    public static class PassiveEntityConfig {
+        @Comment("Default = -24000")
+        public int baby_to_adult_time = -24000;
+        @Comment("PassiveAgeTime : this = Age")
+        public int passive_age_calculation = 24000;
+        @Comment("Baby = Age 0")
+        public int passive_max_age = 3;
+    }
 
 }

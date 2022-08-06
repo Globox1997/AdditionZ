@@ -1,19 +1,32 @@
 package net.additionz.mixin;
 
+import java.util.Iterator;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.additionz.AdditionMain;
 import net.additionz.access.AttackTimeAccess;
+import net.additionz.access.PassiveAgeAccess;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.loot.LootTable;
+import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.context.LootContextTypes;
+import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 @Mixin(LivingEntity.class)
@@ -39,6 +52,35 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
     protected void getVelocityMultiplierMixin(CallbackInfoReturnable<Float> info) {
         if (AdditionMain.CONFIG.path_block_speed_boost && this.world.getBlockState(this.getVelocityAffectingPos()).isIn(AdditionMain.PATH_BLOCKS))
             info.setReturnValue(1.22F);
+    }
+
+    @Inject(method = "dropLoot", at = @At(value = "INVOKE", target = "Lnet/minecraft/loot/LootTable;generateLoot(Lnet/minecraft/loot/context/LootContext;Ljava/util/function/Consumer;)V"), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
+    protected void dropLootMixin(DamageSource source, boolean causedByPlayer, CallbackInfo info, Identifier identifier, LootTable lootTable, LootContext.Builder builder) {
+        if (AdditionMain.CONFIG.passive_entity_modifications && (Object) this instanceof PassiveEntity) {
+
+            int realPassiveAge = (int) Math.round(Math.floor(((PassiveAgeAccess) (Object) this).getPassiveAge() / AdditionMain.CONFIG.passiveEntityConfig.passive_age_calculation)) + 1;
+            if (realPassiveAge > AdditionMain.CONFIG.passiveEntityConfig.passive_max_age)
+                realPassiveAge = AdditionMain.CONFIG.passiveEntityConfig.passive_max_age;
+
+            ObjectArrayList<ItemStack> objectArrayList = lootTable.generateLoot(builder.build(LootContextTypes.ENTITY));
+
+            float lootingChance = 0.0F;
+            if (causedByPlayer && source.getSource() != null && source.getSource() instanceof LivingEntity && EnchantmentHelper.getLooting((LivingEntity) source.getSource()) > 0)
+                lootingChance = 0.15F * EnchantmentHelper.getLooting((LivingEntity) source.getSource());
+
+            Iterator<ItemStack> listIterator = objectArrayList.iterator();
+            while (listIterator.hasNext()) {
+                ItemStack itemStack = listIterator.next();
+                if (itemStack.getCount() == 0)
+                    continue;
+                if (itemStack.isFood() || itemStack.isIn(AdditionMain.PASSIVE_AGE_ITEMS))
+                    itemStack.setCount(1 + (lootingChance > 0.001F ? (this.world.random.nextFloat() <= lootingChance ? 1 : 0) : 0));
+
+                this.dropStack(itemStack);
+            }
+            info.cancel();
+        }
+
     }
 
     @Override
