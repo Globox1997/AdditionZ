@@ -81,12 +81,16 @@ public abstract class PersistentProjectileEntityMixin {
             Vec3d futurePos = ((PersistentProjectileEntity) (Object) this).getPos().add(vec3d);
 
             int distance = (int) Math.round(vec3d.length());
-            for (int i = 1; i <= distance; i++) {
-                BlockPos blockPos = new BlockPos(pos.lerp(futurePos, 1.0D / distance * i));
-                if (!((PersistentProjectileEntity) (Object) this).world.getBlockState(blockPos).isAir() && !this.piercedBlockPosList.contains(blockPos))
-                    this.piercedBlockPosList.add(blockPos);
+
+            checkFutureBlocks(pos, futurePos, distance);
+
+            if (this.piercedBlockPosList.size() < this.blockPierceLevel + 1 && !((PersistentProjectileEntity) (Object) this).world.getBlockState(new BlockPos(futurePos)).isAir()) {
+                Vec3d futureFuturePos = futurePos.add(vec3d);
+                checkFutureBlocks(futurePos, futureFuturePos, distance);
             }
-            if (this.piercedBlockPosList.size() >= this.blockPierceLevel + 1 || !((PersistentProjectileEntity) (Object) this).world.getBlockState(new BlockPos(futurePos)).isAir()) {
+
+            if (this.piercedBlockPosList.size() >= this.blockPierceLevel + 1) {
+                // System.out.println("CHECK: " + ((PersistentProjectileEntity) (Object) this).getPos() + " : " + ((PersistentProjectileEntity) (Object) this).world.getTime());
                 this.isPearcing = false;
             } else if (this.inGround)
                 this.inGround = false;
@@ -100,5 +104,68 @@ public abstract class PersistentProjectileEntityMixin {
         this.blockPierceLevel = EnchantmentHelper.getEquipmentLevel(AdditionMain.BLOCK_PIERCE_ENCHANTMENT, entity);
         if (this.blockPierceLevel == 0)
             this.isPearcing = false;
+    }
+
+    // private void checkFutureBlocks(Vec3d pos, Vec3d futurePos, int distance) {
+    // BlockPos oldPos = null;
+    // for (int i = 1; i <= distance; i++) {
+
+    // BlockPos blockPos = new BlockPos(pos.lerp(futurePos, 1.0D / distance * i));
+    // if (!((PersistentProjectileEntity) (Object) this).world.getBlockState(blockPos).isAir() && !this.piercedBlockPosList.contains(blockPos))
+    // this.piercedBlockPosList.add(blockPos);
+
+    // if (oldPos != null && this.piercedBlockPosList.size() >= this.blockPierceLevel + 1 && ((PersistentProjectileEntity) (Object) this).world.getBlockState(oldPos).isAir()) {
+
+    // ((PersistentProjectileEntity) (Object) this).setPos(oldPos.getX(), oldPos.getY(), oldPos.getZ());
+
+    // System.out.println(((PersistentProjectileEntity) (Object) this).getPos());
+    // break;
+    // }
+    // oldPos = blockPos;
+    // }
+    // }
+
+    private void checkFutureBlocks(Vec3d pos, Vec3d futurePos, int distance) {
+        // BlockPos oldPos = null;
+        ArrayList<Vec3d> oldPosList = new ArrayList<>();
+        for (int i = 1; i <= distance; i++) {
+            // System.out.println("OKAY: " + (1.0D / distance * i) + " : " + (distance * i));
+
+            // BlockPos blockPos = new BlockPos(pos.lerp(futurePos, 1.0D / distance * i));
+            Vec3d differentPos = pos.lerp(futurePos, 1.0D / distance * i);
+            BlockPos blockPos = new BlockPos(differentPos);
+
+            // if (!((PersistentProjectileEntity) (Object) this).world.getBlockState(blockPos).isAir() && !this.piercedBlockPosList.contains(blockPos))
+            // this.piercedBlockPosList.add(blockPos);
+            if (!((PersistentProjectileEntity) (Object) this).world.getBlockState(blockPos).isAir() && !this.piercedBlockPosList.contains(blockPos))
+                this.piercedBlockPosList.add(blockPos);
+
+            if (!oldPosList.contains(differentPos))
+                oldPosList.add(differentPos);
+            // oldPos = blockPos;
+            // oldPos = differentPos;
+        }
+        if (!oldPosList.isEmpty() && this.piercedBlockPosList.size() >= this.blockPierceLevel + 1
+                && !((PersistentProjectileEntity) (Object) this).world.getBlockState(new BlockPos(futurePos)).isAir()) {
+            for (int i = 0; i < oldPosList.size(); i++) {
+                BlockPos newPos = new BlockPos(oldPosList.get(i));
+                if (((PersistentProjectileEntity) (Object) this).world.getBlockState(newPos).isAir()) {
+                    // System.out.println("B: " + ((PersistentProjectileEntity) (Object) this).getPos());
+                    ((PersistentProjectileEntity) (Object) this).setPos(oldPosList.get(i).getX(), oldPosList.get(i).getY(), oldPosList.get(i).getZ());
+                    // System.out.println("A: " + ((PersistentProjectileEntity) (Object) this).getPos());
+                    break;
+                }
+            }
+
+            // && ((PersistentProjectileEntity) (Object) this).world.getBlockState(new BlockPos(oldPos)).isAir()
+
+            // System.out.println(
+            // "OKAY: " + blockPos + " : " + oldPos + " : " + ((PersistentProjectileEntity) (Object) this).world.getTime() + " : " + ((PersistentProjectileEntity) (Object) this).getPos());
+
+            // System.out.println(
+            // "AFTER: " + blockPos + " : " + oldPos + " : " + ((PersistentProjectileEntity) (Object) this).world.getTime() + " : " + ((PersistentProjectileEntity) (Object) this).getPos());
+            // // ((PersistentProjectileEntity) (Object) this).teleport(oldPos.getX(), oldPos.getY(), oldPos.getZ());
+            // break;
+        }
     }
 }
