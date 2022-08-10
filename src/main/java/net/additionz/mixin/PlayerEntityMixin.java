@@ -40,8 +40,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ElytraAc
     private void tickMixin(CallbackInfo info) {
         if (this.disabledElytraTimer > 0)
             this.disabledElytraTimer--;
-        if (!this.world.isClient && this.world.getTime() % 100 == 0)
-            this.damage(DamageSource.CACTUS, 1F);
     }
 
     @Override
