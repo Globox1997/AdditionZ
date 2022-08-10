@@ -23,7 +23,8 @@
     "SpectralArrowEntityMixin",
     "IronGolemEntityMixin",
     "SkeletonEntityMixin",
-    "PassiveEntityMixin"
+    "PassiveEntityMixin",
+    "PlayerEntityMixin"
   ],
   "client": [
     "client.WorldRendererMixin",
