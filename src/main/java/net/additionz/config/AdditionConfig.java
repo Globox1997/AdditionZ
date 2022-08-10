@@ -45,6 +45,7 @@ public class AdditionConfig implements ConfigData {
     public boolean path_block_speed_boost = true;
     @Comment("Ticks: 20 = 1 second")
     public int disable_elytra_on_damage_time = 40;
+    public boolean disable_elytra_underwater = false;
 
     public boolean passive_entity_modifications = true;
 

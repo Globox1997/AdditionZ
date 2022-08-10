@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
@@ -81,6 +82,13 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
             info.cancel();
         }
 
+    }
+
+    @ModifyVariable(method = "tickFallFlying", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/entity/LivingEntity;getFlag(I)Z"), ordinal = 0)
+    private boolean tickFallFlyingMixin(boolean original) {
+        if (AdditionMain.CONFIG.disable_elytra_underwater && this.isSubmergedInWater())
+            return false;
+        return original;
     }
 
     @Override
