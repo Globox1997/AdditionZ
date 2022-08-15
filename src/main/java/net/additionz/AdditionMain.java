@@ -36,6 +36,7 @@ public class AdditionMain implements ModInitializer {
     public static final Enchantment STAMPEDE_ENCHANTMENT = new StampedeEnchantment(Enchantment.Rarity.RARE, EnchantmentTarget.VANISHABLE, EquipmentSlot.OFFHAND);
     public static final Enchantment EAGLE_EYED_ENCHANTMENT = new EagleEyedEnchantment(Enchantment.Rarity.RARE, EnchantmentTarget.VANISHABLE, EquipmentSlot.MAINHAND);
     public static final Enchantment INACCURACY_CURSE_ENCHANTMENT = new InaccuracyCurseEnchantment(Enchantment.Rarity.RARE, EnchantmentTarget.BOW, EquipmentSlot.MAINHAND);
+    public static final Enchantment DEXTERITY_ENCHANTMENT = new DexterityEnchantment(Enchantment.Rarity.RARE, EnchantmentTarget.ARMOR_FEET, EquipmentSlot.FEET);
 
     public static final Item TOTEM_OF_NON_BREAKING = new Item(new Item.Settings().maxCount(1).group(ItemGroup.COMBAT).rarity(Rarity.UNCOMMON));
 
@@ -62,6 +63,8 @@ public class AdditionMain implements ModInitializer {
             Registry.register(Registry.ENCHANTMENT, "additionz:eagle_eyed", EAGLE_EYED_ENCHANTMENT);
         if (CONFIG.inaccuracy_curse_enchantment)
             Registry.register(Registry.ENCHANTMENT, "additionz:inaccuracy_curse", INACCURACY_CURSE_ENCHANTMENT);
+        if (CONFIG.dexterity_enchantment)
+            Registry.register(Registry.ENCHANTMENT, "additionz:dexterity", DEXTERITY_ENCHANTMENT);
         if (CONFIG.totem_of_non_breaking) {
             Registry.register(Registry.ITEM, "additionz:totem_of_non_breaking", TOTEM_OF_NON_BREAKING);
             LootTableEvents.MODIFY.register((resourceManager, lootManager, id, supplier, setter) -> {

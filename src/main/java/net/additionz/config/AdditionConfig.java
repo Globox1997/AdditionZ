@@ -18,6 +18,8 @@ public class AdditionConfig implements ConfigData {
     public boolean stampede_enchantment = true;
     @ConfigEntry.Gui.RequiresRestart
     public boolean eagle_eyed_enchantment = true;
+    @ConfigEntry.Gui.RequiresRestart
+    public boolean dexterity_enchantment = true;
     @Comment("Disable when LevelZ mod installed")
     @ConfigEntry.Gui.RequiresRestart
     public boolean inaccuracy_curse_enchantment = AdditionMain.isLevelzLoaded ? false : true;

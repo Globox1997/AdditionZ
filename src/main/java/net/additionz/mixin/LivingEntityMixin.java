@@ -84,6 +84,15 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
 
     }
 
+    @ModifyVariable(method = "applyClimbingSpeed", at = @At(value = "INVOKE_ASSIGN", target = "Ljava/lang/Math;max(DD)D"), ordinal = 2)
+    private double applyClimbingSpeedMixin(double original) {
+        if (AdditionMain.CONFIG.dexterity_enchantment && !((LivingEntity) (Object) this).getEquippedStack(EquipmentSlot.FEET).isEmpty()
+                && EnchantmentHelper.getEquipmentLevel(AdditionMain.DEXTERITY_ENCHANTMENT, (LivingEntity) (Object) this) > 0)
+            return original + original * (EnchantmentHelper.getEquipmentLevel(AdditionMain.DEXTERITY_ENCHANTMENT, (LivingEntity) (Object) this) * 0.3D);
+
+        return original;
+    }
+
     @ModifyVariable(method = "tickFallFlying", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/entity/LivingEntity;getFlag(I)Z"), ordinal = 0)
     private boolean tickFallFlyingMixin(boolean original) {
         if (AdditionMain.CONFIG.disable_elytra_underwater && this.isSubmergedInWater())
