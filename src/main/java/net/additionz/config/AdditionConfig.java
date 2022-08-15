@@ -10,11 +10,6 @@ import net.additionz.AdditionMain;
 @Config.Gui.Background("minecraft:textures/block/stone.png")
 public class AdditionConfig implements ConfigData {
 
-    // public int test0 = 50;
-    // public float test1 = 25.0f;
-    // public float test2 = 90.0f;
-    // public float test3 = 0.0f;
-
     public boolean feather_falling_trample = true;
     public boolean enderman_particles = true;
     @ConfigEntry.Gui.RequiresRestart
@@ -46,6 +41,8 @@ public class AdditionConfig implements ConfigData {
     @Comment("Ticks: 20 = 1 second")
     public int disable_elytra_on_damage_time = 40;
     public boolean disable_elytra_underwater = false;
+    @ConfigEntry.Gui.RequiresRestart
+    public boolean husk_drops_sand = true;
 
     public boolean passive_entity_modifications = true;
 

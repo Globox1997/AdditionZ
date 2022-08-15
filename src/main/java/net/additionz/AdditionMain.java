@@ -17,6 +17,7 @@ import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTables;
 import net.minecraft.loot.entry.ItemEntry;
@@ -70,6 +71,13 @@ public class AdditionMain implements ModInitializer {
                 }
             });
         }
+        if (CONFIG.husk_drops_sand)
+            LootTableEvents.MODIFY.register((resourceManager, lootManager, id, supplier, setter) -> {
+                if ("minecraft:entities/husk".equals(id.toString())) {
+                    LootPool pool = LootPool.builder().with(ItemEntry.builder(Items.SAND).build()).rolls(BinomialLootNumberProvider.create(2, 0.3F)).build();
+                    supplier.pool(pool);
+                }
+            });
 
         AdditionServerPacket.init();
     }
