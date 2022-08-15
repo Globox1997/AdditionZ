@@ -65,8 +65,9 @@ public class AdditionMain implements ModInitializer {
             Registry.register(Registry.ENCHANTMENT, "additionz:inaccuracy_curse", INACCURACY_CURSE_ENCHANTMENT);
         if (CONFIG.dexterity_enchantment)
             Registry.register(Registry.ENCHANTMENT, "additionz:dexterity", DEXTERITY_ENCHANTMENT);
+        // Has to get registered
+        Registry.register(Registry.ITEM, "additionz:totem_of_non_breaking", TOTEM_OF_NON_BREAKING);
         if (CONFIG.totem_of_non_breaking) {
-            Registry.register(Registry.ITEM, "additionz:totem_of_non_breaking", TOTEM_OF_NON_BREAKING);
             LootTableEvents.MODIFY.register((resourceManager, lootManager, id, supplier, setter) -> {
                 if (id.equals(LootTables.END_CITY_TREASURE_CHEST)) {
                     LootPool pool = LootPool.builder().with(ItemEntry.builder(TOTEM_OF_NON_BREAKING).build()).rolls(BinomialLootNumberProvider.create(1, 0.8F)).build();
