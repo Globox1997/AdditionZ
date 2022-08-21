@@ -24,7 +24,8 @@
     "IronGolemEntityMixin",
     "SkeletonEntityMixin",
     "PassiveEntityMixin",
-    "PlayerEntityMixin"
+    "PlayerEntityMixin",
+    "MobSpawnerLogicMixin"
   ],
   "client": [
     "client.WorldRendererMixin",
