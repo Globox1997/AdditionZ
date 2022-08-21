@@ -45,6 +45,7 @@ public class AdditionConfig implements ConfigData {
     public boolean disable_elytra_underwater = false;
     @ConfigEntry.Gui.RequiresRestart
     public boolean husk_drops_sand = true;
+    public boolean villager_sleeping_eyes = true;
 
     public boolean passive_entity_modifications = true;
 

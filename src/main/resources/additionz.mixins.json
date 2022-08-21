@@ -28,7 +28,8 @@
   ],
   "client": [
     "client.WorldRendererMixin",
-    "client.InGameHudMixin"
+    "client.InGameHudMixin",
+    "client.VillagerEntityRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
