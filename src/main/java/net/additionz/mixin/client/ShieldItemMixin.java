@@ -1,4 +1,4 @@
-package net.additionz.mixin;
+package net.additionz.mixin.client;
 
 import java.util.List;
 
@@ -6,6 +6,8 @@ import org.spongepowered.asm.mixin.Mixin;
 
 import net.additionz.AdditionMain;
 import net.additionz.network.AdditionClientPacket;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -14,9 +16,12 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShieldItem;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+@Environment(EnvType.CLIENT)
 @Mixin(ShieldItem.class)
 public abstract class ShieldItemMixin extends Item {
 
@@ -30,8 +35,7 @@ public abstract class ShieldItemMixin extends Item {
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if (world.isClient && AdditionMain.CONFIG.stampede_enchantment && stack.hasEnchantments() && EnchantmentHelper.getLevel(AdditionMain.STAMPEDE_ENCHANTMENT, stack) > 0) {
             if (stampedeCooldown <= 0) {
-                if (entity instanceof PlayerEntity) {
-                    PlayerEntity playerEntity = (PlayerEntity) entity;
+                if (entity instanceof PlayerEntity playerEntity) {
                     if (playerEntity.isBlocking() && playerEntity.isOnGround() && MinecraftClient.getInstance().options.sprintKey.isPressed()) {
                         int enchantmentLevel = EnchantmentHelper.getLevel(AdditionMain.STAMPEDE_ENCHANTMENT, stack);
                         Vec3d rotationVec3d = playerEntity.getRotationVector().multiply(1.0D, 0.1D, 1.0D).normalize();
@@ -44,13 +48,15 @@ public abstract class ShieldItemMixin extends Item {
             } else {
                 if (stampedeCooldown >= 110) {
                     List<Entity> list = world.getOtherEntities(entity, entity.getBoundingBox());
-                    if (!list.isEmpty())
+                    if (!list.isEmpty()) {
                         for (int i = 0; i < list.size(); i++)
                             if (list.get(i) instanceof LivingEntity) {
                                 AdditionClientPacket.writeC2SStampedeDamagePacket(list.get(i).getId(), EnchantmentHelper.getLevel(AdditionMain.STAMPEDE_ENCHANTMENT, stack), slot == 0);
                                 entity.setVelocity(0.0D, 0.0D, 0.0D);
                                 stampedeCooldown = 109;
                             }
+                        world.playSound(entity.getX(), entity.getY(), entity.getZ(), SoundEvents.ITEM_SHIELD_BLOCK, SoundCategory.PLAYERS, 1.0f, 1.0f, true);
+                    }
                 }
                 stampedeCooldown--;
             }

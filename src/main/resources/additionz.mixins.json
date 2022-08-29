@@ -9,7 +9,6 @@
     "EndermanEntityMixin",
     "FarmlandBlockMixin",
     "ItemEntityMixin",
-    "ShieldItemMixin",
     "ItemStackMixin",
     "EvokerEntityMixin",
     "SpyglassItemMixin",
@@ -28,6 +27,7 @@
     "MobSpawnerLogicMixin"
   ],
   "client": [
+    "client.ShieldItemMixin",
     "client.WorldRendererMixin",
     "client.InGameHudMixin",
     "client.VillagerEntityRendererMixin"
