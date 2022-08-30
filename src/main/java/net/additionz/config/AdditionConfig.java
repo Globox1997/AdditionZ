@@ -46,6 +46,7 @@ public class AdditionConfig implements ConfigData {
     @ConfigEntry.Gui.RequiresRestart
     public boolean husk_drops_sand = true;
     public boolean villager_sleeping_eyes = true;
+    public boolean path_block_under_gates = true;
     @Comment("0 = disabled")
     public int max_spawner_count = 0;
 
