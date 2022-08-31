@@ -25,7 +25,8 @@
     "PassiveEntityMixin",
     "PlayerEntityMixin",
     "MobSpawnerLogicMixin",
-    "ShovelItemMixin"
+    "ShovelItemMixin",
+    "GlassBottleItemMixin"
   ],
   "client": [
     "client.ShieldItemMixin",

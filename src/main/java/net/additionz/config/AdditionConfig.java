@@ -49,6 +49,8 @@ public class AdditionConfig implements ConfigData {
     public boolean path_block_under_gates = true;
     @Comment("0 = disabled")
     public int max_spawner_count = 0;
+    @Comment("90 = 3 bubbles")
+    public int botte_air_amount = 90;
 
     public boolean passive_entity_modifications = true;
 
