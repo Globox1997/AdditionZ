@@ -46,6 +46,8 @@ public class AdditionConfig implements ConfigData {
     @ConfigEntry.Gui.RequiresRestart
     public boolean husk_drops_sand = true;
     public boolean villager_sleeping_eyes = true;
+    @Comment("No trading when villager has no space")
+    public boolean villager_needs_space = true;
     public boolean path_block_under_gates = true;
     @Comment("0 = disabled")
     public int max_spawner_count = 0;
