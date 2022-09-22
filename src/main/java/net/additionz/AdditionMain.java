@@ -82,6 +82,13 @@ public class AdditionMain implements ModInitializer {
                     supplier.pool(pool);
                 }
             });
+        if (CONFIG.trident_buried_treasure)
+            LootTableEvents.MODIFY.register((resourceManager, lootManager, id, supplier, setter) -> {
+                if ("minecraft:chests/buried_treasure".equals(id.toString())) {
+                    LootPool pool = LootPool.builder().with(ItemEntry.builder(Items.TRIDENT).build()).rolls(BinomialLootNumberProvider.create(1, 0.3F)).build();
+                    supplier.pool(pool);
+                }
+            });
 
         AdditionServerPacket.init();
     }

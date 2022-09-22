@@ -31,7 +31,8 @@
     "text.autoconfig.additionz.option.botte_air_amount": "Bottle Air Amount",
     "text.autoconfig.additionz.option.villager_needs_space": "Villager Needs Space",
     "text.autoconfig.additionz.option.beacon_shield_pattern": "Beacon Shield Pattern",
-
+    "text.autoconfig.additionz.option.trident_buried_treasure": "Trident Buried Treasure",
+    
     "text.autoconfig.additionz.option.passive_entity_modifications": "Passive Entity Modifications",
     "text.autoconfig.additionz.option.passiveEntityConfig": "Passive Entity Modifications",
     "text.autoconfig.additionz.option.passiveEntityConfig.baby_to_adult_time": "Baby To Adult Time",
