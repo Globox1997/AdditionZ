@@ -27,7 +27,8 @@
     "MobSpawnerLogicMixin",
     "ShovelItemMixin",
     "GlassBottleItemMixin",
-    "VillagerEntityMixin"
+    "VillagerEntityMixin",
+    "BeaconBlockEntityMixin"
   ],
   "client": [
     "client.ShieldItemMixin",
