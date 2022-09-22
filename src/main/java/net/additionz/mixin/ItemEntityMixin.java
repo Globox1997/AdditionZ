@@ -16,9 +16,8 @@ public class ItemEntityMixin {
 
     @Inject(method = "Lnet/minecraft/entity/ItemEntity;<init>(Lnet/minecraft/world/World;DDDLnet/minecraft/item/ItemStack;)V", at = @At("TAIL"))
     private void initMixin(World world, double x, double y, double z, ItemStack stack, CallbackInfo info) {
-        if (AdditionMain.CONFIG.custom_item_name_non_despawn && getStack().hasCustomName()) {
+        if (AdditionMain.CONFIG.custom_item_name_non_despawn && getStack().hasCustomName())
             setNeverDespawn();
-        }
     }
 
     @Shadow
