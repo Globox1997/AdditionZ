@@ -45,6 +45,7 @@ public class AdditionConfig implements ConfigData {
     public boolean disable_elytra_underwater = false;
     @ConfigEntry.Gui.RequiresRestart
     public boolean husk_drops_sand = true;
+    @ConfigEntry.Gui.RequiresRestart
     public boolean trident_buried_treasure = true;
     public boolean villager_sleeping_eyes = true;
     @Comment("No trading when villager has no space")
