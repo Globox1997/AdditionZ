@@ -28,7 +28,8 @@
     "ShovelItemMixin",
     "GlassBottleItemMixin",
     "VillagerEntityMixin",
-    "BeaconBlockEntityMixin"
+    "BeaconBlockEntityMixin",
+    "ArrowEntityMixin"
   ],
   "client": [
     "client.ShieldItemMixin",

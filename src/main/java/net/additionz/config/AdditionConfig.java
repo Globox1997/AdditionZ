@@ -57,6 +57,7 @@ public class AdditionConfig implements ConfigData {
     public int max_spawner_count = 0;
     @Comment("90 = 3 bubbles")
     public int botte_air_amount = 90;
+    public boolean flame_arrow_burn = true;
 
     public boolean passive_entity_modifications = true;
 
