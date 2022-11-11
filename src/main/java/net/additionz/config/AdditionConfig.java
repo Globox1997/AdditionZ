@@ -60,6 +60,8 @@ public class AdditionConfig implements ConfigData {
     public boolean flame_arrow_burn = true;
     @Comment("Set entity on fire")
     public int magma_cube_fire_ticks = 20;
+    @Comment("Heal passive entity 2hp every ticks")
+    public int heal_passive_entity_over_time_ticks = 1200;
 
     public boolean passive_entity_modifications = true;
 

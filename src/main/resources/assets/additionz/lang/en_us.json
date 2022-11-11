@@ -34,6 +34,7 @@
     "text.autoconfig.additionz.option.trident_buried_treasure": "Trident Buried Treasure",
     "text.autoconfig.additionz.option.flame_arrow_burn": "Flame Arrow Burn",
     "text.autoconfig.additionz.option.magma_cube_fire_ticks": "Magma Cube Fire Ticks",
+    "text.autoconfig.additionz.option.heal_passive_entity_over_time_ticks": "Heal Passive Entity Over Time Ticks",
 
     "text.autoconfig.additionz.option.passive_entity_modifications": "Passive Entity Modifications",
     "text.autoconfig.additionz.option.passiveEntityConfig": "Passive Entity Modifications",

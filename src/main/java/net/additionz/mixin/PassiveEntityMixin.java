@@ -19,6 +19,7 @@ import net.minecraft.world.World;
 public abstract class PassiveEntityMixin extends PathAwareEntity implements PassiveAgeAccess {
 
     private int passiveAge = 0;
+    private boolean gotDamaged = false;
 
     public PassiveEntityMixin(EntityType<? extends PathAwareEntity> entityType, World world) {
         super(entityType, world);
@@ -41,8 +42,18 @@ public abstract class PassiveEntityMixin extends PathAwareEntity implements Pass
 
     @Inject(method = "tickMovement", at = @At("TAIL"))
     private void tickMovementMixin(CallbackInfo info) {
-        if (!this.world.isClient)
+        if (!this.world.isClient) {
             this.passiveAge++;
+            if (AdditionMain.CONFIG.heal_passive_entity_over_time_ticks > 0) {
+                if (this.world.getTime() % AdditionMain.CONFIG.heal_passive_entity_over_time_ticks == 0)
+                    if (this.getMaxHealth() > this.getHealth() && this.gotDamaged)
+                        this.heal(2f);
+                    else if (this.gotDamaged)
+                        this.gotDamaged = false;
+                if (!this.gotDamaged && this.world.getTime() % 20 == 0 && this.getAttacker() != null)
+                    this.gotDamaged = true;
+            }
+        }
     }
 
     @ModifyConstant(method = "setBaby", constant = @Constant(intValue = -24000))
