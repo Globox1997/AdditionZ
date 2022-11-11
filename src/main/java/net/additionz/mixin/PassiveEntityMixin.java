@@ -20,6 +20,7 @@ public abstract class PassiveEntityMixin extends PathAwareEntity implements Pass
 
     private int passiveAge = 0;
     private boolean gotDamaged = false;
+    private long damageTime;
 
     public PassiveEntityMixin(EntityType<? extends PathAwareEntity> entityType, World world) {
         super(entityType, world);
@@ -28,11 +29,13 @@ public abstract class PassiveEntityMixin extends PathAwareEntity implements Pass
     @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
     private void writeCustomDataToNbtMixin(NbtCompound nbt, CallbackInfo info) {
         nbt.putInt("PassiveAge", this.passiveAge);
+        nbt.putBoolean("GotDamaged", this.gotDamaged);
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
     private void readCustomDataFromNbtMixin(NbtCompound nbt, CallbackInfo info) {
         this.passiveAge = nbt.getInt("PassiveAge");
+        this.gotDamaged = nbt.getBoolean("GotDamaged");
     }
 
     @Inject(method = "setBaby", at = @At("HEAD"))
@@ -45,13 +48,15 @@ public abstract class PassiveEntityMixin extends PathAwareEntity implements Pass
         if (!this.world.isClient) {
             this.passiveAge++;
             if (AdditionMain.CONFIG.heal_passive_entity_over_time_ticks > 0) {
-                if (this.world.getTime() % AdditionMain.CONFIG.heal_passive_entity_over_time_ticks == 0)
+                if ((this.world.getTime() - this.damageTime) % AdditionMain.CONFIG.heal_passive_entity_over_time_ticks == 0)
                     if (this.getMaxHealth() > this.getHealth() && this.gotDamaged)
                         this.heal(2f);
                     else if (this.gotDamaged)
                         this.gotDamaged = false;
-                if (!this.gotDamaged && this.world.getTime() % 20 == 0 && this.getAttacker() != null)
+                if (!this.gotDamaged && this.world.getTime() % 20 == 0 && this.getAttacker() != null) {
+                    this.damageTime = this.world.getTime();
                     this.gotDamaged = true;
+                }
             }
         }
     }
