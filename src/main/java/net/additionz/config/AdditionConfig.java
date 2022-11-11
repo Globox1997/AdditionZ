@@ -58,6 +58,8 @@ public class AdditionConfig implements ConfigData {
     @Comment("90 = 3 bubbles")
     public int botte_air_amount = 90;
     public boolean flame_arrow_burn = true;
+    @Comment("Set entity on fire")
+    public int magma_cube_fire_ticks = 20;
 
     public boolean passive_entity_modifications = true;
 

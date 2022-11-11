@@ -29,7 +29,8 @@
     "GlassBottleItemMixin",
     "VillagerEntityMixin",
     "BeaconBlockEntityMixin",
-    "ArrowEntityMixin"
+    "ArrowEntityMixin",
+    "MagmaCubeEntityMixin"
   ],
   "client": [
     "client.ShieldItemMixin",
