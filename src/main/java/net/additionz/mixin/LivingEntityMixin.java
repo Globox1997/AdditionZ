@@ -22,6 +22,7 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootTable;
@@ -40,8 +41,18 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
         super(type, world);
     }
 
-    @Inject(method = "damage", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/LivingEntity;despawnCounter:I", ordinal = 0), cancellable = true)
+    @Inject(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;damageShield(F)V"))
     private void damageMixin(DamageSource source, float amount, CallbackInfoReturnable<Boolean> info) {
+        if (!source.isProjectile() && amount > 1.0f && source.getSource() != null && source.getSource() instanceof LivingEntity && !((LivingEntity) source.getSource()).disablesShield()
+                && AdditionMain.CONFIG.shield_blocking_cooldown != 0) {
+            if ((Object) this instanceof PlayerEntity)
+                ((PlayerEntity) (Object) this).getItemCooldownManager().set(this.getActiveItem().getItem(), AdditionMain.CONFIG.shield_blocking_cooldown);
+            this.clearActiveItem();
+        }
+    }
+
+    @Inject(method = "damage", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/LivingEntity;despawnCounter:I", ordinal = 0), cancellable = true)
+    private void damageSpikeMixin(DamageSource source, float amount, CallbackInfoReturnable<Boolean> info) {
         if (AdditionMain.CONFIG.chainmail_spike_protection && (source.equals(DamageSource.CACTUS) || source.equals(DamageSource.SWEET_BERRY_BUSH))
                 && (Object) this instanceof LivingEntity LivingEntity
                 && (LivingEntity.getEquippedStack(EquipmentSlot.HEAD).isOf(Items.CHAINMAIL_HELMET) || LivingEntity.getEquippedStack(EquipmentSlot.CHEST).isOf(Items.CHAINMAIL_CHESTPLATE)
@@ -103,6 +114,15 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
     @Override
     public void setLastAttackedTime(int time) {
         this.lastAttackedTime = time;
+    }
+
+    @Shadow
+    public void clearActiveItem() {
+    }
+
+    @Shadow
+    public ItemStack getActiveItem() {
+        return null;
     }
 
 }

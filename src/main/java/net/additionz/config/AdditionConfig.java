@@ -60,8 +60,12 @@ public class AdditionConfig implements ConfigData {
     public boolean flame_arrow_burn = true;
     @Comment("Set entity on fire")
     public int magma_cube_fire_ticks = 20;
+    @Comment("20 ticks = 1 second")
+    public int shield_blocking_cooldown = 60;
     @Comment("Heal passive entity 2hp every ticks")
     public int heal_passive_entity_over_time_ticks = 1200;
+    @Comment("Change slot highlight to texture")
+    public boolean change_slot_highlight = false;
 
     public boolean passive_entity_modifications = true;
 

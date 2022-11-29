@@ -31,9 +31,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ElytraAc
     }
 
     @Inject(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;dropShoulderEntities()V"))
-    private void damageMixin(DamageSource source, float amount, CallbackInfoReturnable<Boolean> info) {
+    private void damageElytraDisablingMixin(DamageSource source, float amount, CallbackInfoReturnable<Boolean> info) {
         AdditionServerPacket.writeS2CElytraDisablingPacket((ServerPlayerEntity) (Object) this);
-
     }
 
     @Inject(method = "tick", at = @At("TAIL"))

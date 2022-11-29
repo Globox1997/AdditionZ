@@ -36,7 +36,8 @@
     "client.ShieldItemMixin",
     "client.WorldRendererMixin",
     "client.InGameHudMixin",
-    "client.VillagerEntityRendererMixin"
+    "client.VillagerEntityRendererMixin",
+    "client.HandledScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
