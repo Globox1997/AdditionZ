@@ -42,7 +42,7 @@ public class MobSpawnerLogicMixin {
 
     @Inject(method = "serverTick", at = @At("TAIL"))
     private void serverTickMixin(ServerWorld world, BlockPos pos, CallbackInfo info) {
-        if (this.totalSpawnCount >= AdditionMain.CONFIG.max_spawner_count)
+        if (AdditionMain.CONFIG.max_spawner_count != 0 && this.totalSpawnCount >= AdditionMain.CONFIG.max_spawner_count)
             world.breakBlock(pos, true);
     }
 
