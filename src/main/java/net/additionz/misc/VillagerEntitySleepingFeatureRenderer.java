@@ -1,5 +1,7 @@
 package net.additionz.misc;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.OverlayTexture;
@@ -25,7 +27,9 @@ public class VillagerEntitySleepingFeatureRenderer extends FeatureRenderer<Villa
     public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, VillagerEntity villagerEntity, float f, float g, float h, float j, float k, float l) {
         if (villagerEntity.isSleeping()) {
             VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(EYE_LAYER);
+            RenderSystem.enableBlend();
             this.getContextModel().render(matrixStack, vertexConsumer, 15728640, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
+            RenderSystem.disableBlend();
         }
     }
 
