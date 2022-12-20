@@ -1,6 +1,7 @@
 package net.additionz.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -13,9 +14,18 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ShovelItem;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
+@SuppressWarnings("deprecation")
 @Mixin(FarmlandBlock.class)
 public abstract class FarmlandBlockMixin extends Block {
 
@@ -29,5 +39,25 @@ public abstract class FarmlandBlockMixin extends Block {
             super.onLandedUpon(world, state, pos, entity, fallDistance);
             info.cancel();
         }
+    }
+
+    @Override
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        if (AdditionMain.CONFIG.shovel_undo_farmland && player.getStackInHand(hand).getItem() instanceof ShovelItem) {
+            if (world.getBlockState(pos.up()).isAir() && !FarmlandBlockMixin.hasCrop(world, pos)) {
+                world.playSound(player, pos, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0f, 1.0f);
+                if (!world.isClient) {
+                    FarmlandBlock.setToDirt(state, world, pos);
+                    player.getStackInHand(hand).damage(1, player, p -> p.sendToolBreakStatus(hand));
+                }
+                return ActionResult.success(world.isClient);
+            }
+        }
+        return super.onUse(state, world, pos, player, hand, hit);
+    }
+
+    @Shadow
+    private static boolean hasCrop(BlockView world, BlockPos pos) {
+        return false;
     }
 }

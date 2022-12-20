@@ -52,6 +52,7 @@ public class AdditionConfig implements ConfigData {
     @Comment("No trading when villager has no space")
     public boolean villager_needs_space = true;
     public boolean path_block_under_gates = true;
+    public boolean shovel_undo_farmland = true;
     @Comment("If top is banner, player has to wear shield with same pattern")
     public boolean beacon_shield_pattern = true;
     @Comment("0 = disabled")
