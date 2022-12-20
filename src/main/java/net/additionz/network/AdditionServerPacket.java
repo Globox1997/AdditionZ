@@ -23,10 +23,10 @@ public class AdditionServerPacket {
 
     public static void init() {
         ServerPlayNetworking.registerGlobalReceiver(STAMPEDE_DAMAGE_PACKET, (server, player, handler, buffer, sender) -> {
-            if (player != null) {
-                int entityId = buffer.readInt();
-                int enchantmentLevel = buffer.readInt();
-                boolean offhand = buffer.readBoolean();
+            int entityId = buffer.readInt();
+            int enchantmentLevel = buffer.readInt();
+            boolean offhand = buffer.readBoolean();
+            server.execute(() -> {
                 player.world.getEntityById(entityId).damage(DamageSource.player(player), (float) enchantmentLevel * 2.0F);
                 ((LivingEntity) player.world.getEntityById(entityId)).takeKnockback((float) enchantmentLevel * 0.5f, MathHelper.sin(player.getYaw() * ((float) Math.PI / 180)),
                         -MathHelper.cos(player.getYaw() * ((float) Math.PI / 180)));
@@ -35,16 +35,14 @@ public class AdditionServerPacket {
                         player.getOffHandStack().damage(1, player, e -> e.sendEquipmentBreakStatus(EquipmentSlot.OFFHAND));
                     else
                         player.getMainHandStack().damage(1, player, e -> e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
-
-            }
+            });
         });
         ServerPlayNetworking.registerGlobalReceiver(CONSUME_EXPERIENCE_PACKET, (server, player, handler, buffer, sender) -> {
-            if (player != null) {
-                int amount = buffer.readInt();
+            int amount = buffer.readInt();
+            server.execute(() -> {
                 if (!player.isCreative())
                     player.addExperience(-amount);
-
-            }
+            });
         });
     }
 

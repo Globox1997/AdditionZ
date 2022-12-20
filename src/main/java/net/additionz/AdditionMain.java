@@ -1,5 +1,6 @@
 package net.additionz;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,18 +12,26 @@ import net.additionz.network.AdditionServerPacket;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.fabricmc.loader.api.FabricLoader;
+import net.levelz.data.LevelLists;
+import net.levelz.stats.PlayerStatsManager;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTables;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.provider.number.BinomialLootNumberProvider;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.tag.TagKey;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.math.Direction;
@@ -91,6 +100,36 @@ public class AdditionMain implements ModInitializer {
             });
 
         AdditionServerPacket.init();
+    }
+
+    public static boolean tryUseTotemOfNonBreaking(PlayerEntity playerEntity, ItemStack itemStack) {
+        if (AdditionMain.CONFIG.totem_of_non_breaking && !playerEntity.world.isClient) {
+            PlayerInventory playerInventory = playerEntity.getInventory();
+
+            for (int i = 0; i < playerInventory.size(); i++) {
+                if (playerInventory.getStack(i).getItem().equals(AdditionMain.TOTEM_OF_NON_BREAKING)) {
+
+                    if (isLevelzLoaded) {
+                        ArrayList<Object> levelList = LevelLists.customItemList;
+                        String string = Registry.ITEM.getId(itemStack.getItem()).toString();
+                        if (!levelList.isEmpty() && levelList.contains(string)) {
+                            if (!PlayerStatsManager.playerLevelisHighEnough(playerEntity, levelList, string, true)) {
+                                playerEntity.sendMessage(Text.translatable("item.levelz." + levelList.get(levelList.indexOf(string) + 1) + ".tooltip", levelList.get(levelList.indexOf(string) + 2))
+                                        .formatted(Formatting.RED), true);
+                                return false;
+                            }
+                        }
+                    }
+
+                    playerInventory.getStack(i).decrement(1);
+                    itemStack.setDamage((int) (itemStack.getMaxDamage() * 0.95F));
+                    AdditionServerPacket.writeS2CTotemOfNonBreakingPacket((ServerPlayerEntity) playerEntity);
+                    return true;
+                }
+            }
+
+        }
+        return false;
     }
 
 }

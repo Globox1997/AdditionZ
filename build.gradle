@@ -14,6 +14,7 @@ repositories {
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://maven.terraformersmc.com/" }
 	maven { url "https://bai.jfrog.io/artifactory/maven" }
+	maven { url "https://www.cursemaven.com" }
 }
 
 dependencies {
@@ -35,6 +36,10 @@ dependencies {
     }
 	// Wthit
     modCompileOnly ("mcp.mobius.waila:wthit-api:fabric-${wthit_version}")
+	// LevelZ
+	modCompileOnly ('curse.maven:levelz-517130:4167541'){
+		exclude(group: "net.fabricmc.fabric-api")
+	}
 }
 
 processResources {

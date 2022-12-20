@@ -16,18 +16,18 @@ public class AdditionClientPacket {
 
     public static void init() {
         ClientPlayNetworking.registerGlobalReceiver(AdditionServerPacket.TOTEM_OF_NON_BREAKING_PACKET, (client, handler, buf, sender) -> {
-            if (client.player != null) {
+            client.execute(() -> {
                 client.particleManager.addEmitter(client.player, ParticleTypes.TOTEM_OF_UNDYING, 30);
                 client.world.playSound(client.player.getX(), client.player.getY(), client.player.getZ(), SoundEvents.ITEM_TOTEM_USE, client.player.getSoundCategory(), 1.0f, 1.0f, false);
                 client.gameRenderer.showFloatingItem(new ItemStack(AdditionMain.TOTEM_OF_NON_BREAKING));
-            }
+            });
         });
         ClientPlayNetworking.registerGlobalReceiver(AdditionServerPacket.ELYTRA_DISABLING_PACKET, (client, handler, buf, sender) -> {
-            if (client.player != null) {
+            client.execute(() -> {
                 int disableElytraTime = buf.readInt();
                 client.player.getItemCooldownManager().set(Items.ELYTRA, 100);
                 ((ElytraAccess) client.player).setElytraDisablingTime(disableElytraTime);
-            }
+            });
         });
     }
 
