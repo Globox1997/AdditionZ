@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:fletching",
+    "top": {
+        "item": "minecraft:flint"
+    },
+    "middle": {
+        "item": "minecraft:stick"
+    },
+    "bottom": {
+        "item": "minecraft:feather"
+    },
+    "result": {
+        "item": "minecraft:arrow",
+        "count": 6
+    }
+}

@@ -37,6 +37,8 @@
     "text.autoconfig.additionz.option.magma_cube_fire_ticks": "Magma Cube Fire Ticks",
     "text.autoconfig.additionz.option.shield_blocking_cooldown": "Shield Blocking Cooldown",
     "text.autoconfig.additionz.option.change_slot_highlight": "Change Slot Highlight",
+    "text.autoconfig.additionz.option.show_nbt_tooltip": "Show Nbt Tooltip",
+    "text.autoconfig.additionz.option.fletching_table_use": "Fletching Table Use",
     "text.autoconfig.additionz.option.heal_passive_entity_over_time_ticks": "Heal Passive Entity Over Time Ticks",
 
     "text.autoconfig.additionz.option.passive_entity_modifications": "Passive Entity Modifications",
@@ -56,5 +58,9 @@
     "entity.additionz.age.tooltip": "Age %d",
 
     "config.waila.plugin_additionz": "AdditionZ",
-    "config.waila.plugin_additionz.age_info": "Age Info"
+    "config.waila.plugin_additionz.age_info": "Age Info",
+
+    "container.fletching": "Fletching Table",
+
+    "text.additionz.nbt": "Nbt:"
 }

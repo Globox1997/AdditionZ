@@ -30,14 +30,17 @@
     "VillagerEntityMixin",
     "BeaconBlockEntityMixin",
     "ArrowEntityMixin",
-    "MagmaCubeEntityMixin"
+    "MagmaCubeEntityMixin",
+    "FletchingTableBlockMixin"
   ],
   "client": [
     "client.ShieldItemMixin",
     "client.WorldRendererMixin",
     "client.InGameHudMixin",
     "client.VillagerEntityRendererMixin",
-    "client.HandledScreenMixin"
+    "client.HandledScreenMixin",
+    "client.ClientRecipeBookMixin",
+    "client.ItemStackMixin"
   ],
   "injectors": {
     "defaultRequire": 1

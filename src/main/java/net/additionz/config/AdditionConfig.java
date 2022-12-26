@@ -68,6 +68,8 @@ public class AdditionConfig implements ConfigData {
     public int heal_passive_entity_over_time_ticks = 1200;
     @Comment("Change slot highlight to texture")
     public boolean change_slot_highlight = false;
+    public boolean fletching_table_use = true;
+    public boolean show_nbt_tooltip = false;
 
     public boolean passive_entity_modifications = true;
 

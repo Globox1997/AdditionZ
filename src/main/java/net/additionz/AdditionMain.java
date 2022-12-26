@@ -15,6 +15,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.levelz.data.LevelLists;
 import net.levelz.stats.PlayerStatsManager;
 import net.minecraft.block.Block;
+import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
@@ -28,6 +29,9 @@ import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTables;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.provider.number.BinomialLootNumberProvider;
+import net.minecraft.recipe.RecipeSerializer;
+import net.minecraft.recipe.RecipeType;
+import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.tag.TagKey;
 import net.minecraft.text.Text;
@@ -53,6 +57,10 @@ public class AdditionMain implements ModInitializer {
 
     public static final TagKey<Block> PATH_BLOCKS = TagKey.of(Registry.BLOCK_KEY, new Identifier("additionz", "path_blocks"));
     public static final TagKey<Item> PASSIVE_AGE_ITEMS = TagKey.of(Registry.ITEM_KEY, new Identifier("additionz", "passive_age_items"));
+
+    public static final RecipeType<FletchingRecipe> FLETCHING_RECIPE = RecipeType.register("fletching");
+    public static final RecipeSerializer<FletchingRecipe> FLETCHING_SERIALIZER = RecipeSerializer.register("fletching", new FletchingRecipe.Serializer());
+    public static ScreenHandlerType<FletchingScreenHandler> FLETCHING = new ScreenHandlerType<>(FletchingScreenHandler::new);
 
     public static final boolean isLevelzLoaded = FabricLoader.getInstance().isModLoaded("levelz");
 
@@ -100,6 +108,9 @@ public class AdditionMain implements ModInitializer {
             });
 
         AdditionServerPacket.init();
+
+        Registry.register(Registry.SCREEN_HANDLER, "fletching", FLETCHING);
+        HandledScreens.register(FLETCHING, FletchingScreen::new);
     }
 
     public static boolean tryUseTotemOfNonBreaking(PlayerEntity playerEntity, ItemStack itemStack) {

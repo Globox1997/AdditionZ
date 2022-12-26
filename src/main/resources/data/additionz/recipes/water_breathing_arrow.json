@@ -1,0 +1,21 @@
+{
+    "type": "minecraft:fletching",
+    "top": {
+        "item": "minecraft:flint"
+    },
+    "middle": {
+        "item": "minecraft:stick"
+    },
+    "bottom": {
+        "item": "minecraft:feather"
+    },
+    "addition": {
+        "item": "minecraft:potion",
+        "data": "{Potion:\"minecraft:water_breathing\"}"
+    },
+    "result": {
+        "item": "minecraft:tipped_arrow",
+        "count": 6,
+        "data": "{Potion:\"minecraft:water_breathing\"}"
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:fletching",
+    "top": {
+        "item": "minecraft:flint"
+    },
+    "middle": {
+        "item": "minecraft:stick"
+    },
+    "bottom": {
+        "item": "minecraft:feather"
+    },
+    "addition": {
+        "item": "minecraft:glowstone_dust"
+    },
+    "result": {
+        "item": "minecraft:spectral_arrow",
+        "count": 6
+    }
+}
