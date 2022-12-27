@@ -15,7 +15,6 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.levelz.data.LevelLists;
 import net.levelz.stats.PlayerStatsManager;
 import net.minecraft.block.Block;
-import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
@@ -110,7 +109,6 @@ public class AdditionMain implements ModInitializer {
         AdditionServerPacket.init();
 
         Registry.register(Registry.SCREEN_HANDLER, "fletching", FLETCHING);
-        HandledScreens.register(FLETCHING, FletchingScreen::new);
     }
 
     public static boolean tryUseTotemOfNonBreaking(PlayerEntity playerEntity, ItemStack itemStack) {
