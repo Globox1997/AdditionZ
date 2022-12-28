@@ -160,17 +160,20 @@ public class FletchingScreenHandler extends ScreenHandler {
             ItemStack itemStack2 = slot.getStack();
             itemStack = itemStack2.copy();
             if (index == 4) {
+                // output slot
                 if (!this.insertItem(itemStack2, 5, 39, true)) {
                     return ItemStack.EMPTY;
                 }
                 slot.onQuickTransfer(itemStack2, itemStack);
             } else if (index == 0 || index == 1 || index == 2 || index == 3) {
+                // input slots
                 if (!this.insertItem(itemStack2, 5, 39, false)) {
                     return ItemStack.EMPTY;
                 }
             } else if (index >= 3 && index < 39) {
+                // player inv slots
                 int i = this.isUsableAsAddition(itemStack) ? 3 : 0;
-                if (!this.insertItem(itemStack2, i, 3, false)) {
+                if (!this.insertItem(itemStack2, i, 4, false)) {
                     return ItemStack.EMPTY;
                 }
             }
