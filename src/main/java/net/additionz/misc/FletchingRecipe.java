@@ -15,6 +15,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.StringNbtReader;
 import net.minecraft.network.PacketByteBuf;
@@ -32,7 +33,6 @@ public class FletchingRecipe implements Recipe<Inventory> {
     final Ingredient bottom;
     final Ingredient middle;
     final Ingredient top;
-    @Nullable
     final ItemStack addition;
     final ItemStack result;
     private final Identifier id;
@@ -64,7 +64,7 @@ public class FletchingRecipe implements Recipe<Inventory> {
 
     @Override
     public boolean matches(Inventory inventory, World world) {
-        if (this.addition != null && !areItemStackEqual(this.addition, inventory.getStack(3))) {
+        if (!this.addition.isEmpty() && !areItemStackEqual(this.addition, inventory.getStack(3))) {
             return false;
         }
 
@@ -114,14 +114,14 @@ public class FletchingRecipe implements Recipe<Inventory> {
     // Used by ClientRecipeBook
     @Override
     public boolean isEmpty() {
-        if (this.addition != null && !this.addition.isEmpty())
+        if (!this.addition.isEmpty())
             return false;
         // return Stream.of(this.bottom, this.middle, this.top, this.addition).anyMatch(ingredient -> ingredient.getMatchingStacks().length == 0);
         return Stream.of(this.bottom, this.middle, this.top).anyMatch(ingredient -> ingredient.getMatchingStacks().length == 0);
     }
 
     public boolean hasAddition() {
-        return this.addition != null && !this.addition.isEmpty();
+        return !this.addition.isEmpty();
     }
 
     private static ItemStack outputFromJson(JsonObject json) {
@@ -151,7 +151,7 @@ public class FletchingRecipe implements Recipe<Inventory> {
             Ingredient topIngredient = Ingredient.fromJson(JsonHelper.getObject(jsonObject, "top"));
             Ingredient middleIngredient = Ingredient.fromJson(JsonHelper.getObject(jsonObject, "middle"));
             Ingredient bottomIngredient = Ingredient.fromJson(JsonHelper.getObject(jsonObject, "bottom"));
-            ItemStack additionItemStack = null;
+            ItemStack additionItemStack = new ItemStack(Items.AIR);
             if (JsonHelper.hasElement(jsonObject, "addition"))
                 additionItemStack = outputFromJson(JsonHelper.getObject(jsonObject, "addition"));
             ItemStack itemStack = outputFromJson(JsonHelper.getObject(jsonObject, "result"));
