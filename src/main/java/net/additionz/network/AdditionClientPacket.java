@@ -23,8 +23,8 @@ public class AdditionClientPacket {
             });
         });
         ClientPlayNetworking.registerGlobalReceiver(AdditionServerPacket.ELYTRA_DISABLING_PACKET, (client, handler, buf, sender) -> {
+            int disableElytraTime = buf.readInt();
             client.execute(() -> {
-                int disableElytraTime = buf.readInt();
                 client.player.getItemCooldownManager().set(Items.ELYTRA, 100);
                 ((ElytraAccess) client.player).setElytraDisablingTime(disableElytraTime);
             });
