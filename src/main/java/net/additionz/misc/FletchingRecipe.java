@@ -59,7 +59,7 @@ public class FletchingRecipe implements Recipe<Inventory> {
         if (left.getNbt() == null && right.getNbt() != null) {
             return false;
         }
-        return left.getNbt() == null || left.getNbt().equals(right.getNbt());
+        return !left.hasNbt() || left.getNbt() == null || left.getNbt().equals(right.getNbt());
     }
 
     @Override
@@ -74,7 +74,7 @@ public class FletchingRecipe implements Recipe<Inventory> {
     @Override
     public ItemStack craft(Inventory inventory) {
         ItemStack itemStack = this.result.copy();
-        NbtCompound nbtCompound = inventory.getStack(0).getNbt();
+        NbtCompound nbtCompound = inventory.getStack(1).getNbt();
         if (nbtCompound != null) {
             itemStack.setNbt(nbtCompound.copy());
         }
