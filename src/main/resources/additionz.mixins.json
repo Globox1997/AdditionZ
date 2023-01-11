@@ -31,7 +31,8 @@
     "BeaconBlockEntityMixin",
     "ArrowEntityMixin",
     "MagmaCubeEntityMixin",
-    "FletchingTableBlockMixin"
+    "FletchingTableBlockMixin",
+    "TridentItemMixin"
   ],
   "client": [
     "client.ShieldItemMixin",

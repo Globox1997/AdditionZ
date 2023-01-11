@@ -38,6 +38,7 @@
     "text.autoconfig.additionz.option.shield_blocking_cooldown": "Shield Blocking Cooldown",
     "text.autoconfig.additionz.option.change_slot_highlight": "Change Slot Highlight",
     "text.autoconfig.additionz.option.show_nbt_tooltip": "Show Nbt Tooltip",
+    "text.autoconfig.additionz.option.repair_trident": "Repair Trident",
     "text.autoconfig.additionz.option.fletching_table_use": "Fletching Table Use",
     "text.autoconfig.additionz.option.heal_passive_entity_over_time_ticks": "Heal Passive Entity Over Time Ticks",
 
