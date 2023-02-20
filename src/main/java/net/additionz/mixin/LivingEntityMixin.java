@@ -1,6 +1,7 @@
 package net.additionz.mixin;
 
 import java.util.Iterator;
+import java.util.UUID;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -20,6 +21,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttributeInstance;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -29,6 +33,7 @@ import net.minecraft.loot.LootTable;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 @Mixin(LivingEntity.class)
@@ -36,6 +41,8 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
 
     @Shadow
     private int lastAttackedTime;
+
+    private static final UUID PATH_BOOST_ID = UUID.fromString("1509fe4d-df41-4b81-b9c6-daec1128ea53");
 
     public LivingEntityMixin(EntityType<?> type, World world) {
         super(type, world);
@@ -60,10 +67,22 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
             info.setReturnValue(false);
     }
 
-    @Inject(method = "getVelocityMultiplier", at = @At("HEAD"), cancellable = true)
-    protected void getVelocityMultiplierMixin(CallbackInfoReturnable<Float> info) {
-        if (AdditionMain.CONFIG.path_block_speed_boost && this.world.getBlockState(this.getVelocityAffectingPos()).isIn(AdditionMain.PATH_BLOCKS))
-            info.setReturnValue(1.22F);
+    @Inject(method = "applyMovementEffects", at = @At("TAIL"))
+    protected void applyMovementEffectsMixin(BlockPos pos, CallbackInfo info) {
+        if (AdditionMain.CONFIG.path_block_speed_boost > 0.00D) {
+            EntityAttributeInstance entityAttributeInstance = ((LivingEntity) (Object) this).getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
+            if (entityAttributeInstance != null) {
+                if (this.world.getBlockState(this.getVelocityAffectingPos()).isIn(AdditionMain.PATH_BLOCKS)) {
+                    if (entityAttributeInstance.getModifier(PATH_BOOST_ID) == null)
+                        entityAttributeInstance.addTemporaryModifier(
+                                new EntityAttributeModifier(PATH_BOOST_ID, "Path speed boost", (double) AdditionMain.CONFIG.path_block_speed_boost, EntityAttributeModifier.Operation.ADDITION));
+                } else {
+                    if (entityAttributeInstance.getModifier(PATH_BOOST_ID) != null) {
+                        entityAttributeInstance.removeModifier(PATH_BOOST_ID);
+                    }
+                }
+            }
+        }
     }
 
     @Inject(method = "dropLoot", at = @At(value = "INVOKE", target = "Lnet/minecraft/loot/LootTable;generateLoot(Lnet/minecraft/loot/context/LootContext;Ljava/util/function/Consumer;)V"), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
