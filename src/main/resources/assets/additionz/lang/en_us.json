@@ -27,6 +27,7 @@
     "text.autoconfig.additionz.option.husk_drops_sand": "Husks Drop Sand",
     "text.autoconfig.additionz.option.villager_sleeping_eyes": "Villager Sleeping Eyes",
     "text.autoconfig.additionz.option.max_spawner_count": "Max Spawner Count",
+    "text.autoconfig.additionz.option.spawner_tick_deactivation": "Spawner Tick Deactivation",
     "text.autoconfig.additionz.option.path_block_under_gates": "Path Block Under Gates",
     "text.autoconfig.additionz.option.botte_air_amount": "Bottle Air Amount",
     "text.autoconfig.additionz.option.shovel_undo_farmland": "Shovel Undo Farmland",
@@ -53,6 +54,12 @@
     "enchantment.additionz.eagle_eyed": "Eagle Eyed",
     "enchantment.additionz.inaccuracy_curse": "Curse of Inaccuracy",
     "enchantment.additionz.dexterity": "Dexterity",
+
+    "enchantment.additionz.block_piercing.desc": "Blocks can be pierced.",
+    "enchantment.additionz.stampede.desc": "Jump forward shield attack with sprinting key.",
+    "enchantment.additionz.eagle_eyed.desc": "Spy ores from afar.",
+    "enchantment.additionz.inaccuracy_curse.desc": "Decreases accuracy of arrows.",
+    "enchantment.additionz.dexterity.desc": "Increases climbing speed.",
 
     "item.additionz.totem_of_non_breaking": "Totem of Non Breaking",
 
