@@ -75,7 +75,7 @@ public class AdditionConfig implements ConfigData {
     @Comment("Repair trident with prismarine shards")
     public boolean repair_trident = true;
 
-    public boolean passive_entity_modifications = true;
+    public boolean passive_entity_modifications = false;
 
     @ConfigEntry.Gui.CollapsibleObject
     public PassiveEntityConfig passiveEntityConfig = new PassiveEntityConfig();
