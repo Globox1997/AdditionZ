@@ -74,6 +74,7 @@ public class AdditionConfig implements ConfigData {
     public boolean show_nbt_tooltip = false;
     @Comment("Repair trident with prismarine shards")
     public boolean repair_trident = true;
+    public boolean show_jukebox_disc = true;
 
     public boolean passive_entity_modifications = false;
 
