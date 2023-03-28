@@ -51,6 +51,8 @@ public class AdditionConfig implements ConfigData {
     public boolean villager_sleeping_eyes = true;
     @Comment("No trading when villager has no space")
     public boolean villager_needs_space = true;
+    @Comment("0 = disabled")
+    public int max_iron_golem_villager_spawn = 0;
     public boolean path_block_under_gates = true;
     public boolean shovel_undo_farmland = true;
     @Comment("If top is banner, player has to wear shield with same pattern")

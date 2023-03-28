@@ -15,6 +15,7 @@ import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -28,6 +29,8 @@ public abstract class VillagerEntityMixin extends MerchantEntity {
     private BlockPos tradingPos = null;
     @Unique
     private int tradeCount = 0;
+    @Unique
+    private int ironGolemCount = 0;
 
     public VillagerEntityMixin(EntityType<? extends MerchantEntity> entityType, World world) {
         super(entityType, world);
@@ -41,6 +44,7 @@ public abstract class VillagerEntityMixin extends MerchantEntity {
             nbt.putInt("TradePosZ", tradingPos.getZ());
         }
         nbt.putInt("TradeCount", tradeCount);
+        nbt.putInt("IronGolemCount", ironGolemCount);
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
@@ -48,6 +52,7 @@ public abstract class VillagerEntityMixin extends MerchantEntity {
         if (nbt.contains("TradePosX"))
             tradingPos = new BlockPos(nbt.getInt("TradePosX"), nbt.getInt("TradePosY"), nbt.getInt("TradePosZ"));
         tradeCount = nbt.getInt("TradeCount");
+        ironGolemCount = nbt.getInt("IronGolemCount");
     }
 
     @Inject(method = "interactMob", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/passive/VillagerEntity;beginTradeWith(Lnet/minecraft/entity/player/PlayerEntity;)V"), cancellable = true)
@@ -64,6 +69,15 @@ public abstract class VillagerEntityMixin extends MerchantEntity {
                 }
             } else
                 tradeCount = 0;
+    }
+
+    @Inject(method = "summonGolem", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/entity/passive/VillagerEntity;getBoundingBox()Lnet/minecraft/util/math/Box;"), cancellable = true)
+    private void summonGolemMixin(ServerWorld world, long time, int requiredCount, CallbackInfo info) {
+        if (ironGolemCount >= AdditionMain.CONFIG.max_iron_golem_villager_spawn) {
+            info.cancel();
+        } else {
+            ironGolemCount++;
+        }
     }
 
     @Shadow
