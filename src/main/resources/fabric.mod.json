@@ -24,6 +24,9 @@
     ],
     "modmenu": [
       "net.additionz.config.ModMenuIntegration"
+    ],
+    "jade": [
+      "net.additionz.waila.AgeJadePlugin"
     ]
   },
   "mixins": [

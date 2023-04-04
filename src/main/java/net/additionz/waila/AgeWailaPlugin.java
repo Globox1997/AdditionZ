@@ -12,7 +12,7 @@ public class AgeWailaPlugin implements IWailaPlugin {
 
     @Override
     public void register(IRegistrar registrar) {
-        features.add(new AgeWailaBlockInfo());
+        features.add(new AgeWailaInfo());
         features.forEach(feature -> feature.initialize(registrar));
     }
 

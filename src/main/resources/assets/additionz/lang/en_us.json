@@ -66,9 +66,11 @@
     "item.additionz.totem_of_non_breaking": "Totem of Non Breaking",
 
     "entity.additionz.age.tooltip": "Age %d",
+    "entity.additionz.age_jade.tooltip": " Age %d",
 
     "config.waila.plugin_additionz": "AdditionZ",
     "config.waila.plugin_additionz.age_info": "Age Info",
+    "config.jade.plugin_additionz.age_info": "Age Info",
 
     "container.fletching": "Fletching Table",
 

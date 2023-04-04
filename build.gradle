@@ -36,6 +36,10 @@ dependencies {
     }
 	// Wthit
     modCompileOnly ("mcp.mobius.waila:wthit-api:fabric-${wthit_version}")
+	// Jade
+	modCompileOnly ('curse.maven:jade-324717:4328558') {
+		exclude(group: "net.fabricmc.fabric-api")
+	}
 	// LevelZ
 	modCompileOnly ('curse.maven:levelz-517130:4167541'){
 		exclude(group: "net.fabricmc.fabric-api")
