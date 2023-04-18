@@ -33,7 +33,8 @@
     "MagmaCubeEntityMixin",
     "FletchingTableBlockMixin",
     "TridentItemMixin",
-    "JukeboxBlockEntityMixin"
+    "JukeboxBlockEntityMixin",
+    "ServerWorldMixin"
   ],
   "client": [
     "client.ShieldItemMixin",
