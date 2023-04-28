@@ -43,6 +43,10 @@
     "another-mod": "*"
   },
   "custom": {
+    "mc-publish": {
+      "modrinth": "QeSwHM7w",
+      "curseforge": 659920
+    },
     "waila:plugins": {
       "id": "additionz:plugin",
       "initializer": "net.additionz.waila.AgeWailaPlugin"
