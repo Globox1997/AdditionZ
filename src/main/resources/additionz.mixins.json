@@ -34,7 +34,8 @@
     "FletchingTableBlockMixin",
     "TridentItemMixin",
     "JukeboxBlockEntityMixin",
-    "ServerWorldMixin"
+    "ServerWorldMixin",
+    "CampfireBlockEntityMixin"
   ],
   "client": [
     "client.ShieldItemMixin",
