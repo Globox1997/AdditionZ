@@ -7,26 +7,12 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
-      - name: read mod name
-        id: mod_name
+      - name: read mod name, mod version and minecraft version
+        id: properties
         uses: christian-draeger/read-properties@1.0.1
         with:
           path: "./gradle.properties"
-          property: archives_base_name
-
-      - name: read mod version
-        id: mod_version
-        uses: christian-draeger/read-properties@1.0.1
-        with:
-          path: "./gradle.properties"
-          property: mod_version
-
-      - name: read minecraft version
-        id: minecraft_version
-        uses: christian-draeger/read-properties@1.0.1
-        with:
-          path: "./gradle.properties"
-          property: minecraft_version
+          property: "archives_base_name mod_version minecraft_version"
 
       - uses: actions/checkout@v2
       - name: set up JDK 17
@@ -48,12 +34,12 @@ jobs:
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
 
-          name: '${{ steps.mod_name.outputs.value }}-${{ steps.mod_version.outputs.value }}+${{ steps.minecraft_version.outputs.value }}'
+          name: '${{ steps.properties.outputs.mod_name }}-${{ steps.properties.outputs.mod_version }}+${{ steps.properties.outputs.minecraft_version }}'
 
           version-type: release
-          version: '${{ steps.mod_version.outputs.value }}+${{ steps.minecraft_version.outputs.value }}'
+          version: '${{ steps.properties.outputs.mod_version }}+${{ steps.properties.outputs.minecraft_version }}'
           game-versions: |
-            ${{ steps.minecraft_version.outputs.value }}
+            ${{ steps.properties.outputs.minecraft_version }}
           version-resolver: exact
 
           dependencies: |
