@@ -24,30 +24,9 @@ jobs:
         id: properties
         uses: christian-draeger/read-properties@1.1.1
         with:
-          path: gradle.properties
-          property: "archives_base_name mod_version minecraft_version"
+          path: './gradle.properties'
+          property: 'archives_base_name mod_version minecraft_version'
 
-      - uses: Kir-Antipov/mc-publish@v3.2
-        with:
-          modrinth-featured: true
-          modrinth-unfeature-mode: subset
-
-          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-
-          name: '${{ steps.properties.outputs.mod_name }}-${{ steps.properties.outputs.mod_version }}+${{ steps.properties.outputs.minecraft_version }}'
-          version: '${{ steps.properties.outputs.mod_version }}+${{ steps.properties.outputs.minecraft_version }}'
-          game-versions: |
-            ${{ steps.properties.outputs.minecraft_version }}
-
-          version-type: release
-          version-resolver: exact
-
-          dependencies: |
-            cloth-config | depends | *
-
-          changelog-file: CHANGELOG.md
-
-          retry-attempts: 2
-          retry-delay: 10000
-          fail-mode: fail
+      - name: Do something with your bumped release version
+        run: echo ${{ steps.properties.outputs.archives_base_name }}
+  # will print "the value of 'the.key.of.a.property'"
