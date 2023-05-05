@@ -7,13 +7,6 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
-      - name: read mod name, mod version and minecraft version
-        id: properties
-        uses: christian-draeger/read-properties@1.0.1
-        with:
-          path: "./gradle.properties"
-          property: "archives_base_name mod_version minecraft_version"
-
       - uses: actions/checkout@v2
       - name: set up JDK 17
         uses: actions/setup-java@v2
@@ -26,6 +19,15 @@ jobs:
         run: chmod +x ./gradlew
       - name: build files
         run: ./gradlew build
+
+      - name: read mod name, mod version and minecraft version
+        id: properties
+        uses: christian-draeger/read-properties@1.0.1
+        with:
+          path: gradle.properties
+          property: "archives_base_name mod_version minecraft_version"
+
+      - name: use mc-publish action
       - uses: Kir-Antipov/mc-publish@v3.2
         with:
           modrinth-featured: true
