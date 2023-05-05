@@ -35,7 +35,7 @@ jobs:
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
 
-          name: '${{ steps.properties.outputs.mod_name }}-${{ steps.properties.outputs.mod_version }}+${{ steps.properties.outputs.minecraft_version }}'
+          name: '${{ steps.properties.outputs.archives_base_name }}-${{ steps.properties.outputs.mod_version }}+${{ steps.properties.outputs.minecraft_version }}'
           version: '${{ steps.properties.outputs.mod_version }}+${{ steps.properties.outputs.minecraft_version }}'
           game-versions: |
             ${{ steps.properties.outputs.minecraft_version }}
