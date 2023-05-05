@@ -22,7 +22,7 @@ jobs:
 
       - name: read mod name, mod version and minecraft version
         id: properties
-        uses: christian-draeger/read-properties@1.0.1
+        uses: christian-draeger/read-properties@1.1.1
         with:
           path: gradle.properties
           property: "archives_base_name mod_version minecraft_version"
@@ -36,11 +36,11 @@ jobs:
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
 
           name: '${{ steps.properties.outputs.mod_name }}-${{ steps.properties.outputs.mod_version }}+${{ steps.properties.outputs.minecraft_version }}'
-
-          version-type: release
           version: '${{ steps.properties.outputs.mod_version }}+${{ steps.properties.outputs.minecraft_version }}'
           game-versions: |
             ${{ steps.properties.outputs.minecraft_version }}
+
+          version-type: release
           version-resolver: exact
 
           dependencies: |
