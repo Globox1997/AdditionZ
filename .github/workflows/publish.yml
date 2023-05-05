@@ -27,7 +27,6 @@ jobs:
           path: gradle.properties
           property: "archives_base_name mod_version minecraft_version"
 
-      - name: use mc-publish action
       - uses: Kir-Antipov/mc-publish@v3.2
         with:
           modrinth-featured: true
