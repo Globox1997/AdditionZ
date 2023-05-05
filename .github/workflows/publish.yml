@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: set up JDK 17
@@ -27,8 +27,28 @@ jobs:
           path: './gradle.properties'
           properties: 'archives_base_name mod_version minecraft_version'
 
-      - name: Do something with your bumped release version
-        run: echo ${{ steps.properties.outputs.archives_base_name }}
-      - name: Do something with your bumped release version
-        run: echo ${{ steps.properties.outputs.mod_version }}
-  # will print "the value of 'the.key.of.a.property'"
+      - uses: Kir-Antipov/mc-publish@v3.2
+        with:
+          modrinth-featured: true
+          modrinth-unfeature-mode: subset
+
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+
+          name: '${{ steps.properties.outputs.mod_name }}-${{ steps.properties.outputs.mod_version }}+${{ steps.properties.outputs.minecraft_version }}'
+          version: '${{ steps.properties.outputs.mod_version }}+${{ steps.properties.outputs.minecraft_version }}'
+          game-versions: |
+            ${{ steps.properties.outputs.minecraft_version }}
+
+          version-type: release
+          version-resolver: exact
+
+          dependencies: |
+            fabric-api | depends | *
+            cloth-config | depends | *
+
+          changelog-file: CHANGELOG.md
+
+          retry-attempts: 2
+          retry-delay: 10000
+          fail-mode: fail
