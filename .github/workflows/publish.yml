@@ -1,4 +1,4 @@
-name: Publish
+name: publish
 
 on: 
   workflow_dispatch
@@ -11,21 +11,21 @@ jobs:
         id: mod_name
         uses: christian-draeger/read-properties@1.0.1
         with:
-          path: gradle.properties
+          path: "./gradle.properties"
           property: archives_base_name
 
       - name: read mod version
         id: mod_version
         uses: christian-draeger/read-properties@1.0.1
         with:
-          path: gradle.properties
+          path: "./gradle.properties"
           property: mod_version
 
       - name: read minecraft version
         id: minecraft_version
         uses: christian-draeger/read-properties@1.0.1
         with:
-          path: gradle.properties
+          path: "./gradle.properties"
           property: minecraft_version
 
       - uses: actions/checkout@v2
