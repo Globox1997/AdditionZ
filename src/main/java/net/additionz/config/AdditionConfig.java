@@ -78,6 +78,7 @@ public class AdditionConfig implements ConfigData {
     public boolean repair_trident = true;
     public boolean show_jukebox_disc = true;
     public boolean snow_under_trees = true;
+    public boolean spawn_not_on_leaves = true;
     @Comment("Minimum time in ticks during rain + nextInt(this)")
     public int campfire_rain_extinguish = 20;
 
