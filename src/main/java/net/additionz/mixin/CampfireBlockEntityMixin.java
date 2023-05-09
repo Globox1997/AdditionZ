@@ -14,7 +14,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-@Mixin(CampfireBlockEntity.class)
+@Mixin(value = CampfireBlockEntity.class, priority = 1001)
 public abstract class CampfireBlockEntityMixin {
 
     private int rainBurnTime = 0;
