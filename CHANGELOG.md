@@ -1,6 +1,6 @@
 ### Added:
-- Campfire extinguish feature
-### Fixed:
 - 
+### Fixed:
+- Lithium compat
 ### Changed:
 - 
