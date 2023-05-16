@@ -26,15 +26,18 @@ public interface DegradableMixin {
             boolean hasFire = false;
             boolean hasWater = false;
             for (int i = 0; i < AdditionMain.DIRECTIONS.size(); i++) {
-                if (world.getBlockState(pos.offset(AdditionMain.DIRECTIONS.get(i))).isIn(BlockTags.FIRE) || world.getBlockState(pos.offset(AdditionMain.DIRECTIONS.get(i))).isOf(Blocks.LAVA))
+                if (world.getBlockState(pos.offset(AdditionMain.DIRECTIONS.get(i))).isIn(BlockTags.FIRE) || world.getBlockState(pos.offset(AdditionMain.DIRECTIONS.get(i))).isOf(Blocks.LAVA)) {
                     hasFire = true;
-                if (world.getBlockState(pos.offset(AdditionMain.DIRECTIONS.get(i))).isOf(Blocks.WATER))
+                }
+                if (world.getBlockState(pos.offset(AdditionMain.DIRECTIONS.get(i))).isOf(Blocks.WATER)) {
                     hasWater = true;
-                if (hasFire && hasWater)
+                }
+                if (hasFire && hasWater) {
                     break;
+                }
             }
 
-            if (hasFire && hasWater && random.nextFloat() < 0.5F) {
+            if (hasFire && hasWater && random.nextFloat() < 0.7F) {
                 this.getDegradationResult(state2).ifPresent(state -> world.setBlockState(pos, (BlockState) state));
                 info.cancel();
             }
