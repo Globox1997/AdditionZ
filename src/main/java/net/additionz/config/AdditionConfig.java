@@ -84,6 +84,7 @@ public class AdditionConfig implements ConfigData {
     @Comment("Only in cold biomes")
     public boolean strays_affected_by_daylight = false;
     public boolean start_riding_fall_damage = true;
+    public boolean boat_fall_damage_nerf = true;
 
     public boolean passive_entity_modifications = false;
 

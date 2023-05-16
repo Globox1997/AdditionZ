@@ -37,7 +37,8 @@
     "ServerWorldMixin",
     "CampfireBlockEntityMixin",
     "SpawnLocatingMixin",
-    "StrayEntityMixin"
+    "StrayEntityMixin",
+    "BoatEntityMixin"
   ],
   "client": [
     "client.ShieldItemMixin",
