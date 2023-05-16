@@ -83,6 +83,7 @@ public class AdditionConfig implements ConfigData {
     public int campfire_rain_extinguish = 20;
     @Comment("Only in cold biomes")
     public boolean strays_affected_by_daylight = false;
+    public boolean start_riding_fall_damage = true;
 
     public boolean passive_entity_modifications = false;
 

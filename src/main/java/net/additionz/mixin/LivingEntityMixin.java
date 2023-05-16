@@ -52,8 +52,9 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
     private void damageMixin(DamageSource source, float amount, CallbackInfoReturnable<Boolean> info) {
         if (!source.isProjectile() && amount > 1.0f && source.getSource() != null && source.getSource() instanceof LivingEntity && !((LivingEntity) source.getSource()).disablesShield()
                 && AdditionMain.CONFIG.shield_blocking_cooldown != 0) {
-            if ((Object) this instanceof PlayerEntity)
+            if ((Object) this instanceof PlayerEntity) {
                 ((PlayerEntity) (Object) this).getItemCooldownManager().set(this.getActiveItem().getItem(), AdditionMain.CONFIG.shield_blocking_cooldown);
+            }
             this.clearActiveItem();
         }
     }
@@ -63,8 +64,9 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
         if (AdditionMain.CONFIG.chainmail_spike_protection && (source.equals(DamageSource.CACTUS) || source.equals(DamageSource.SWEET_BERRY_BUSH))
                 && (Object) this instanceof LivingEntity LivingEntity
                 && (LivingEntity.getEquippedStack(EquipmentSlot.HEAD).isOf(Items.CHAINMAIL_HELMET) || LivingEntity.getEquippedStack(EquipmentSlot.CHEST).isOf(Items.CHAINMAIL_CHESTPLATE)
-                        || LivingEntity.getEquippedStack(EquipmentSlot.LEGS).isOf(Items.CHAINMAIL_LEGGINGS) || LivingEntity.getEquippedStack(EquipmentSlot.FEET).isOf(Items.CHAINMAIL_BOOTS)))
+                        || LivingEntity.getEquippedStack(EquipmentSlot.LEGS).isOf(Items.CHAINMAIL_LEGGINGS) || LivingEntity.getEquippedStack(EquipmentSlot.FEET).isOf(Items.CHAINMAIL_BOOTS))) {
             info.setReturnValue(false);
+        }
     }
 
     @Inject(method = "applyMovementEffects", at = @At("TAIL"))
@@ -73,9 +75,10 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
             EntityAttributeInstance entityAttributeInstance = ((LivingEntity) (Object) this).getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
             if (entityAttributeInstance != null) {
                 if (this.world.getBlockState(this.getVelocityAffectingPos()).isIn(AdditionMain.PATH_BLOCKS)) {
-                    if (entityAttributeInstance.getModifier(PATH_BOOST_ID) == null)
+                    if (entityAttributeInstance.getModifier(PATH_BOOST_ID) == null) {
                         entityAttributeInstance.addTemporaryModifier(
                                 new EntityAttributeModifier(PATH_BOOST_ID, "Path speed boost", (double) AdditionMain.CONFIG.path_block_speed_boost, EntityAttributeModifier.Operation.ADDITION));
+                    }
                 } else {
                     if (entityAttributeInstance.getModifier(PATH_BOOST_ID) != null) {
                         entityAttributeInstance.removeModifier(PATH_BOOST_ID);
@@ -90,23 +93,26 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
         if (AdditionMain.CONFIG.passive_entity_modifications && (Object) this instanceof PassiveEntity) {
 
             int realPassiveAge = (int) Math.round(Math.floor(((PassiveAgeAccess) (Object) this).getPassiveAge() / AdditionMain.CONFIG.passiveEntityConfig.passive_age_calculation)) + 1;
-            if (realPassiveAge > AdditionMain.CONFIG.passiveEntityConfig.passive_max_age)
+            if (realPassiveAge > AdditionMain.CONFIG.passiveEntityConfig.passive_max_age) {
                 realPassiveAge = AdditionMain.CONFIG.passiveEntityConfig.passive_max_age;
+            }
 
             ObjectArrayList<ItemStack> objectArrayList = lootTable.generateLoot(builder.build(LootContextTypes.ENTITY));
 
             float lootingChance = 0.0F;
-            if (causedByPlayer && source.getSource() != null && source.getSource() instanceof LivingEntity && EnchantmentHelper.getLooting((LivingEntity) source.getSource()) > 0)
+            if (causedByPlayer && source.getSource() != null && source.getSource() instanceof LivingEntity && EnchantmentHelper.getLooting((LivingEntity) source.getSource()) > 0) {
                 lootingChance = 0.15F * EnchantmentHelper.getLooting((LivingEntity) source.getSource());
+            }
 
             Iterator<ItemStack> listIterator = objectArrayList.iterator();
             while (listIterator.hasNext()) {
                 ItemStack itemStack = listIterator.next();
-                if (itemStack.getCount() == 0)
+                if (itemStack.getCount() == 0) {
                     continue;
-                if (itemStack.isFood() || itemStack.isIn(AdditionMain.PASSIVE_AGE_ITEMS))
+                }
+                if (itemStack.isFood() || itemStack.isIn(AdditionMain.PASSIVE_AGE_ITEMS)) {
                     itemStack.setCount(1 + (lootingChance > 0.001F ? (this.world.random.nextFloat() <= lootingChance ? 1 : 0) : 0));
-
+                }
                 this.dropStack(itemStack);
             }
             info.cancel();
@@ -117,17 +123,26 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
     @ModifyVariable(method = "applyClimbingSpeed", at = @At(value = "INVOKE_ASSIGN", target = "Ljava/lang/Math;max(DD)D"), ordinal = 2)
     private double applyClimbingSpeedMixin(double original) {
         if (AdditionMain.CONFIG.dexterity_enchantment && !((LivingEntity) (Object) this).getEquippedStack(EquipmentSlot.FEET).isEmpty()
-                && EnchantmentHelper.getEquipmentLevel(AdditionMain.DEXTERITY_ENCHANTMENT, (LivingEntity) (Object) this) > 0)
+                && EnchantmentHelper.getEquipmentLevel(AdditionMain.DEXTERITY_ENCHANTMENT, (LivingEntity) (Object) this) > 0) {
             return original + original * (EnchantmentHelper.getEquipmentLevel(AdditionMain.DEXTERITY_ENCHANTMENT, (LivingEntity) (Object) this) * 0.3D);
-
+        }
         return original;
     }
 
     @ModifyVariable(method = "tickFallFlying", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/entity/LivingEntity;getFlag(I)Z"), ordinal = 0)
     private boolean tickFallFlyingMixin(boolean original) {
-        if (AdditionMain.CONFIG.disable_elytra_underwater && this.isSubmergedInWater())
+        if (AdditionMain.CONFIG.disable_elytra_underwater && this.isSubmergedInWater()) {
             return false;
+        }
         return original;
+    }
+
+    @Override
+    public boolean startRiding(Entity entity) {
+        if (AdditionMain.CONFIG.start_riding_fall_damage) {
+            this.handleFallDamage(this.fallDistance, 1.0f, DamageSource.FALL);
+        }
+        return super.startRiding(entity);
     }
 
     @Override
