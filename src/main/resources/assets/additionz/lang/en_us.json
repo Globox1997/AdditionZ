@@ -47,6 +47,7 @@
     "text.autoconfig.additionz.option.snow_under_trees": "Snow Under Trees",
     "text.autoconfig.additionz.option.campfire_rain_extinguish": "Campfire Rain Extinguish",
     "text.autoconfig.additionz.option.spawn_not_on_leaves": "Spawn Not On Leaves",
+    "text.autoconfig.additionz.option.strays_affected_by_daylight": "Strays Affected By Daylight",
 
     "text.autoconfig.additionz.option.passive_entity_modifications": "Passive Entity Modifications",
     "text.autoconfig.additionz.option.passiveEntityConfig": "Passive Entity Modifications",

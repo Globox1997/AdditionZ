@@ -36,7 +36,8 @@
     "JukeboxBlockEntityMixin",
     "ServerWorldMixin",
     "CampfireBlockEntityMixin",
-    "SpawnLocatingMixin"
+    "SpawnLocatingMixin",
+    "StrayEntityMixin"
   ],
   "client": [
     "client.ShieldItemMixin",

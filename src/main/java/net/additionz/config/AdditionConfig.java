@@ -81,6 +81,8 @@ public class AdditionConfig implements ConfigData {
     public boolean spawn_not_on_leaves = true;
     @Comment("Minimum time in ticks during rain + nextInt(this)")
     public int campfire_rain_extinguish = 20;
+    @Comment("Only in cold biomes")
+    public boolean strays_affected_by_daylight = false;
 
     public boolean passive_entity_modifications = false;
 
