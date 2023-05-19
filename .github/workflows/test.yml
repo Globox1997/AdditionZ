@@ -16,7 +16,7 @@ jobs:
         path: './gradle.properties'
         properties: 'archives_base_name mod_version minecraft_version'
 
-     - name: read changelog
+    - name: read changelog
       id: file
       uses: juliangruber/read-file-action@v1
       with:
