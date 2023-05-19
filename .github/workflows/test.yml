@@ -17,13 +17,8 @@ jobs:
         properties: 'archives_base_name mod_version minecraft_version'
 
     - name: read changelog
-      id: file
+      id: changelog
       uses: juliangruber/read-file-action@v1
-      with:
-        path: 'CHANGELOG.md'
-
-    - name: "read file contents"
-      uses: andstor/file-reader-action@v1
       with:
         path: 'CHANGELOG.md'
 
@@ -32,6 +27,6 @@ jobs:
       with:
         webhook-url: ${{ secrets.WEBHOOK_URL }}
         embed-title: "${{ steps.properties.outputs.archives_base_name }} ${{ steps.properties.outputs.mod_version }} for Minecraft ${{ steps.properties.outputs.minecraft_version }} has been released!"
-        embed-description: "Changelog```md\n${{ steps.file.outputs.content }}```\nDownloads```\nGet it on Modrinth https://modrinth.com/mod/${{ steps.properties.outputs.archives_base_name }}```\nhttps://modrinth.com/mod/${{ steps.properties.outputs.archives_base_name }}"
+        embed-description: "Changelog```md\n${{ steps.changelog.outputs.content }}```\nDownloads\nGet it on Modrinth https://modrinth.com/mod/${{ steps.properties.outputs.archives_base_name }}\nGet it on Curseforge https://www.curseforge.com/minecraft/mc-mods/${{ steps.properties.outputs.archives_base_name }}"
         embed-footer-text: "Have fun and be blessed!"
         embed-color: 0xFF8000
