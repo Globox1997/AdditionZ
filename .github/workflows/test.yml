@@ -33,5 +33,5 @@ jobs:
         webhook-url: ${{ secrets.WEBHOOK_URL }}
         embed-title: "${{ steps.properties.outputs.archives_base_name }} ${{ steps.properties.outputs.mod_version }} for Minecraft ${{ steps.properties.outputs.minecraft_version }} has been released!"
         embed-description: "${{ steps.file.outputs.content }}"
-        embed-footer-text: "Get it on Modrinth <a href="https://modrinth.com/mod/${{ steps.properties.outputs.archives_base_name }}"></a>"
+        embed-footer-text: "Get it on Modrinth https://modrinth.com/mod/${{ steps.properties.outputs.archives_base_name }}"
         embed-color: 0xFF8000
