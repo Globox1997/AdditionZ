@@ -32,6 +32,6 @@ jobs:
       with:
         webhook-url: ${{ secrets.WEBHOOK_URL }}
         embed-title: "${{ steps.properties.outputs.archives_base_name }} ${{ steps.properties.outputs.mod_version }} for Minecraft ${{ steps.properties.outputs.minecraft_version }} has been released!"
-        embed-description: "Changelog```md\n${{ steps.file.outputs.content }}```\nDownloads```md\nGet it on Modrinth [here](https://modrinth.com/mod/${{ steps.properties.outputs.archives_base_name }})```\n[TEST](https://modrinth.com)\n```md\n[WOLOLO](https://modrinth.com)```"
+        embed-description: "Changelog```md\n${{ steps.file.outputs.content }}```\nDownloads```md\nGet it on Modrinth [here](https://modrinth.com/mod/${{ steps.properties.outputs.archives_base_name }})```\n[TEST](https://modrinth.com)\n```md\n[WOLOLO](https://modrinth.com)```\n[https://modrinth.com/mod/${{ steps.properties.outputs.archives_base_name }}](https://modrinth.com/mod/${{ steps.properties.outputs.archives_base_name }})"
         embed-footer-text: "Have fun and be blessed!"
         embed-color: 0xFF8000
