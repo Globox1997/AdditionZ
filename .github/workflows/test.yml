@@ -22,11 +22,16 @@ jobs:
       with:
         path: 'CHANGELOG.md'
 
+    - name: "read file contents"
+      uses: andstor/file-reader-action@v1
+      with:
+        path: 'CHANGELOG.md'
+
     - name: discord webhook
       uses: tsickert/discord-webhook@v5.3.0
       with:
         webhook-url: ${{ secrets.WEBHOOK_URL }}
-        filename: CHANGELOG.md
         embed-title: "${{ steps.properties.outputs.archives_base_name }} ${{ steps.properties.outputs.mod_version }} for Minecraft ${{ steps.properties.outputs.minecraft_version }} has been released!"
-        embed-description: "${{ steps.file.outputs.content }} \nGet it on Modrinth [https://modrinth.com/mod/${{ steps.properties.outputs.archives_base_name }}](https://modrinth.com/mod/${{ steps.properties.outputs.archives_base_name }})"
+        embed-description: "${{ steps.read_file.outputs.content }} \nGet it on Modrinth [https://modrinth.com/mod/${{ steps.properties.outputs.archives_base_name }}](https://modrinth.com/mod/${{ steps.properties.outputs.archives_base_name }})"
+        embed-footer-icon-url: "Get it on Modrinth [https://modrinth.com/mod/${{ steps.properties.outputs.archives_base_name }}](https://modrinth.com/mod/${{ steps.properties.outputs.archives_base_name }})"
         embed-color: 0xFF8000
