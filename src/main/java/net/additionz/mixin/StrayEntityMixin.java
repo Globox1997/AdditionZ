@@ -17,7 +17,7 @@ public abstract class StrayEntityMixin extends AbstractSkeletonEntity {
 
     @Override
     protected boolean isAffectedByDaylight() {
-        if (!AdditionMain.CONFIG.strays_affected_by_daylight && this.world.getBiome(this.getBlockPos()).value().getTemperature() <= 0.4f) {
+        if (!AdditionMain.CONFIG.strays_affected_by_daylight && this.getWorld().getBiome(this.getBlockPos()).value().getTemperature() <= 0.4f) {
             return false;
         }
         return super.isAffectedByDaylight();

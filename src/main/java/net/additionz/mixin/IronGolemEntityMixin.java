@@ -63,7 +63,7 @@ public abstract class IronGolemEntityMixin extends GolemEntity {
 
     @Inject(method = "tickMovement", at = @At("TAIL"))
     private void tickMovementMixin(CallbackInfo info) {
-        if (!((IronGolemEntity) (Object) this).world.isClient && this.repairedAngryTick > 0) {
+        if (!((IronGolemEntity) (Object) this).getWorld().isClient() && this.repairedAngryTick > 0) {
             this.repairedAngryTick--;
         }
     }

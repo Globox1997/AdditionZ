@@ -44,8 +44,8 @@ public abstract class SpectralArrowEntityMixin extends PersistentProjectileEntit
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void tickMixin(CallbackInfo info) {
-        if (!this.world.isClient && this.lightPos != null && !this.inGround && this.world.getBlockState(this.lightPos).isOf(Blocks.LIGHT)) {
-            this.world.setBlockState(this.lightPos, Blocks.AIR.getDefaultState());
+        if (!this.getWorld().isClient() && this.lightPos != null && !this.inGround && this.getWorld().getBlockState(this.lightPos).isOf(Blocks.LIGHT)) {
+            this.getWorld().setBlockState(this.lightPos, Blocks.AIR.getDefaultState());
             this.lightPos = null;
         }
     }
@@ -53,17 +53,17 @@ public abstract class SpectralArrowEntityMixin extends PersistentProjectileEntit
     @Override
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
-        if (!this.world.isClient && AdditionMain.CONFIG.spectral_arrow_light && this.world.getBlockState(this.getBlockPos()).isAir()) {
+        if (!this.getWorld().isClient() && AdditionMain.CONFIG.spectral_arrow_light && this.getWorld().getBlockState(this.getBlockPos()).isAir()) {
             this.lightPos = this.getBlockPos();
-            this.world.setBlockState(this.getBlockPos(), Blocks.LIGHT.getDefaultState().with(LightBlock.LEVEL_15, 10));
+            this.getWorld().setBlockState(this.getBlockPos(), Blocks.LIGHT.getDefaultState().with(LightBlock.LEVEL_15, 10));
         }
 
     }
 
     @Override
     public void remove(RemovalReason reason) {
-        if (!this.world.isClient && lightPos != null && this.world.getBlockState(this.lightPos).isOf(Blocks.LIGHT))
-            this.world.setBlockState(this.lightPos, Blocks.AIR.getDefaultState());
+        if (!this.getWorld().isClient() && lightPos != null && this.getWorld().getBlockState(this.lightPos).isOf(Blocks.LIGHT))
+            this.getWorld().setBlockState(this.lightPos, Blocks.AIR.getDefaultState());
 
         super.remove(reason);
     }

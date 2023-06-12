@@ -45,7 +45,7 @@ public class FletchingScreenHandler extends ScreenHandler {
     public FletchingScreenHandler(int syncId, PlayerInventory playerInventory, ScreenHandlerContext context) {
         super(AdditionMain.FLETCHING, syncId);
 
-        this.world = playerInventory.player.world;
+        this.world = playerInventory.player.getWorld();
         // this.recipes = this.world.getRecipeManager().listAllOfType(AdditionMain.FLETCHING_RECIPE);
 
         int i;
@@ -95,10 +95,12 @@ public class FletchingScreenHandler extends ScreenHandler {
     }
 
     private void onTakeOutput(PlayerEntity player, ItemStack stack) {
-        stack.onCraft(player.world, player, stack.getCount());
-        this.output.unlockLastRecipe(player);
-        for (int i = 0; i < 4; i++)
+        stack.onCraft(player.getWorld(), player, stack.getCount());
+
+        this.output.unlockLastRecipe(player, List.of(this.input.getStack(0), this.input.getStack(1), this.input.getStack(2), this.input.getStack(3)));
+        for (int i = 0; i < 4; i++) {
             this.decrementStack(i);
+        }
         // this.context.run((world, pos) -> world.syncWorldEvent(WorldEvents.SMITHING_TABLE_USED, (BlockPos)pos, 0));
     }
 
@@ -123,15 +125,15 @@ public class FletchingScreenHandler extends ScreenHandler {
             }
             if (!hasAddition)
                 this.currentRecipe = list.get(0);
-            ItemStack itemStack = this.currentRecipe.craft(this.input);
+            ItemStack itemStack = this.currentRecipe.craft(this.input, this.world.getRegistryManager());
             this.output.setLastRecipe(this.currentRecipe);
             this.output.setStack(0, itemStack);
         }
     }
 
     @Override
-    public void close(PlayerEntity player) {
-        super.close(player);
+    public void onClosed(PlayerEntity player) {
+        super.onClosed(player);
         this.context.run((world, pos) -> this.dropInventory(player, this.input));
     }
 
@@ -153,7 +155,7 @@ public class FletchingScreenHandler extends ScreenHandler {
     }
 
     @Override
-    public ItemStack transferSlot(PlayerEntity player, int index) {
+    public ItemStack quickMove(PlayerEntity player, int index) {
         ItemStack itemStack = ItemStack.EMPTY;
         Slot slot = (Slot) this.slots.get(index);
         if (slot != null && slot.hasStack()) {

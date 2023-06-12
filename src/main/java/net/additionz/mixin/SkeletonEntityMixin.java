@@ -26,7 +26,7 @@ public abstract class SkeletonEntityMixin extends AbstractSkeletonEntity {
             System.out.println(UUID.randomUUID());
             if (AdditionMain.CONFIG.skeleton_bow_damaged)
                 this.getMainHandStack().damage(1, this, e -> e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
-            if (AdditionMain.CONFIG.break_skeleton_bow_chance > 0.001F && world.getRandom().nextFloat() <= AdditionMain.CONFIG.break_skeleton_bow_chance) {
+            if (AdditionMain.CONFIG.break_skeleton_bow_chance > 0.001F && this.getWorld().getRandom().nextFloat() <= AdditionMain.CONFIG.break_skeleton_bow_chance) {
                 this.getMainHandStack().damage(this.getMainHandStack().getMaxDamage(), this, e -> e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
                 this.updateAttackType();
             }

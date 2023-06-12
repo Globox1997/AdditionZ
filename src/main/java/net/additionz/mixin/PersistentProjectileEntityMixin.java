@@ -63,13 +63,13 @@ public abstract class PersistentProjectileEntityMixin {
 
     @Inject(method = "onBlockHit", at = @At("HEAD"), cancellable = true)
     protected void onBlockHitMixin(BlockHitResult blockHitResult, CallbackInfo info) {
-        if (!((PersistentProjectileEntity) (Object) this).world.isClient && this.isPearcing)
+        if (!((PersistentProjectileEntity) (Object) this).getWorld().isClient() && this.isPearcing)
             info.cancel();
     }
 
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/projectile/PersistentProjectileEntity;isTouchingWaterOrRain()Z"))
     private void tickMixin(CallbackInfo info) {
-        if (!((PersistentProjectileEntity) (Object) this).world.isClient && this.isPearcing) {
+        if (!((PersistentProjectileEntity) (Object) this).getWorld().isClient() && this.isPearcing) {
             Vec3d vec3d = ((PersistentProjectileEntity) (Object) this).getVelocity();
             Vec3d pos = ((PersistentProjectileEntity) (Object) this).getPos();
             if ((int) Math.round(vec3d.length()) <= this.blockPierceLevel + 1)
@@ -84,7 +84,7 @@ public abstract class PersistentProjectileEntityMixin {
 
             checkFutureBlocks(pos, futurePos, distance);
 
-            if (this.piercedBlockPosList.size() < this.blockPierceLevel + 1 && !((PersistentProjectileEntity) (Object) this).world.getBlockState(new BlockPos(futurePos)).isAir()) {
+            if (this.piercedBlockPosList.size() < this.blockPierceLevel + 1 && !((PersistentProjectileEntity) (Object) this).getWorld().getBlockState(BlockPos.ofFloored(futurePos)).isAir()) {
                 Vec3d futureFuturePos = futurePos.add(vec3d);
                 checkFutureBlocks(futurePos, futureFuturePos, distance);
             }
@@ -133,23 +133,24 @@ public abstract class PersistentProjectileEntityMixin {
 
             // BlockPos blockPos = new BlockPos(pos.lerp(futurePos, 1.0D / distance * i));
             Vec3d differentPos = pos.lerp(futurePos, 1.0D / distance * i);
-            BlockPos blockPos = new BlockPos(differentPos);
+            BlockPos blockPos = BlockPos.ofFloored(differentPos.getX(), differentPos.getY(), differentPos.getZ());
 
             // if (!((PersistentProjectileEntity) (Object) this).world.getBlockState(blockPos).isAir() && !this.piercedBlockPosList.contains(blockPos))
             // this.piercedBlockPosList.add(blockPos);
-            if (!((PersistentProjectileEntity) (Object) this).world.getBlockState(blockPos).isAir() && !this.piercedBlockPosList.contains(blockPos))
+            if (!((PersistentProjectileEntity) (Object) this).getWorld().getBlockState(blockPos).isAir() && !this.piercedBlockPosList.contains(blockPos))
                 this.piercedBlockPosList.add(blockPos);
 
-            if (!oldPosList.contains(differentPos))
+            if (!oldPosList.contains(differentPos)) {
                 oldPosList.add(differentPos);
+            }
             // oldPos = blockPos;
             // oldPos = differentPos;
         }
         if (!oldPosList.isEmpty() && this.piercedBlockPosList.size() >= this.blockPierceLevel + 1
-                && !((PersistentProjectileEntity) (Object) this).world.getBlockState(new BlockPos(futurePos)).isAir()) {
+                && !((PersistentProjectileEntity) (Object) this).getWorld().getBlockState(BlockPos.ofFloored(futurePos)).isAir()) {
             for (int i = 0; i < oldPosList.size(); i++) {
-                BlockPos newPos = new BlockPos(oldPosList.get(i));
-                if (((PersistentProjectileEntity) (Object) this).world.getBlockState(newPos).isAir()) {
+                BlockPos newPos = BlockPos.ofFloored(oldPosList.get(i));
+                if (((PersistentProjectileEntity) (Object) this).getWorld().getBlockState(newPos).isAir()) {
                     // System.out.println("B: " + ((PersistentProjectileEntity) (Object) this).getPos());
                     ((PersistentProjectileEntity) (Object) this).setPos(oldPosList.get(i).getX(), oldPosList.get(i).getY(), oldPosList.get(i).getZ());
                     // System.out.println("A: " + ((PersistentProjectileEntity) (Object) this).getPos());

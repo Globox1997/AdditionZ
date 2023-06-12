@@ -25,13 +25,13 @@ public abstract class JukeboxBlockEntityMixin extends BlockEntity {
     @Inject(method = "readNbt", at = @At("TAIL"))
     private void readNbtMixin(NbtCompound nbt, CallbackInfo info) {
         if (nbt.getBoolean("EmptyRecordItem")) {
-            setRecord(ItemStack.EMPTY);
+            setDisc(ItemStack.EMPTY);
         }
     }
 
     @Inject(method = "writeNbt", at = @At("TAIL"))
     protected void writeNbtMixin(NbtCompound nbt, CallbackInfo info) {
-        nbt.putBoolean("EmptyRecordItem", this.getRecord().isEmpty());
+        nbt.putBoolean("EmptyRecordItem", this.getStack(0).isEmpty());
     }
 
     @Override
@@ -45,11 +45,11 @@ public abstract class JukeboxBlockEntityMixin extends BlockEntity {
     }
 
     @Shadow
-    public ItemStack getRecord() {
+    public ItemStack getStack(int slot) {
         return null;
     }
 
     @Shadow
-    public void setRecord(ItemStack stack) {
+    public void setDisc(ItemStack stack) {
     }
 }

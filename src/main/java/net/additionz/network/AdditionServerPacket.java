@@ -6,7 +6,6 @@ import net.additionz.access.ElytraAccess;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.s2c.play.CustomPayloadS2CPacket;
@@ -27,8 +26,8 @@ public class AdditionServerPacket {
             int enchantmentLevel = buffer.readInt();
             boolean offhand = buffer.readBoolean();
             server.execute(() -> {
-                player.world.getEntityById(entityId).damage(DamageSource.player(player), (float) enchantmentLevel * 2.0F);
-                ((LivingEntity) player.world.getEntityById(entityId)).takeKnockback((float) enchantmentLevel * 0.5f, MathHelper.sin(player.getYaw() * ((float) Math.PI / 180)),
+                player.getWorld().getEntityById(entityId).damage(player.getDamageSources().playerAttack(player), (float) enchantmentLevel * 2.0F);
+                ((LivingEntity) player.getWorld().getEntityById(entityId)).takeKnockback((float) enchantmentLevel * 0.5f, MathHelper.sin(player.getYaw() * ((float) Math.PI / 180)),
                         -MathHelper.cos(player.getYaw() * ((float) Math.PI / 180)));
                 if (!player.isCreative())
                     if (offhand)

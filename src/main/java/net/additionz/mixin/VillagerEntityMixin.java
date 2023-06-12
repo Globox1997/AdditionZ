@@ -65,7 +65,7 @@ public abstract class VillagerEntityMixin extends MerchantEntity {
                 tradeCount++;
                 if (tradeCount >= 5) {
                     this.sayNo();
-                    info.setReturnValue(ActionResult.success(this.world.isClient));
+                    info.setReturnValue(ActionResult.success(this.getWorld().isClient()));
                 }
             } else
                 tradeCount = 0;

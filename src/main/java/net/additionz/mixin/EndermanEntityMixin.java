@@ -47,15 +47,15 @@ public abstract class EndermanEntityMixin extends HostileEntity {
                 double maxDistance = Math.pow(vec3d.distanceTo(newPos) / oldPos.distanceTo(newPos), 5);// MathHelper.square(vec3d.distanceTo(newPos) / oldPos.distanceTo(newPos));
                 // System.out
                 // .println(MathHelper.clamp(maxDistance * world.random.nextGaussian() * this.getHeight() / 2.0D, -maxDistance * this.getHeight() / 2.0D, maxDistance * this.getHeight() / 2.0D));
-                double particleX = vec3d.x
-                        + MathHelper.clamp(maxDistance * world.random.nextGaussian() * this.getWidth() / 2.0D, -maxDistance * this.getWidth() / 2.0D, maxDistance * this.getWidth() / 2.0D);
-                double particleY = vec3d.y
-                        + MathHelper.clamp(maxDistance * world.random.nextGaussian() * this.getHeight() / 2.0D, -maxDistance * this.getHeight() / 2.2D, maxDistance * this.getHeight() / 2.1D);
+                double particleX = vec3d.x + MathHelper.clamp(maxDistance * this.getWorld().getRandom().nextGaussian() * this.getWidth() / 2.0D, -maxDistance * this.getWidth() / 2.0D,
+                        maxDistance * this.getWidth() / 2.0D);
+                double particleY = vec3d.y + MathHelper.clamp(maxDistance * this.getWorld().getRandom().nextGaussian() * this.getHeight() / 2.0D, -maxDistance * this.getHeight() / 2.2D,
+                        maxDistance * this.getHeight() / 2.1D);
                 // - this.getHeight() / 2.0D + random.nextDouble() * this.getHeight();
-                double particleZ = vec3d.z
-                        + MathHelper.clamp(maxDistance * world.random.nextGaussian() * this.getWidth() / 2.0D, -maxDistance * this.getWidth() / 2.0D, maxDistance * this.getWidth() / 2.0D);
+                double particleZ = vec3d.z + MathHelper.clamp(maxDistance * this.getWorld().getRandom().nextGaussian() * this.getWidth() / 2.0D, -maxDistance * this.getWidth() / 2.0D,
+                        maxDistance * this.getWidth() / 2.0D);
 
-                ((ServerWorld) this.world).spawnParticles(ParticleTypes.PORTAL, particleX, particleY, particleZ, 0, 0.0D, 0.0D, 0.0D, 0.1F);
+                ((ServerWorld) this.getWorld()).spawnParticles(ParticleTypes.PORTAL, particleX, particleY, particleZ, 0, 0.0D, 0.0D, 0.0D, 0.1F);
                 // ((ServerWorld) this.world).spawnParticles(ParticleTypes.FLAME, vec3d.x, vec3d.y, vec3d.z, 0, 0.0D, 0.0D, 0.0D, 0.01F);
             }
         }

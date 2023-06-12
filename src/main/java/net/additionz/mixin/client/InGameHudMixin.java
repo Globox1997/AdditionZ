@@ -16,12 +16,11 @@ import net.additionz.network.AdditionClientPacket;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.OreBlock;
+import net.minecraft.block.ExperienceDroppingBlock;
 import net.minecraft.block.RedstoneBlock;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
@@ -43,12 +42,12 @@ public class InGameHudMixin {
     private int spyglassUsage = 0;
 
     @Inject(method = "renderCrosshair", at = @At("TAIL"))
-    private void renderCrosshairMixin(MatrixStack matrices, CallbackInfo info) {
-        if (!renderOreIcon(matrices) && this.spyglassUsage != 0)
+    private void renderCrosshairMixin(DrawContext context, CallbackInfo info) {
+        if (!renderOreIcon(context) && this.spyglassUsage != 0)
             this.spyglassUsage = 0;
     }
 
-    private boolean renderOreIcon(MatrixStack matrixStack) {
+    private boolean renderOreIcon(DrawContext context) {
         if (AdditionMain.CONFIG.eagle_eyed_enchantment && this.client.player.isUsingSpyglass() && (this.client.player.experienceLevel > 0 || this.client.player.isCreative())
                 && this.client.player.getActiveItem().hasEnchantments() && EnchantmentHelper.getLevel(AdditionMain.EAGLE_EYED_ENCHANTMENT, this.client.player.getActiveItem()) > 0) {
             HitResult hit = this.client.player.raycast(128, 0, false);
@@ -58,19 +57,17 @@ public class InGameHudMixin {
                     for (int i = -1; i < 2; i++)
                         for (int u = -1; u < 2; u++) {
                             BlockPos otherPos = pos.up(k).north(i).east(u);
-                            if ((this.client.world.getBlockState(otherPos).getBlock() instanceof OreBlock || this.client.world.getBlockState(otherPos).getBlock() instanceof RedstoneBlock
-                                    || this.client.world.getBlockState(otherPos).isOf(Blocks.ANCIENT_DEBRIS))) {
+                            if ((this.client.world.getBlockState(otherPos).getBlock() instanceof ExperienceDroppingBlock
+                                    || this.client.world.getBlockState(otherPos).getBlock() instanceof RedstoneBlock || this.client.world.getBlockState(otherPos).isOf(Blocks.ANCIENT_DEBRIS))) {
                                 int scaledWidth = this.client.getWindow().getScaledWidth();
                                 int scaledHeight = this.client.getWindow().getScaledHeight();
                                 RenderSystem.enableBlend();
                                 RenderSystem.defaultBlendFunc();
-                                RenderSystem.setShaderTexture(0, ORE_TEXTURE);
-                                RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-                                DrawableHelper.drawTexture(matrixStack, (scaledWidth / 2), (scaledHeight / 2) - 16, 0.0F, 0.0F, 16, 16, 16, 16);
+                                context.drawTexture(ORE_TEXTURE, (scaledWidth / 2), (scaledHeight / 2) - 16, 0.0F, 0.0F, 16, 16, 16, 16);
 
-                                if (this.spyglassUsage == 0)
+                                if (this.spyglassUsage == 0) {
                                     AdditionClientPacket.writeC2SConsumeXpPacket(1);
-
+                                }
                                 this.spyglassUsage++;
                                 return true;
                             }

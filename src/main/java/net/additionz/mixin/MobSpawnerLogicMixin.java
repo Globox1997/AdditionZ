@@ -14,6 +14,8 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.MobSpawnerEntry;
 import net.minecraft.world.MobSpawnerLogic;
 import net.minecraft.world.World;
 
@@ -47,7 +49,7 @@ public class MobSpawnerLogicMixin {
     }
 
     @Inject(method = "serverTick", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/nbt/NbtCompound;getList(Ljava/lang/String;I)Lnet/minecraft/nbt/NbtList;"), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
-    private void serverTickMixin(ServerWorld world, BlockPos pos, CallbackInfo info, boolean bl, int i) {
+    private void serverTickMixin(ServerWorld world, BlockPos pos, CallbackInfo info, boolean bl, Random random, MobSpawnerEntry mobSpawnerEntry, int i) {
         if (this.deactivationTicks > 0) {
             info.cancel();
         } else if (AdditionMain.CONFIG.max_spawner_count != 0 && i == (spawnCount - 1)) {

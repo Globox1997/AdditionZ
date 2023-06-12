@@ -24,6 +24,7 @@ import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.ShapedRecipe;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.world.World;
@@ -72,7 +73,7 @@ public class FletchingRecipe implements Recipe<Inventory> {
     }
 
     @Override
-    public ItemStack craft(Inventory inventory) {
+    public ItemStack craft(Inventory inventory, DynamicRegistryManager dynamicRegistryManager) {
         ItemStack itemStack = this.result.copy();
         NbtCompound nbtCompound = inventory.getStack(1).getNbt();
         if (nbtCompound != null) {
@@ -87,7 +88,7 @@ public class FletchingRecipe implements Recipe<Inventory> {
     }
 
     @Override
-    public ItemStack getOutput() {
+    public ItemStack getOutput(DynamicRegistryManager dynamicRegistryManager) {
         return this.result;
     }
 

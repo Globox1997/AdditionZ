@@ -45,16 +45,16 @@ public abstract class PassiveEntityMixin extends PathAwareEntity implements Pass
 
     @Inject(method = "tickMovement", at = @At("TAIL"))
     private void tickMovementMixin(CallbackInfo info) {
-        if (!this.world.isClient) {
+        if (!this.getWorld().isClient()) {
             this.passiveAge++;
             if (AdditionMain.CONFIG.heal_passive_entity_over_time_ticks > 0) {
-                if ((this.world.getTime() - this.damageTime) % AdditionMain.CONFIG.heal_passive_entity_over_time_ticks == 0)
+                if ((this.getWorld().getTime() - this.damageTime) % AdditionMain.CONFIG.heal_passive_entity_over_time_ticks == 0)
                     if (this.getMaxHealth() > this.getHealth() && this.gotDamaged)
                         this.heal(2f);
                     else if (this.gotDamaged)
                         this.gotDamaged = false;
-                if (!this.gotDamaged && this.world.getTime() % 20 == 0 && this.getAttacker() != null) {
-                    this.damageTime = this.world.getTime();
+                if (!this.gotDamaged && this.getWorld().getTime() % 20 == 0 && this.getAttacker() != null) {
+                    this.damageTime = this.getWorld().getTime();
                     this.gotDamaged = true;
                 }
             }

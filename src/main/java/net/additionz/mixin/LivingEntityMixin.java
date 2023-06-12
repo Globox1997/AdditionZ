@@ -30,8 +30,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootTable;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.loot.context.LootContextTypes;
+import net.minecraft.loot.context.LootContextParameterSet;
+import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -50,8 +50,8 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
 
     @Inject(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;damageShield(F)V"))
     private void damageMixin(DamageSource source, float amount, CallbackInfoReturnable<Boolean> info) {
-        if (!source.isProjectile() && amount > 1.0f && source.getSource() != null && source.getSource() instanceof LivingEntity && !((LivingEntity) source.getSource()).disablesShield()
-                && AdditionMain.CONFIG.shield_blocking_cooldown != 0) {
+        if (!source.isIn(DamageTypeTags.IS_PROJECTILE) && amount > 1.0f && source.getSource() != null && source.getSource() instanceof LivingEntity
+                && !((LivingEntity) source.getSource()).disablesShield() && AdditionMain.CONFIG.shield_blocking_cooldown != 0) {
             if ((Object) this instanceof PlayerEntity) {
                 ((PlayerEntity) (Object) this).getItemCooldownManager().set(this.getActiveItem().getItem(), AdditionMain.CONFIG.shield_blocking_cooldown);
             }
@@ -61,7 +61,7 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
 
     @Inject(method = "damage", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/LivingEntity;despawnCounter:I", ordinal = 0), cancellable = true)
     private void damageSpikeMixin(DamageSource source, float amount, CallbackInfoReturnable<Boolean> info) {
-        if (AdditionMain.CONFIG.chainmail_spike_protection && (source.equals(DamageSource.CACTUS) || source.equals(DamageSource.SWEET_BERRY_BUSH))
+        if (AdditionMain.CONFIG.chainmail_spike_protection && (source.equals(this.getDamageSources().cactus()) || source.equals(this.getDamageSources().sweetBerryBush()))
                 && (Object) this instanceof LivingEntity LivingEntity
                 && (LivingEntity.getEquippedStack(EquipmentSlot.HEAD).isOf(Items.CHAINMAIL_HELMET) || LivingEntity.getEquippedStack(EquipmentSlot.CHEST).isOf(Items.CHAINMAIL_CHESTPLATE)
                         || LivingEntity.getEquippedStack(EquipmentSlot.LEGS).isOf(Items.CHAINMAIL_LEGGINGS) || LivingEntity.getEquippedStack(EquipmentSlot.FEET).isOf(Items.CHAINMAIL_BOOTS))) {
@@ -74,7 +74,7 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
         if (AdditionMain.CONFIG.path_block_speed_boost > 0.00D) {
             EntityAttributeInstance entityAttributeInstance = ((LivingEntity) (Object) this).getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
             if (entityAttributeInstance != null) {
-                if (this.world.getBlockState(this.getVelocityAffectingPos()).isIn(AdditionMain.PATH_BLOCKS)) {
+                if (this.getWorld().getBlockState(this.getVelocityAffectingPos()).isIn(AdditionMain.PATH_BLOCKS)) {
                     if (entityAttributeInstance.getModifier(PATH_BOOST_ID) == null) {
                         entityAttributeInstance.addTemporaryModifier(
                                 new EntityAttributeModifier(PATH_BOOST_ID, "Path speed boost", (double) AdditionMain.CONFIG.path_block_speed_boost, EntityAttributeModifier.Operation.ADDITION));
@@ -88,8 +88,9 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
         }
     }
 
-    @Inject(method = "dropLoot", at = @At(value = "INVOKE", target = "Lnet/minecraft/loot/LootTable;generateLoot(Lnet/minecraft/loot/context/LootContext;Ljava/util/function/Consumer;)V"), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
-    protected void dropLootMixin(DamageSource source, boolean causedByPlayer, CallbackInfo info, Identifier identifier, LootTable lootTable, LootContext.Builder builder) {
+    @Inject(method = "dropLoot", at = @At(value = "INVOKE", target = "Lnet/minecraft/loot/LootTable;generateLoot(Lnet/minecraft/loot/context/LootContextParameterSet;JLjava/util/function/Consumer;)V"), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
+    protected void dropLootMixin(DamageSource source, boolean causedByPlayer, CallbackInfo info, Identifier identifier, LootTable lootTable, LootContextParameterSet.Builder builder,
+            LootContextParameterSet lootContextParameterSet) {
         if (AdditionMain.CONFIG.passive_entity_modifications && (Object) this instanceof PassiveEntity) {
 
             int realPassiveAge = (int) Math.round(Math.floor(((PassiveAgeAccess) (Object) this).getPassiveAge() / AdditionMain.CONFIG.passiveEntityConfig.passive_age_calculation)) + 1;
@@ -97,7 +98,7 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
                 realPassiveAge = AdditionMain.CONFIG.passiveEntityConfig.passive_max_age;
             }
 
-            ObjectArrayList<ItemStack> objectArrayList = lootTable.generateLoot(builder.build(LootContextTypes.ENTITY));
+            ObjectArrayList<ItemStack> objectArrayList = lootTable.generateLoot(lootContextParameterSet);
 
             float lootingChance = 0.0F;
             if (causedByPlayer && source.getSource() != null && source.getSource() instanceof LivingEntity && EnchantmentHelper.getLooting((LivingEntity) source.getSource()) > 0) {
@@ -111,7 +112,7 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
                     continue;
                 }
                 if (itemStack.isFood() || itemStack.isIn(AdditionMain.PASSIVE_AGE_ITEMS)) {
-                    itemStack.setCount(1 + (lootingChance > 0.001F ? (this.world.random.nextFloat() <= lootingChance ? 1 : 0) : 0));
+                    itemStack.setCount(1 + (lootingChance > 0.001F ? (this.getWorld().getRandom().nextFloat() <= lootingChance ? 1 : 0) : 0));
                 }
                 this.dropStack(itemStack);
             }
@@ -140,7 +141,7 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
     @Override
     public boolean startRiding(Entity entity) {
         if (AdditionMain.CONFIG.start_riding_fall_damage) {
-            this.handleFallDamage(this.fallDistance, 1.0f, DamageSource.FALL);
+            this.handleFallDamage(this.fallDistance, 1.0f, this.getDamageSources().fall());
         }
         return super.startRiding(entity);
     }

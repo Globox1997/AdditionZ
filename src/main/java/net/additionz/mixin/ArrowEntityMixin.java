@@ -24,11 +24,11 @@ public abstract class ArrowEntityMixin extends PersistentProjectileEntity {
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
 
-        if (!this.world.isClient && AdditionMain.CONFIG.flame_arrow_burn && this.isOnFire()) {
+        if (!this.getWorld().isClient() && AdditionMain.CONFIG.flame_arrow_burn && this.isOnFire()) {
             BlockPos blockPos2 = blockHitResult.getBlockPos().offset(blockHitResult.getSide());
-            if (AbstractFireBlock.canPlaceAt(world, blockPos2, this.getHorizontalFacing())) {
-                BlockState blockState2 = AbstractFireBlock.getState(world, blockPos2);
-                world.setBlockState(blockPos2, blockState2, Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
+            if (AbstractFireBlock.canPlaceAt(this.getWorld(), blockPos2, this.getHorizontalFacing())) {
+                BlockState blockState2 = AbstractFireBlock.getState(this.getWorld(), blockPos2);
+                this.getWorld().setBlockState(blockPos2, blockState2, Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
             }
         }
     }

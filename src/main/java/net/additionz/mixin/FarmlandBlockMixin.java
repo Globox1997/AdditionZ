@@ -33,7 +33,7 @@ public abstract class FarmlandBlockMixin extends Block {
         super(settings);
     }
 
-    @Inject(method = "onLandedUpon", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/FarmlandBlock;setToDirt(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V"), cancellable = true)
+    @Inject(method = "onLandedUpon", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/FarmlandBlock;setToDirt(Lnet/minecraft/entity/Entity;Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V"), cancellable = true)
     private void onLandedUponMixin(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance, CallbackInfo info) {
         if (AdditionMain.CONFIG.feather_falling_trample && EnchantmentHelper.getEquipmentLevel(Enchantments.FEATHER_FALLING, (LivingEntity) entity) > 0) {
             super.onLandedUpon(world, state, pos, entity, fallDistance);
@@ -46,8 +46,8 @@ public abstract class FarmlandBlockMixin extends Block {
         if (AdditionMain.CONFIG.shovel_undo_farmland && player.getStackInHand(hand).getItem() instanceof ShovelItem) {
             if (world.getBlockState(pos.up()).isAir() && !FarmlandBlockMixin.hasCrop(world, pos)) {
                 world.playSound(player, pos, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0f, 1.0f);
-                if (!world.isClient) {
-                    FarmlandBlock.setToDirt(state, world, pos);
+                if (!world.isClient()) {
+                    FarmlandBlock.setToDirt(player, state, world, pos);
                     player.getStackInHand(hand).damage(1, player, p -> p.sendToolBreakStatus(hand));
                 }
                 return ActionResult.success(world.isClient);

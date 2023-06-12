@@ -4,7 +4,7 @@ import org.spongepowered.asm.mixin.Mixin;
 
 import net.additionz.AdditionMain;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.OreBlock;
+import net.minecraft.block.ExperienceDroppingBlock;
 import net.minecraft.block.RedstoneBlock;
 import net.minecraft.client.util.ParticleUtil;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -45,11 +45,12 @@ public abstract class SpyglassItemMixin extends Item {
                     for (int i = -1; i < 2; i++)
                         for (int u = -1; u < 2; u++) {
                             BlockPos otherPos = pos.up(k).north(i).east(u);
-                            if ((world.getBlockState(otherPos).getBlock() instanceof OreBlock || world.getBlockState(otherPos).getBlock() instanceof RedstoneBlock
-                                    || world.getBlockState(otherPos).isOf(Blocks.ANCIENT_DEBRIS)) && world.random.nextFloat() < 0.1F)
-                                for (Direction direction : Direction.values())
+                            if ((world.getBlockState(otherPos).getBlock() instanceof ExperienceDroppingBlock || world.getBlockState(otherPos).getBlock() instanceof RedstoneBlock
+                                    || world.getBlockState(otherPos).isOf(Blocks.ANCIENT_DEBRIS)) && world.random.nextFloat() < 0.1F) {
+                                for (Direction direction : Direction.values()) {
                                     ParticleUtil.spawnParticles(world, otherPos, ParticleTypes.END_ROD, UniformIntProvider.create(0, 2), direction, () -> getRandomVelocity(world.random), 0.55D);
-
+                                }
+                            }
                         }
         }
     }

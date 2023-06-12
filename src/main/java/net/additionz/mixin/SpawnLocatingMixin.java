@@ -6,9 +6,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.additionz.AdditionMain;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.network.SpawnLocating;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
 
 @Mixin(SpawnLocating.class)

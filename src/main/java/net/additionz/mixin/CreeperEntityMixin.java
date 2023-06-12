@@ -18,7 +18,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.explosion.Explosion;
 
 @Mixin(CreeperEntity.class)
 public abstract class CreeperEntityMixin extends HostileEntity {
@@ -40,10 +39,10 @@ public abstract class CreeperEntityMixin extends HostileEntity {
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 
-    @Inject(method = "explode", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;createExplosion(Lnet/minecraft/entity/Entity;DDDFLnet/minecraft/world/explosion/Explosion$DestructionType;)Lnet/minecraft/world/explosion/Explosion;"), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
-    private void explode(CallbackInfo info, Explosion.DestructionType destructionType, float f) {
+    @Inject(method = "explode", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;createExplosion(Lnet/minecraft/entity/Entity;DDDFLnet/minecraft/world/World$ExplosionSourceType;)Lnet/minecraft/world/explosion/Explosion;"), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
+    private void explode(CallbackInfo info, float f) {
         if (AdditionMain.CONFIG.creeper_on_fire && this.isOnFire()) {
-            this.world.createExplosion(this, this.getX(), this.getY(), this.getZ(), (float) this.explosionRadius * f, true, destructionType);
+            this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), (float) this.explosionRadius * f, true, World.ExplosionSourceType.MOB);
             this.discard();
             this.spawnEffectsCloud();
             info.cancel();

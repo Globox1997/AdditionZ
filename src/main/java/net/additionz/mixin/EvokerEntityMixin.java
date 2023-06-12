@@ -36,22 +36,23 @@ public abstract class EvokerEntityMixin extends SpellcastingIllagerEntity {
 
     @Override
     public void onDeath(DamageSource damageSource) {
-        if (!this.tryUseTotem(damageSource))
+        if (!this.tryUseTotem(damageSource)) {
             super.onDeath(damageSource);
+        }
     }
 
     private boolean tryUseTotem(DamageSource source) {
-        if (source.isOutOfWorld()) {
+        if (source.equals(this.getDamageSources().outOfWorld())) {
             return false;
         }
-        if (!this.usedTotem && AdditionMain.CONFIG.evoker_use_totem_chance > 0.001F && this.world.random.nextFloat() <= AdditionMain.CONFIG.evoker_use_totem_chance) {
+        if (!this.usedTotem && AdditionMain.CONFIG.evoker_use_totem_chance > 0.001F && this.getWorld().getRandom().nextFloat() <= AdditionMain.CONFIG.evoker_use_totem_chance) {
             this.usedTotem = true;
             this.setHealth(this.getMaxHealth() * 0.5F);
             this.clearStatusEffects();
             this.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 900, 1));
             this.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 100, 1));
             this.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 800, 0));
-            this.world.sendEntityStatus(this, EntityStatuses.USE_TOTEM_OF_UNDYING);
+            this.getWorld().sendEntityStatus(this, EntityStatuses.USE_TOTEM_OF_UNDYING);
             return true;
         } else
             return false;
