@@ -50,6 +50,7 @@ public class WorldRendererMixin {
             CameraSubmersionType cameraSubmersionType, Vec3d vec3d, float f, float g, float h, BufferBuilder bufferBuilder) {
 
         if (AdditionMain.CONFIG.polar_star) {
+            matrices.push();
             matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(25.0f));
             matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(90.0f));
             Matrix4f matrix4fStar = matrices.peek().getPositionMatrix();
@@ -61,9 +62,11 @@ public class WorldRendererMixin {
             bufferBuilder.vertex(matrix4fStar, k, 100.0f, k).texture(1.0f, 1.0f).next();
             bufferBuilder.vertex(matrix4fStar, -k, 100.0f, k).texture(0.0f, 1.0f).next();
             BufferRenderer.drawWithGlobalProgram(bufferBuilder.end());
+            matrices.pop();
         }
 
         if (AdditionMain.CONFIG.other_stars && this.client.player != null && this.client.player.isUsingSpyglass()) {
+            matrices.push();
             LocalDate localDate = LocalDate.now();
             int i = localDate.get(ChronoField.DAY_OF_MONTH);
             int j = localDate.get(ChronoField.MONTH_OF_YEAR);
@@ -103,6 +106,7 @@ public class WorldRendererMixin {
             bufferBuilder.vertex(matrix4fStar, k, 100.0f, k).texture(1.0f, 1.0f).next();
             bufferBuilder.vertex(matrix4fStar, -k, 100.0f, k).texture(0.0f, 1.0f).next();
             BufferRenderer.drawWithGlobalProgram(bufferBuilder.end());
+            matrices.pop();
         }
 
     }
