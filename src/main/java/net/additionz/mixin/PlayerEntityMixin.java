@@ -26,8 +26,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ElytraAc
 
     @Inject(method = "checkFallFlying", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;startFallFlying()V"), cancellable = true)
     private void checkFallFlyingMixin(CallbackInfoReturnable<Boolean> info) {
-        if (this.disabledElytraTimer > 0)
+        if (this.disabledElytraTimer > 0) {
             info.setReturnValue(false);
+        }
     }
 
     @Inject(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;dropShoulderEntities()V"))
@@ -37,8 +38,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ElytraAc
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void tickMixin(CallbackInfo info) {
-        if (this.disabledElytraTimer > 0)
+        if (this.disabledElytraTimer > 0) {
             this.disabledElytraTimer--;
+        }
     }
 
     @Override
