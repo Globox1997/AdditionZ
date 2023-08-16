@@ -9,12 +9,9 @@ import net.fabricmc.api.Environment;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
-import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class AdditionClient implements ClientModInitializer {
-
-    public static final Identifier AGE_INFO = new Identifier("additionz", "age_info");
 
     @Override
     public void onInitializeClient() {

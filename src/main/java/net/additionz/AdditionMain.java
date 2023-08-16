@@ -65,6 +65,8 @@ public class AdditionMain implements ModInitializer {
     public static final RecipeSerializer<FletchingRecipe> FLETCHING_SERIALIZER = RecipeSerializer.register("fletching", new FletchingRecipe.Serializer());
     public static ScreenHandlerType<FletchingScreenHandler> FLETCHING = new ScreenHandlerType<>(FletchingScreenHandler::new, FeatureFlags.VANILLA_FEATURES);
 
+    public static final Identifier AGE_INFO = new Identifier("additionz", "age_info");
+
     public static final boolean isLevelzLoaded = FabricLoader.getInstance().isModLoaded("levelz");
 
     @Override

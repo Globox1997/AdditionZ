@@ -1,6 +1,5 @@
 package net.additionz.waila;
 
-import net.additionz.AdditionClient;
 import net.additionz.AdditionMain;
 import net.additionz.access.PassiveAgeAccess;
 import net.minecraft.entity.passive.PassiveEntity;
@@ -16,7 +15,7 @@ public enum AgeJadeProvider implements IEntityComponentProvider {
 
     @Override
     public Identifier getUid() {
-        return AdditionClient.AGE_INFO;
+        return AdditionMain.AGE_INFO;
     }
 
     @Override
