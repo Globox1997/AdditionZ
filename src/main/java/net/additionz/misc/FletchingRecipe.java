@@ -98,6 +98,11 @@ public class FletchingRecipe implements Recipe<Inventory> {
     }
 
     @Override
+    public boolean isIgnoredInRecipeBook() {
+        return true;
+    }
+
+    @Override
     public Identifier getId() {
         return this.id;
     }
