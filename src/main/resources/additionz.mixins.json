@@ -46,7 +46,6 @@
     "client.InGameHudMixin",
     "client.VillagerEntityRendererMixin",
     "client.HandledScreenMixin",
-    "client.ClientRecipeBookMixin",
     "client.ItemStackMixin"
   ],
   "injectors": {
