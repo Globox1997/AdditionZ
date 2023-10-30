@@ -13,7 +13,7 @@ import net.minecraft.util.Identifier;
 @Environment(EnvType.CLIENT)
 public class FletchingScreen extends HandledScreen<FletchingScreenHandler> {
 
-    private static final Identifier TEXTURE = new Identifier("additionz:textures/gui/fletching_table.png");
+    public static final Identifier TEXTURE = new Identifier("additionz:textures/gui/fletching_table.png");
 
     public FletchingScreen(FletchingScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);

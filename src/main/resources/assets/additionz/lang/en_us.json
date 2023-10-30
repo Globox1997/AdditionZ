@@ -80,5 +80,7 @@
 
     "container.fletching": "Fletching Table",
 
-    "text.additionz.nbt": "Nbt:"
+    "text.additionz.nbt": "Nbt:",
+
+    "emi.category.additionz.fletching": "Fletching"
 }

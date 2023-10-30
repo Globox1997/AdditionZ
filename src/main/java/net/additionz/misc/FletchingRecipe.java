@@ -27,6 +27,7 @@ import net.minecraft.recipe.ShapedRecipe;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
 public class FletchingRecipe implements Recipe<Inventory> {
@@ -88,6 +89,16 @@ public class FletchingRecipe implements Recipe<Inventory> {
     }
 
     @Override
+    public DefaultedList<Ingredient> getIngredients() {
+        DefaultedList<Ingredient> ingredients = DefaultedList.ofSize(4);
+        ingredients.add(bottom);
+        ingredients.add(middle);
+        ingredients.add(top);
+        ingredients.add(Ingredient.ofStacks(addition));
+        return ingredients;
+    }
+
+    @Override
     public ItemStack getOutput(DynamicRegistryManager dynamicRegistryManager) {
         return this.result;
     }
@@ -120,9 +131,9 @@ public class FletchingRecipe implements Recipe<Inventory> {
     // Used by ClientRecipeBook
     @Override
     public boolean isEmpty() {
-        if (!this.addition.isEmpty())
+        if (!this.addition.isEmpty()) {
             return false;
-        // return Stream.of(this.bottom, this.middle, this.top, this.addition).anyMatch(ingredient -> ingredient.getMatchingStacks().length == 0);
+        }
         return Stream.of(this.bottom, this.middle, this.top).anyMatch(ingredient -> ingredient.getMatchingStacks().length == 0);
     }
 
