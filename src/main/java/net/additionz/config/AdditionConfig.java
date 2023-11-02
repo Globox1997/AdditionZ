@@ -87,6 +87,7 @@ public class AdditionConfig implements ConfigData {
     public boolean boat_fall_damage_nerf = true;
     public boolean teleport_potion = true;
     public boolean teleport_scroll = true;
+    public boolean sneak_through_berries = true;
 
     public boolean passive_entity_modifications = false;
 

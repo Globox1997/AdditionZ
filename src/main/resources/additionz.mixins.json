@@ -38,7 +38,8 @@
     "CampfireBlockEntityMixin",
     "SpawnLocatingMixin",
     "StrayEntityMixin",
-    "BoatEntityMixin"
+    "BoatEntityMixin",
+    "SweetBerryBushBlockMixin"
   ],
   "client": [
     "client.ShieldItemMixin",
