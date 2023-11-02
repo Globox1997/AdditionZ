@@ -34,6 +34,7 @@ import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 @Mixin(LivingEntity.class)
@@ -120,6 +121,10 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
         }
 
     }
+
+    // @Inject(method = "applyClimbingSpeed", at = @At(""))
+    // private void applyClimbingSpeedMixin(Vec3d motion, CallbackInfoReturnable<Vec3d> info) {
+    // }
 
     @ModifyVariable(method = "applyClimbingSpeed", at = @At(value = "INVOKE_ASSIGN", target = "Ljava/lang/Math;max(DD)D"), ordinal = 2)
     private double applyClimbingSpeedMixin(double original) {

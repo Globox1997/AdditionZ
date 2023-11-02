@@ -50,6 +50,8 @@
     "text.autoconfig.additionz.option.strays_affected_by_daylight": "Strays Affected By Daylight",
     "text.autoconfig.additionz.option.start_riding_fall_damage": "Start Riding Fall Damage",
     "text.autoconfig.additionz.option.boat_fall_damage_nerf": "Boat Fall Damage Nerf",
+    "text.autoconfig.additionz.option.teleport_potion": "Teleport Potion",
+    "text.autoconfig.additionz.option.teleport_scroll": "Teleport Scroll",
 
     "text.autoconfig.additionz.option.passive_entity_modifications": "Passive Entity Modifications",
     "text.autoconfig.additionz.option.passiveEntityConfig": "Passive Entity Modifications",
@@ -70,6 +72,9 @@
     "enchantment.additionz.dexterity.desc": "Increases climbing speed.",
 
     "item.additionz.totem_of_non_breaking": "Totem of Non Breaking",
+    "item.additionz.teleport_potion": "Teleport Potion",
+    "item.additionz.teleport_scroll": "Teleport Scroll",
+    "item.additionz.teleport_scroll.tooltip": "§7Hold 10s",
 
     "entity.additionz.age.tooltip": "Age %d",
     "entity.additionz.age_jade.tooltip": " Age %d",

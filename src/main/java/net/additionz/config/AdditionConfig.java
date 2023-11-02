@@ -85,6 +85,8 @@ public class AdditionConfig implements ConfigData {
     public boolean strays_affected_by_daylight = false;
     public boolean start_riding_fall_damage = true;
     public boolean boat_fall_damage_nerf = true;
+    public boolean teleport_potion = true;
+    public boolean teleport_scroll = true;
 
     public boolean passive_entity_modifications = false;
 

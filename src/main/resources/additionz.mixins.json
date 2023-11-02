@@ -43,7 +43,6 @@
   "client": [
     "client.ShieldItemMixin",
     "client.WorldRendererMixin",
-    "client.InGameHudMixin",
     "client.VillagerEntityRendererMixin",
     "client.HandledScreenMixin",
     "client.ItemStackMixin"

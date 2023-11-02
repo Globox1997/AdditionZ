@@ -7,17 +7,20 @@ import java.util.List;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.additionz.config.AdditionConfig;
+import net.additionz.item.*;
 import net.additionz.misc.*;
 import net.additionz.network.AdditionServerPacket;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
+import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.fabricmc.loader.api.FabricLoader;
 import net.levelz.data.LevelLists;
 import net.levelz.stats.PlayerStatsManager;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -43,6 +46,9 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.village.TradeOffer;
+import net.minecraft.village.TradeOffers;
 
 public class AdditionMain implements ModInitializer {
 
@@ -55,6 +61,8 @@ public class AdditionMain implements ModInitializer {
     public static final Enchantment DEXTERITY_ENCHANTMENT = new DexterityEnchantment(Enchantment.Rarity.RARE, EnchantmentTarget.ARMOR_FEET, EquipmentSlot.FEET);
 
     public static final Item TOTEM_OF_NON_BREAKING = new Item(new Item.Settings().maxCount(1).rarity(Rarity.UNCOMMON));
+    public static final Item TELEPORT_SCROLL = new TeleportScrollItem(new Item.Settings().maxCount(16));
+    public static final Item TELEPORT_POTION = new TeleportPotion(new Item.Settings().maxCount(16));
 
     public static final List<Direction> DIRECTIONS = Arrays.asList(Direction.DOWN, Direction.UP, Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH);
 
@@ -103,13 +111,34 @@ public class AdditionMain implements ModInitializer {
             });
             ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(entries -> entries.add(TOTEM_OF_NON_BREAKING));
         }
-        if (CONFIG.husk_drops_sand)
+        Registry.register(Registries.ITEM, "additionz:teleport_scroll", TELEPORT_SCROLL);
+        if (CONFIG.teleport_scroll) {
+            LootTableEvents.MODIFY.register((resourceManager, lootManager, id, supplier, setter) -> {
+                if (id.equals(LootTables.END_CITY_TREASURE_CHEST)) {
+                    LootPool pool = LootPool.builder().with(ItemEntry.builder(TELEPORT_SCROLL).build()).rolls(BinomialLootNumberProvider.create(1, 0.2F)).build();
+                    supplier.pool(pool);
+                }
+            });
+            TradeOfferHelper.registerWanderingTraderOffers(1, factories -> {
+                factories.add(new SimpleTradeFactory(new TradeOffer(new ItemStack(Items.WRITABLE_BOOK, 1), new ItemStack(Items.EMERALD, 24), new ItemStack(TELEPORT_SCROLL), 1, 1, 0.0F)));
+            });
+            ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(entries -> entries.add(TELEPORT_SCROLL));
+        }
+        Registry.register(Registries.ITEM, "additionz:teleport_potion", TELEPORT_POTION);
+        if (CONFIG.teleport_potion) {
+            TradeOfferHelper.registerWanderingTraderOffers(1, factories -> {
+                factories.add(new SimpleTradeFactory(new TradeOffer(new ItemStack(Items.DRAGON_BREATH, 1), new ItemStack(Items.EMERALD, 42), new ItemStack(TELEPORT_POTION), 1, 1, 0.0F)));
+            });
+            ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> entries.add(TELEPORT_POTION));
+        }
+        if (CONFIG.husk_drops_sand) {
             LootTableEvents.MODIFY.register((resourceManager, lootManager, id, supplier, setter) -> {
                 if ("minecraft:entities/husk".equals(id.toString())) {
                     LootPool pool = LootPool.builder().with(ItemEntry.builder(Items.SAND).build()).rolls(BinomialLootNumberProvider.create(2, 0.3F)).build();
                     supplier.pool(pool);
                 }
             });
+        }
         if (CONFIG.trident_buried_treasure)
             LootTableEvents.MODIFY.register((resourceManager, lootManager, id, supplier, setter) -> {
                 if ("minecraft:chests/buried_treasure".equals(id.toString())) {
@@ -151,6 +180,19 @@ public class AdditionMain implements ModInitializer {
 
         }
         return false;
+    }
+
+    private class SimpleTradeFactory implements TradeOffers.Factory {
+        private final TradeOffer offer;
+
+        public SimpleTradeFactory(TradeOffer offer) {
+            this.offer = offer;
+        }
+
+        @Override
+        public TradeOffer create(Entity entity, Random random) {
+            return new TradeOffer(this.offer.toNbt());
+        }
     }
 
 }
