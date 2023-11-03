@@ -39,7 +39,9 @@
     "SpawnLocatingMixin",
     "StrayEntityMixin",
     "BoatEntityMixin",
-    "SweetBerryBushBlockMixin"
+    "SweetBerryBushBlockMixin",
+    "EnchantmentHelperMixin",
+    "PhantomSpawnerMixin"
   ],
   "client": [
     "client.ShieldItemMixin",

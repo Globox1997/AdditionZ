@@ -53,6 +53,7 @@
     "text.autoconfig.additionz.option.teleport_potion": "Teleport Potion",
     "text.autoconfig.additionz.option.teleport_scroll": "Teleport Scroll",
     "text.autoconfig.additionz.option.sneak_through_berries": "Sneak Through Berries",
+    "text.autoconfig.additionz.option.phantom_tick_time": "Phantom Tick Time",
 
     "text.autoconfig.additionz.option.passive_entity_modifications": "Passive Entity Modifications",
     "text.autoconfig.additionz.option.passiveEntityConfig": "Passive Entity Modifications",
