@@ -73,7 +73,7 @@ public abstract class VillagerEntityMixin extends MerchantEntity {
 
     @Inject(method = "summonGolem", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/entity/passive/VillagerEntity;getBoundingBox()Lnet/minecraft/util/math/Box;"), cancellable = true)
     private void summonGolemMixin(ServerWorld world, long time, int requiredCount, CallbackInfo info) {
-        if (ironGolemCount >= AdditionMain.CONFIG.max_iron_golem_villager_spawn) {
+        if (AdditionMain.CONFIG.max_iron_golem_villager_spawn != 0 && ironGolemCount >= AdditionMain.CONFIG.max_iron_golem_villager_spawn) {
             info.cancel();
         } else {
             ironGolemCount++;
