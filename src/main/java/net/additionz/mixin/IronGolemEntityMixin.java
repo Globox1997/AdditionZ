@@ -104,14 +104,13 @@ public abstract class IronGolemEntityMixin extends GolemEntity {
 
         @Override
         protected void attack(LivingEntity target, double squaredDistance) {
-            // System.out.println(target.distanceTo(mob));
-            if (target.getY() - mob.getY() > 2.5D && target.getY() - mob.getY() < 4.5D && target.isInRange(target, 1.5D, 4.5D) && this.getCooldown() <= 0) {
-                // System.out.println("Attack Distance: " + target.distanceTo(mob) + " : " + target.isInRange(target, mob.getWidth() * 2.0D, 4.5D));
+            if (target.getY() - mob.getY() > 2.5D && target.getY() - mob.getY() < 4.5D && mob.isInRange(target, 1.5D, 4.5D) && this.getCooldown() <= 0) {
                 this.resetCooldown();
                 this.mob.swingHand(Hand.MAIN_HAND);
                 this.mob.tryAttack(target);
-            } else
+            } else {
                 super.attack(target, squaredDistance);
+            }
         }
 
     }
@@ -124,8 +123,9 @@ public abstract class IronGolemEntityMixin extends GolemEntity {
 
         @Override
         public boolean shouldContinue() {
-            if (((IronGolemEntityMixin) mob).repairedAngryTick > 0)
+            if (((IronGolemEntityMixin) mob).repairedAngryTick > 0) {
                 return false;
+            }
             return super.shouldContinue();
         }
 
