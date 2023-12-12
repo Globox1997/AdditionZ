@@ -24,7 +24,7 @@ public abstract class JukeboxBlockEntityMixin extends BlockEntity {
 
     @Inject(method = "readNbt", at = @At("TAIL"))
     private void readNbtMixin(NbtCompound nbt, CallbackInfo info) {
-        if (nbt.getBoolean("EmptyRecordItem")) {
+        if (nbt != null && nbt.contains("EmptyRecordItem") && nbt.getBoolean("EmptyRecordItem")) {
             setDisc(ItemStack.EMPTY);
         }
     }
