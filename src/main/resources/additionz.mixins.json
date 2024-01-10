@@ -41,12 +41,14 @@
     "BoatEntityMixin",
     "SweetBerryBushBlockMixin",
     "EnchantmentHelperMixin",
-    "PhantomSpawnerMixin"
+    "PhantomSpawnerMixin",
+    "VillagerBreedTaskMixin"
   ],
   "client": [
     "client.ShieldItemMixin",
     "client.WorldRendererMixin",
     "client.VillagerEntityRendererMixin",
+    "client.VillagerResemblingModelMixin",
     "client.HandledScreenMixin",
     "client.ItemStackMixin"
   ],

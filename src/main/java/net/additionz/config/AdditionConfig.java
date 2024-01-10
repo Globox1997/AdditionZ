@@ -10,6 +10,9 @@ import net.additionz.AdditionMain;
 @Config.Gui.Background("minecraft:textures/block/stone.png")
 public class AdditionConfig implements ConfigData {
 
+    public float test = -1.8f;
+    public float test2 = 1.0f;
+
     public boolean feather_falling_trample = true;
     public boolean enderman_particles = true;
     @ConfigEntry.Gui.RequiresRestart
@@ -49,6 +52,7 @@ public class AdditionConfig implements ConfigData {
     @ConfigEntry.Gui.RequiresRestart
     public boolean trident_buried_treasure = true;
     public boolean villager_sleeping_eyes = true;
+    public boolean villager_gender = false;
     @Comment("No trading when villager has no space")
     public boolean villager_needs_space = true;
     @Comment("0 = disabled")
