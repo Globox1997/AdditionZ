@@ -30,6 +30,9 @@
     ],
     "emi": [
       "net.additionz.compat.AdditionzEmiPlugin"
+    ],
+    "rei_client": [
+      "net.additionz.compat.AdditionzReiPlugin"
     ]
   },
   "mixins": [

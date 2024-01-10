@@ -26,6 +26,7 @@
     "text.autoconfig.additionz.option.disable_elytra_underwater": "Disable Elytra Underwater",
     "text.autoconfig.additionz.option.husk_drops_sand": "Husks Drop Sand",
     "text.autoconfig.additionz.option.villager_sleeping_eyes": "Villager Sleeping Eyes",
+    "text.autoconfig.additionz.option.villager_gender": "Villager Gender",
     "text.autoconfig.additionz.option.max_spawner_count": "Max Spawner Count",
     "text.autoconfig.additionz.option.spawner_tick_deactivation": "Spawner Tick Deactivation",
     "text.autoconfig.additionz.option.path_block_under_gates": "Path Block Under Gates",
@@ -89,5 +90,6 @@
 
     "text.additionz.nbt": "Nbt:",
 
-    "emi.category.additionz.fletching": "Fletching"
+    "emi.category.additionz.fletching": "Fletching",
+    "category.additionz.fletching": "Fletching"
 }

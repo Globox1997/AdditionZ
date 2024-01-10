@@ -45,6 +45,8 @@ dependencies {
     modCompileOnly ('maven.modrinth:emi:1.0.11+1.20.1+fabric') {
 		exclude(group: "net.fabricmc.fabric-api")
 	}
+	// REI
+    modCompileOnly "me.shedaniel:RoughlyEnoughItems-fabric:12.0.684"
 }
 
 processResources {
