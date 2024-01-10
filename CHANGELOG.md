@@ -1,9 +1,7 @@
 ### Added:
-- Added emi fletching recipe category
-- Added teleport scroll
-- Added teleport potion
-- Added sneak through berries feature
+- Added rei fletching recipe category
+- Added female villager option
 ### Fixed:
-- 
+- Fixed jukebox issue
 ### Changed:
 - 
