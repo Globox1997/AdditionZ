@@ -1,6 +1,6 @@
 ### Added:
-- Added rei fletching recipe category
-- Added female villager option
+- Added experience drop loader
+- Added leather climbing speed feature
 ### Fixed:
 - Fixed jukebox issue
 ### Changed:

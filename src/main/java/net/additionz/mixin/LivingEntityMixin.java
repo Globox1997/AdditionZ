@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.At.Shift;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
@@ -16,6 +17,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.additionz.AdditionMain;
 import net.additionz.access.AttackTimeAccess;
 import net.additionz.access.PassiveAgeAccess;
+import net.additionz.mixin.accessor.MobEntityAccess;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -25,6 +27,7 @@ import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -122,9 +125,24 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
 
     }
 
-    // @Inject(method = "applyClimbingSpeed", at = @At(""))
-    // private void applyClimbingSpeedMixin(Vec3d motion, CallbackInfoReturnable<Vec3d> info) {
-    // }
+    @Inject(method = "onDeath", at = @At("HEAD"))
+    private void onDeathMixin(DamageSource damageSource, CallbackInfo info) {
+        if ((Object) this instanceof MobEntity mobEntity && AdditionMain.ENTITY_EXPERIENCE_MAP.containsKey(mobEntity.getType())) {
+            ((MobEntityAccess) mobEntity).setExperiencePoints(AdditionMain.ENTITY_EXPERIENCE_MAP.get(mobEntity.getType()));
+        }
+    }
+
+    @Inject(method = "applyClimbingSpeed", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;isHoldingOntoLadder()Z", shift = Shift.AFTER), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
+    private void applyClimbingSpeedMixin(Vec3d motion, CallbackInfoReturnable<Vec3d> info, float f, double d, double e, double g) {
+        if (AdditionMain.CONFIG.ladder_climb_speeding && !isHoldingOntoLadder()) {
+            if (this.getPitch() >= 90.0f) {
+                info.setReturnValue(new Vec3d(d, g * 2.5f, e));
+            } else if (this.getPitch() <= -90.0f) {
+                info.setReturnValue(new Vec3d(d, g + 0.2D, e));
+            }
+        }
+
+    }
 
     @ModifyVariable(method = "applyClimbingSpeed", at = @At(value = "INVOKE_ASSIGN", target = "Ljava/lang/Math;max(DD)D"), ordinal = 2)
     private double applyClimbingSpeedMixin(double original) {
@@ -163,6 +181,11 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
     @Shadow
     public ItemStack getActiveItem() {
         return null;
+    }
+
+    @Shadow
+    public boolean isHoldingOntoLadder() {
+        return this.isSneaking();
     }
 
 }

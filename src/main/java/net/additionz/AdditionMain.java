@@ -2,11 +2,14 @@ package net.additionz;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.additionz.config.AdditionConfig;
+import net.additionz.data.ExperienceLoader;
 import net.additionz.item.*;
 import net.additionz.misc.*;
 import net.additionz.network.AdditionServerPacket;
@@ -14,6 +17,7 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.loader.api.FabricLoader;
 import net.levelz.data.LevelLists;
 import net.levelz.stats.PlayerStatsManager;
@@ -21,6 +25,7 @@ import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -38,6 +43,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.resource.ResourceType;
 import net.minecraft.resource.featuretoggle.FeatureFlags;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -53,6 +59,8 @@ import net.minecraft.village.TradeOffers;
 public class AdditionMain implements ModInitializer {
 
     public static AdditionConfig CONFIG = new AdditionConfig();
+
+    public static final Map<EntityType<?>, Integer> ENTITY_EXPERIENCE_MAP = new HashMap<EntityType<?>, Integer>();
 
     public static final Enchantment BLOCK_PIERCE_ENCHANTMENT = new BlockPiercingEnchantment(Enchantment.Rarity.RARE, EnchantmentTarget.BOW, EquipmentSlot.MAINHAND);
     public static final Enchantment STAMPEDE_ENCHANTMENT = new StampedeEnchantment(Enchantment.Rarity.RARE, EnchantmentTarget.VANISHABLE, EquipmentSlot.OFFHAND);
@@ -150,6 +158,8 @@ public class AdditionMain implements ModInitializer {
         AdditionServerPacket.init();
 
         Registry.register(Registries.SCREEN_HANDLER, "fletching", FLETCHING);
+
+        ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ExperienceLoader());
     }
 
     public static boolean tryUseTotemOfNonBreaking(PlayerEntity playerEntity, ItemStack itemStack) {

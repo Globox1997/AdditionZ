@@ -10,9 +10,6 @@ import net.additionz.AdditionMain;
 @Config.Gui.Background("minecraft:textures/block/stone.png")
 public class AdditionConfig implements ConfigData {
 
-    public float test = -1.8f;
-    public float test2 = 1.0f;
-
     public boolean feather_falling_trample = true;
     public boolean enderman_particles = true;
     @ConfigEntry.Gui.RequiresRestart
@@ -93,6 +90,7 @@ public class AdditionConfig implements ConfigData {
     public boolean teleport_scroll = true;
     public boolean sneak_through_berries = true;
     public int phantom_tick_time = 72000;
+    public boolean ladder_climb_speeding = true;
 
     public boolean passive_entity_modifications = false;
 

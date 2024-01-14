@@ -42,7 +42,10 @@
     "SweetBerryBushBlockMixin",
     "EnchantmentHelperMixin",
     "PhantomSpawnerMixin",
-    "VillagerBreedTaskMixin"
+    "VillagerBreedTaskMixin",
+    "WaterCreatureEntityMixin",
+    "AnimalEntityMixin",
+    "accessor.MobEntityAccess"
   ],
   "client": [
     "client.ShieldItemMixin",
