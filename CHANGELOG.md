@@ -1,7 +1,6 @@
 ### Added:
-- Added experience drop loader
-- Added leather climbing speed feature
+- 
 ### Fixed:
-- Fixed jukebox issue
+- Fixed dexterity enchantment
 ### Changed:
 - 
