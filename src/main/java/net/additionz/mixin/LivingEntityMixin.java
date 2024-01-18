@@ -45,6 +45,7 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
 
     @Shadow
     private int lastAttackedTime;
+    private double oldClimbingSpeed = 0D;
 
     private static final UUID PATH_BOOST_ID = UUID.fromString("1509fe4d-df41-4b81-b9c6-daec1128ea53");
 
@@ -136,20 +137,21 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
     private void applyClimbingSpeedMixin(Vec3d motion, CallbackInfoReturnable<Vec3d> info, float f, double d, double e, double g) {
         if (AdditionMain.CONFIG.ladder_climb_speeding && !isHoldingOntoLadder()) {
             if (this.getPitch() >= 90.0f) {
-                info.setReturnValue(new Vec3d(d, g * 2.5f, e));
-            } else if (this.getPitch() <= -90.0f) {
-                info.setReturnValue(new Vec3d(d, g + 0.2D, e));
+                info.setReturnValue(new Vec3d(d, g - 0.25f, e));
             }
         }
 
     }
 
-    @ModifyVariable(method = "applyClimbingSpeed", at = @At(value = "INVOKE_ASSIGN", target = "Ljava/lang/Math;max(DD)D"), ordinal = 2)
+    @ModifyVariable(method = "applyClimbingSpeed", at = @At(value = "INVOKE_ASSIGN", target = "Ljava/lang/Math;max(DD)D", shift = Shift.AFTER), ordinal = 2)
     private double applyClimbingSpeedMixin(double original) {
-        if (AdditionMain.CONFIG.dexterity_enchantment && !((LivingEntity) (Object) this).getEquippedStack(EquipmentSlot.FEET).isEmpty()
+        if (((LivingEntity) (Object) this).getWorld().isClient() && this.oldClimbingSpeed == original && AdditionMain.CONFIG.dexterity_enchantment
+                && !((LivingEntity) (Object) this).getEquippedStack(EquipmentSlot.FEET).isEmpty()
                 && EnchantmentHelper.getEquipmentLevel(AdditionMain.DEXTERITY_ENCHANTMENT, (LivingEntity) (Object) this) > 0) {
-            return original + original * (EnchantmentHelper.getEquipmentLevel(AdditionMain.DEXTERITY_ENCHANTMENT, (LivingEntity) (Object) this) * 0.3D);
+            double dexterityLevel = (double) EnchantmentHelper.getEquipmentLevel(AdditionMain.DEXTERITY_ENCHANTMENT, (LivingEntity) (Object) this);
+            return original > 0 ? Math.min(original * 1.5D * dexterityLevel, dexterityLevel * 0.1176D) : original * 1.3D * dexterityLevel;
         }
+        this.oldClimbingSpeed = original;
         return original;
     }
 
