@@ -8,6 +8,9 @@ import java.util.Map;
 
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
+import net.additionz.block.ChunkLoaderBlock;
+import net.additionz.block.entity.ChunkLoaderEntity;
+import net.additionz.block.screen.ChunkLoaderScreenHandler;
 import net.additionz.config.AdditionConfig;
 import net.additionz.data.ExperienceLoader;
 import net.additionz.item.*;
@@ -16,12 +19,18 @@ import net.additionz.network.AdditionServerPacket;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.levelz.data.LevelLists;
 import net.levelz.stats.PlayerStatsManager;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.Entity;
@@ -29,6 +38,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.item.ItemStack;
@@ -71,6 +81,10 @@ public class AdditionMain implements ModInitializer {
     public static final Item TOTEM_OF_NON_BREAKING = new Item(new Item.Settings().maxCount(1).rarity(Rarity.UNCOMMON));
     public static final Item TELEPORT_SCROLL = new TeleportScrollItem(new Item.Settings().maxCount(16));
     public static final Item TELEPORT_POTION = new TeleportPotion(new Item.Settings().maxCount(16));
+
+    public static final Block CHUNK_LOADER = new ChunkLoaderBlock(FabricBlockSettings.copy(Blocks.LODESTONE).nonOpaque().pistonBehavior(PistonBehavior.IGNORE));
+    public static BlockEntityType<ChunkLoaderEntity> CHUNK_LOADER_ENTITY;
+    public static final ScreenHandlerType<ChunkLoaderScreenHandler> CHUNK_LOADER_SCREEN_HANDLER = new ExtendedScreenHandlerType<>(ChunkLoaderScreenHandler::new);
 
     public static final List<Direction> DIRECTIONS = Arrays.asList(Direction.DOWN, Direction.UP, Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH);
 
@@ -139,6 +153,12 @@ public class AdditionMain implements ModInitializer {
             });
             ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> entries.add(TELEPORT_POTION));
         }
+        Registry.register(Registries.BLOCK, "additionz:chunk_loader", CHUNK_LOADER);
+        Registry.register(Registries.ITEM, "additionz:chunk_loader", new BlockItem(CHUNK_LOADER, new Item.Settings()));
+        CHUNK_LOADER_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, "additionz:chunk_loader_entity", FabricBlockEntityTypeBuilder.create(ChunkLoaderEntity::new, CHUNK_LOADER).build(null));
+        if (CONFIG.chunk_loader) {
+            ItemGroupEvents.modifyEntriesEvent(ItemGroups.REDSTONE).register(entries -> entries.add(CHUNK_LOADER));
+        }
         if (CONFIG.husk_drops_sand) {
             LootTableEvents.MODIFY.register((resourceManager, lootManager, id, supplier, setter) -> {
                 if ("minecraft:entities/husk".equals(id.toString())) {
@@ -158,6 +178,7 @@ public class AdditionMain implements ModInitializer {
         AdditionServerPacket.init();
 
         Registry.register(Registries.SCREEN_HANDLER, "fletching", FLETCHING);
+        Registry.register(Registries.SCREEN_HANDLER, "additionz:chunk_loader", CHUNK_LOADER_SCREEN_HANDLER);
 
         ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ExperienceLoader());
     }

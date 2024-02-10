@@ -53,7 +53,10 @@
     "text.autoconfig.additionz.option.boat_fall_damage_nerf": "Boat Fall Damage Nerf",
     "text.autoconfig.additionz.option.teleport_potion": "Teleport Potion",
     "text.autoconfig.additionz.option.teleport_scroll": "Teleport Scroll",
+    "text.autoconfig.additionz.option.chunk_loader": "Chunk Loader",
+    "text.autoconfig.additionz.option.chunk_loader_fuel_time": "Chunk Loader Fuel Time",
     "text.autoconfig.additionz.option.sneak_through_berries": "Sneak Through Berries",
+    "text.autoconfig.additionz.option.ladder_climbing_speed": "Ladder Climbing Speed",
     "text.autoconfig.additionz.option.phantom_tick_time": "Phantom Tick Time",
 
     "text.autoconfig.additionz.option.passive_entity_modifications": "Passive Entity Modifications",
@@ -79,6 +82,9 @@
     "item.additionz.teleport_scroll": "Teleport Scroll",
     "item.additionz.teleport_scroll.tooltip": "§7Hold 10s",
 
+    "block.additionz.chunk_loader": "Chunk Loader",
+    "block.additionz.chunk_loader.message": "Chunk loaded by other chunk loader",
+
     "entity.additionz.age.tooltip": "Age %d",
     "entity.additionz.age_jade.tooltip": " Age %d",
 
@@ -87,6 +93,7 @@
     "config.jade.plugin_additionz.age_info": "Age Info",
 
     "container.fletching": "Fletching Table",
+    "container.chunk_loader": "Chunk Loader",
 
     "text.additionz.nbt": "Nbt:",
 

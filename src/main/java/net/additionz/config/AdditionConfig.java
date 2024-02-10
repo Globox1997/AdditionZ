@@ -88,6 +88,9 @@ public class AdditionConfig implements ConfigData {
     public boolean boat_fall_damage_nerf = true;
     public boolean teleport_potion = true;
     public boolean teleport_scroll = true;
+    public boolean chunk_loader = true;
+    @Comment("Value per item, 20 ticks = 1 second")
+    public int chunk_loader_fuel_time = 144000;
     public boolean sneak_through_berries = true;
     public int phantom_tick_time = 72000;
     public boolean ladder_climb_speeding = true;

@@ -11,6 +11,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.c2s.play.CustomPayloadC2SPacket;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.math.BlockPos;
 
 public class AdditionClientPacket {
 
@@ -44,6 +45,15 @@ public class AdditionClientPacket {
         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
         buf.writeInt(amount);
         CustomPayloadC2SPacket packet = new CustomPayloadC2SPacket(AdditionServerPacket.CONSUME_EXPERIENCE_PACKET, buf);
+        MinecraftClient.getInstance().getNetworkHandler().sendPacket(packet);
+    }
+
+    public static void writeC2SChunkLoaderPacket(BlockPos pos, int chunkId, boolean enableChunkLoading) {
+        PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
+        buf.writeBlockPos(pos);
+        buf.writeInt(chunkId);
+        buf.writeBoolean(enableChunkLoading);
+        CustomPayloadC2SPacket packet = new CustomPayloadC2SPacket(AdditionServerPacket.CHUNK_LOADER_PACKET, buf);
         MinecraftClient.getInstance().getNetworkHandler().sendPacket(packet);
     }
 }

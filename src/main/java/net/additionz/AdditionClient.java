@@ -3,11 +3,14 @@ package net.additionz;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.additionz.block.JukeBoxEntityRenderer;
+import net.additionz.block.render.ChunkLoaderRenderer;
+import net.additionz.block.screen.ChunkLoaderScreen;
 import net.additionz.misc.FletchingScreen;
 import net.additionz.network.AdditionClientPacket;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ExperienceDroppingBlock;
@@ -16,6 +19,7 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.util.Identifier;
@@ -35,7 +39,10 @@ public class AdditionClient implements ClientModInitializer {
     public void onInitializeClient() {
         AdditionClientPacket.init();
         HandledScreens.register(AdditionMain.FLETCHING, FletchingScreen::new);
+        HandledScreens.register(AdditionMain.CHUNK_LOADER_SCREEN_HANDLER, ChunkLoaderScreen::new);
         BlockEntityRendererFactories.register(BlockEntityType.JUKEBOX, JukeBoxEntityRenderer::new);
+        BlockRenderLayerMap.INSTANCE.putBlock(AdditionMain.CHUNK_LOADER, RenderLayer.getCutout());
+        BlockEntityRendererFactories.register(AdditionMain.CHUNK_LOADER_ENTITY, ChunkLoaderRenderer::new);
 
         HudRenderCallback.EVENT.register((context, tickDelta) -> {
             MinecraftClient client = MinecraftClient.getInstance();

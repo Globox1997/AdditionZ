@@ -1,6 +1,6 @@
 ### Added:
-- 
+- Added chunk loader
 ### Fixed:
-- Fixed dexterity enchantment
+- 
 ### Changed:
 - 
