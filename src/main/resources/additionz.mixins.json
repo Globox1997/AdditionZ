@@ -45,6 +45,7 @@
     "VillagerBreedTaskMixin",
     "WaterCreatureEntityMixin",
     "AnimalEntityMixin",
+    "SpawnHelperMixin",
     "accessor.MobEntityAccess"
   ],
   "client": [

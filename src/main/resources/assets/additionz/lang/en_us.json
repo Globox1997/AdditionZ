@@ -59,6 +59,7 @@
     "text.autoconfig.additionz.option.ladder_climbing_speed": "Ladder Climbing Speed",
     "text.autoconfig.additionz.option.phantom_tick_time": "Phantom Tick Time",
 
+    "text.autoconfig.additionz.option.passive_entity_group_spawn": "Passive Entity Group Spawn",
     "text.autoconfig.additionz.option.passive_entity_modifications": "Passive Entity Modifications",
     "text.autoconfig.additionz.option.passiveEntityConfig": "Passive Entity Modifications",
     "text.autoconfig.additionz.option.passiveEntityConfig.baby_to_adult_time": "Baby To Adult Time",

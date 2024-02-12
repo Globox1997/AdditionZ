@@ -95,6 +95,8 @@ public class AdditionConfig implements ConfigData {
     public int phantom_tick_time = 72000;
     public boolean ladder_climb_speeding = true;
 
+    @Comment("Mobs like animals get spawned with a higher chance in a group")
+    public boolean passive_entity_group_spawn = true;
     public boolean passive_entity_modifications = false;
 
     @ConfigEntry.Gui.CollapsibleObject

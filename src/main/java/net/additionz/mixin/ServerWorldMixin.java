@@ -2,14 +2,18 @@ package net.additionz.mixin;
 
 import java.util.function.Supplier;
 
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import net.additionz.AdditionMain;
+import net.additionz.access.WorldAccess;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.EntityType;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -26,7 +30,15 @@ import net.minecraft.world.chunk.WorldChunk;
 import net.minecraft.world.dimension.DimensionType;
 
 @Mixin(ServerWorld.class)
-public abstract class ServerWorldMixin extends World {
+public abstract class ServerWorldMixin extends World implements WorldAccess {
+
+    @Nullable
+    @Unique
+    private EntityType<?> lastSpawnedEntityType = null;
+
+    @Nullable
+    @Unique
+    private BlockPos lastSpawnedBlockPos = null;
 
     public ServerWorldMixin(MutableWorldProperties properties, RegistryKey<World> registryRef, DynamicRegistryManager registryManager, RegistryEntry<DimensionType> dimensionEntry,
             Supplier<Profiler> profiler, boolean isClient, boolean debugWorld, long biomeAccess, int maxChainedNeighborUpdates) {
@@ -53,5 +65,25 @@ public abstract class ServerWorldMixin extends World {
                 }
             }
         }
+    }
+
+    @Override
+    public void setLastSpawnEntityType(EntityType<?> type) {
+        this.lastSpawnedEntityType = type;
+    }
+
+    @Override
+    public void setLastSpawnBlockPos(@Nullable BlockPos pos) {
+        this.lastSpawnedBlockPos = pos;
+    }
+
+    @Override
+    public @Nullable EntityType<?> getLastSpawnEntityType() {
+        return this.lastSpawnedEntityType;
+    }
+
+    @Override
+    public @Nullable BlockPos getLastSpawnBlockPos() {
+        return this.lastSpawnedBlockPos;
     }
 }
