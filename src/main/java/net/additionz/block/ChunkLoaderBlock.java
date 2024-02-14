@@ -81,5 +81,4 @@ public class ChunkLoaderBlock extends BlockWithEntity {
         return checkType(type, AdditionMain.CHUNK_LOADER_ENTITY, world.isClient() ? ChunkLoaderEntity::clientTick : ChunkLoaderEntity::serverTick);
     }
 
-    // https://github.com/jptrzy/trinkets-curios-theme-mod/tree/1.19/src/main/java/net/jptrzy/trinkets/curios/theme
 }
