@@ -46,7 +46,9 @@
     "WaterCreatureEntityMixin",
     "AnimalEntityMixin",
     "SpawnHelperMixin",
-    "accessor.MobEntityAccess"
+    "ScreenHandlerMixin",
+    "accessor.MobEntityAccess",
+    "accessor.SlotAccess"
   ],
   "client": [
     "client.ShieldItemMixin",
@@ -54,7 +56,11 @@
     "client.VillagerEntityRendererMixin",
     "client.VillagerResemblingModelMixin",
     "client.HandledScreenMixin",
-    "client.ItemStackMixin"
+    "client.ItemStackMixin",
+    "client.InventoryScreenMixin",
+    "client.SurvivalTrinketSlotMixin",
+    "client.TrinketScreenManagerMixin",
+    "client.CreativeInventoryScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -12,6 +12,11 @@ repositories {
     maven { url "https://maven.terraformersmc.com/" }
 	maven { url "https://maven2.bai.lol" }
 	maven { url "https://api.modrinth.com/maven" }
+	maven { url "https://maven.ladysnake.org/releases" }
+}
+
+loom {
+	accessWidenerPath = file("src/main/resources/additionz.accesswidener")
 }
 
 dependencies {
@@ -47,6 +52,10 @@ dependencies {
 	}
 	// REI
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-fabric:12.0.684"
+	// Trinkets
+	modCompileOnly ("dev.onyxstudios.cardinal-components-api:cardinal-components-base:5.2.2")
+	modCompileOnly ("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:5.2.2")
+	modCompileOnly "dev.emi:trinkets:3.8.0"
 }
 
 processResources {

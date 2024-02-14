@@ -56,8 +56,9 @@
     "text.autoconfig.additionz.option.chunk_loader": "Chunk Loader",
     "text.autoconfig.additionz.option.chunk_loader_fuel_time": "Chunk Loader Fuel Time",
     "text.autoconfig.additionz.option.sneak_through_berries": "Sneak Through Berries",
-    "text.autoconfig.additionz.option.ladder_climbing_speed": "Ladder Climbing Speed",
+    "text.autoconfig.additionz.option.ladder_climb_speeding": "Ladder Climb Speeding",
     "text.autoconfig.additionz.option.phantom_tick_time": "Phantom Tick Time",
+    "text.autoconfig.additionz.option.trinket_slot_arrangement": "Trinket Slot Arrangement",
 
     "text.autoconfig.additionz.option.passive_entity_group_spawn": "Passive Entity Group Spawn",
     "text.autoconfig.additionz.option.passive_entity_modifications": "Passive Entity Modifications",

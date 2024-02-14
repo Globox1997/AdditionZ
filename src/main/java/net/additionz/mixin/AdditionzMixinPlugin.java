@@ -22,8 +22,12 @@ public class AdditionzMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        if (mixinClassName.contains("ProjectileEntityMixin") && !mixinClassName.contains("PersistentProjectileEntity") && FabricLoader.getInstance().isModLoaded("levelz"))
+        if (mixinClassName.contains("ProjectileEntityMixin") && !mixinClassName.contains("PersistentProjectileEntity") && FabricLoader.getInstance().isModLoaded("levelz")){
+            return false;}
+        if ((mixinClassName.contains("SurvivalTrinketSlotMixin") || mixinClassName.contains("TrinketScreenManagerMixin") || mixinClassName.contains("ScreenHandlerMixin")
+                || mixinClassName.contains("InventoryScreenMixin") || mixinClassName.contains("CreativeInventoryScreenMixin")) && !FabricLoader.getInstance().isModLoaded("trinkets")) {
             return false;
+        }
 
         return true;
     }

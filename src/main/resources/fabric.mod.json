@@ -38,6 +38,7 @@
   "mixins": [
     "additionz.mixins.json"
   ],
+  "accessWidener" : "additionz.accesswidener",
   "depends": {
     "java": ">=17",
     "minecraft": ">=${minecraft_version}",

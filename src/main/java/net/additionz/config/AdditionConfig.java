@@ -94,6 +94,7 @@ public class AdditionConfig implements ConfigData {
     public boolean sneak_through_berries = true;
     public int phantom_tick_time = 72000;
     public boolean ladder_climb_speeding = true;
+    public boolean trinket_slot_arrangement = true;
 
     @Comment("Mobs like animals get spawned with a higher chance in a group")
     public boolean passive_entity_group_spawn = true;
