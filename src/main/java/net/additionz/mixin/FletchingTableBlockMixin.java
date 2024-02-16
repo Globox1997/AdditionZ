@@ -38,10 +38,10 @@ public abstract class FletchingTableBlockMixin extends CraftingTableBlock {
     @Inject(method = "onUse", at = @At("HEAD"), cancellable = true)
     private void onUseMixin(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ActionResult> info) {
         if (AdditionMain.CONFIG.fletching_table_use) {
-            if (!world.isClient) {
+            if (!world.isClient()) {
                 player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
             }
-            info.setReturnValue(ActionResult.success(world.isClient));
+            info.setReturnValue(ActionResult.success(world.isClient()));
         }
     }
 }

@@ -1,7 +1,7 @@
 package net.additionz.misc;
 
 import net.additionz.AdditionMain;
-import net.minecraft.block.Blocks;
+import net.minecraft.block.FletchingTableBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.CraftingResultInventory;
@@ -12,7 +12,6 @@ import net.minecraft.item.PotionItem;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -141,7 +140,7 @@ public class FletchingScreenHandler extends ScreenHandler {
     public boolean canUse(PlayerEntity player) {
         return this.context.get((world, pos) -> {
 
-            if (!this.world.getBlockState((BlockPos) pos).isOf(Blocks.FLETCHING_TABLE)) {
+            if (!(this.world.getBlockState(pos).getBlock() instanceof FletchingTableBlock)) {
                 return false;
             }
             return player.squaredDistanceTo((double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5) <= 64.0;
