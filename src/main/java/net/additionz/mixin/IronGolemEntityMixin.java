@@ -104,6 +104,9 @@ public abstract class IronGolemEntityMixin extends GolemEntity {
 
         @Override
         protected void attack(LivingEntity target, double squaredDistance) {
+            if (!AdditionMain.CONFIG.iron_golem_repair_friendly) {
+                super.attack(target, squaredDistance);
+            }
             if (target.getY() - mob.getY() > 2.5D && target.getY() - mob.getY() < 4.5D && mob.isInRange(target, 1.5D, 4.5D) && this.getCooldown() <= 0) {
                 this.resetCooldown();
                 this.mob.swingHand(Hand.MAIN_HAND);
