@@ -19,8 +19,9 @@ public class TrinketUtil {
     private static final Identifier TEXTURE = new Identifier("additionz", "textures/gui/trinket_slots.png");
 
     public static void setTrinketSlotPosition(Slot slot, int trinketSlotCount) {
-        int rowCount = trinketSlotCount / 8 + (trinketSlotCount != 0 && trinketSlotCount % 8 == 0 ? -1 : 0);
-        int rowSlotCount = trinketSlotCount - rowCount * 8;
+
+        int rowCount = trinketSlotCount / 8;
+        int rowSlotCount = trinketSlotCount % 8;
 
         ((SlotAccess) slot).setX(-17 - rowCount * 18);
         ((SlotAccess) slot).setY(12 + rowSlotCount * 18);
