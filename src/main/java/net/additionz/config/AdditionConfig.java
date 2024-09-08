@@ -6,6 +6,9 @@ import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 import net.additionz.AdditionMain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Config(name = "additionz")
 @Config.Gui.Background("minecraft:textures/block/stone.png")
 public class AdditionConfig implements ConfigData {
@@ -99,6 +102,9 @@ public class AdditionConfig implements ConfigData {
 
     @Comment("Mobs like animals get spawned with a higher chance in a group")
     public boolean passive_entity_group_spawn = true;
+    @Comment("Exclude entities e.g.: minecraft:villager")
+    public List<String> passive_entity_group_spawn_exclude = new ArrayList<String>(List.of("adventurez:ender_whale"));
+
     public boolean passive_entity_modifications = false;
 
     @ConfigEntry.Gui.CollapsibleObject

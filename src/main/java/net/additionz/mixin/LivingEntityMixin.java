@@ -102,9 +102,9 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
     @Inject(method = "dropLoot", at = @At(value = "INVOKE", target = "Lnet/minecraft/loot/LootTable;generateLoot(Lnet/minecraft/loot/context/LootContextParameterSet;JLjava/util/function/Consumer;)V"), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
     protected void dropLootMixin(DamageSource source, boolean causedByPlayer, CallbackInfo info, RegistryKey<LootTable> registryKey, LootTable lootTable, LootContextParameterSet.Builder builder,
             LootContextParameterSet lootContextParameterSet) {
-        if (AdditionMain.CONFIG.passive_entity_modifications && (Object) this instanceof PassiveEntity) {
+        if (AdditionMain.CONFIG.passive_entity_modifications && (Object) this instanceof PassiveEntity passiveEntity) {
 
-            int realPassiveAge = (int) Math.round(Math.floor(((PassiveAgeAccess) (Object) this).getPassiveAge() / AdditionMain.CONFIG.passiveEntityConfig.passive_age_calculation)) + 1;
+            int realPassiveAge = (int) Math.round(Math.floor(((PassiveAgeAccess) passiveEntity).getPassiveAge() / AdditionMain.CONFIG.passiveEntityConfig.passive_age_calculation)) + 1;
             if (realPassiveAge > AdditionMain.CONFIG.passiveEntityConfig.passive_max_age) {
                 realPassiveAge = AdditionMain.CONFIG.passiveEntityConfig.passive_max_age;
             }

@@ -41,13 +41,13 @@ public class SpawnHelperMixin {
     private static void spawnEntitiesInChunkMixin(SpawnGroup group, ServerWorld world, Chunk chunk, BlockPos pos, Checker checker, SpawnHelper.Runner runner, CallbackInfo info,
             StructureAccessor structureAccessor, ChunkGenerator chunkGenerator, int i, BlockState blockState, BlockPos.Mutable mutable, int j, int k, int l, int m, int n,
             SpawnSettings.SpawnEntry spawnEntry, EntityData entityData, int o, int p, int q) {
-        if (group.isRare() && AdditionMain.CONFIG.passive_entity_group_spawn) {
+        if (group.isRare() && AdditionMain.CONFIG.passive_entity_group_spawn ) {
             if (((WorldAccess) world).getLastSpawnEntityType() == null || !((WorldAccess) world).getLastSpawnEntityType().equals(spawnEntry.type)) {
                 ((WorldAccess) world).setLastSpawnBlockPos(null);
                 ((WorldAccess) world).setLastSpawnEntityType(spawnEntry.type);
             } else if (p < spawnEntry.minGroupSize && q == o - 1 && ((WorldAccess) world).getLastSpawnBlockPos() != null) {
                 MobEntity mobEntity2 = SpawnHelperMixin.createMob(world, spawnEntry.type);
-                if (mobEntity2 != null) {
+                if (mobEntity2 != null && !AdditionMain.CONFIG.passive_entity_group_spawn_exclude.contains(mobEntity2.getType().toString().replace("entity.", "").replace(".", ":")) ) {
                     mobEntity2.initialize(world, world.getLocalDifficulty(mobEntity2.getBlockPos()), SpawnReason.NATURAL, entityData);
                     mobEntity2.refreshPositionAndAngles(((WorldAccess) world).getLastSpawnBlockPos(), q, p);
                     world.spawnEntityAndPassengers(mobEntity2);

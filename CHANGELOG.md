@@ -1,6 +1,6 @@
 ### Added:
-- 
+- Added passive group spawn exclude list
 ### Fixed:
 - 
 ### Changed:
-- Updated to mc 1.21
+- Changed config serializer to json

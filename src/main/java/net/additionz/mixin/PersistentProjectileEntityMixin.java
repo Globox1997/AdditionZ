@@ -40,18 +40,20 @@ public abstract class PersistentProjectileEntityMixin {
     private boolean isPearcing = true;
     @Unique
     private List<BlockPos> piercedBlockPosList = new ArrayList<BlockPos>();
-//Lnet/minecraft/entity/projectile/PersistentProjectileEntity;<init>(Lnet/minecraft/entity/EntityType;DDDLnet/minecraft/world/World;Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;)V
+
+    //Lnet/minecraft/entity/projectile/PersistentProjectileEntity;<init>(Lnet/minecraft/entity/EntityType;DDDLnet/minecraft/world/World;Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;)V
     @Inject(method = "Lnet/minecraft/entity/projectile/PersistentProjectileEntity;<init>(Lnet/minecraft/entity/EntityType;Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/world/World;Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;)V", at = @At("TAIL"))
     protected void PersistentProjectileEntityInitMixin(EntityType<? extends PersistentProjectileEntity> type, LivingEntity owner, World world, ItemStack stack, @Nullable ItemStack shotFrom,
-            CallbackInfo info) {
-
-        Optional<RegistryEntry<Enchantment>> optional = stack.getEnchantments().getEnchantments().stream().filter(entry -> entry.matchesId(AdditionMain.BLOCK_PIERCE_ENCHANTMENT.getRegistry()))
-                .findFirst();
-        if (optional.isPresent() && !optional.isEmpty()) {
-            this.blockPierceLevel = EnchantmentHelper.getLevel(optional.get(), stack);
-        }
-        if (this.blockPierceLevel == 0) {
-            this.isPearcing = false;
+                                                       CallbackInfo info) {
+        if (AdditionMain.CONFIG.block_pearcing_enchantment) {
+            Optional<RegistryEntry<Enchantment>> optional = stack.getEnchantments().getEnchantments().stream().filter(entry -> entry.matchesId(AdditionMain.BLOCK_PIERCE_ENCHANTMENT.getRegistry()))
+                    .findFirst();
+            if (optional.isPresent() && !optional.isEmpty()) {
+                this.blockPierceLevel = EnchantmentHelper.getLevel(optional.get(), stack);
+            }
+            if (this.blockPierceLevel == 0) {
+                this.isPearcing = false;
+            }
         }
     }
 

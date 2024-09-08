@@ -61,6 +61,7 @@
     "text.autoconfig.additionz.option.trinket_slot_arrangement": "Trinket Slot Arrangement",
 
     "text.autoconfig.additionz.option.passive_entity_group_spawn": "Passive Entity Group Spawn",
+    "text.autoconfig.additionz.option.passive_entity_group_spawn_exclude": "Passive Entity Group Spawn Exclude",
     "text.autoconfig.additionz.option.passive_entity_modifications": "Passive Entity Modifications",
     "text.autoconfig.additionz.option.passiveEntityConfig": "Passive Entity Modifications",
     "text.autoconfig.additionz.option.passiveEntityConfig.baby_to_adult_time": "Baby To Adult Time",

@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.additionz.block.ChunkLoaderBlock;
 import net.additionz.block.entity.ChunkLoaderEntity;
@@ -114,7 +115,7 @@ public class AdditionMain implements ModInitializer {
     public void onInitialize() {
 
         // Config
-        AutoConfig.register(AdditionConfig.class, JanksonConfigSerializer::new);
+        AutoConfig.register(AdditionConfig.class, GsonConfigSerializer::new);
         CONFIG = AutoConfig.getConfigHolder(AdditionConfig.class).getConfig();
 
         // Registries
