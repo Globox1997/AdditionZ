@@ -1,11 +1,14 @@
 plugins {
-	id 'fabric-loom' version '1.7-SNAPSHOT'
+	id 'fabric-loom' version '1.14-SNAPSHOT'
 	id 'maven-publish'
 }
 
-archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
+
+base {
+	archivesName = project.archives_base_name
+}
 
 repositories {
     maven { url "https://maven.shedaniel.me/" }
@@ -39,23 +42,23 @@ dependencies {
 	// Wthit
     modCompileOnly ("mcp.mobius.waila:wthit-api:fabric-${project.wthit_version}")
 	// Jade
-    modCompileOnly ('maven.modrinth:jade:14.2.4+fabric'){
+    modCompileOnly ('maven.modrinth:jade:15.10.2+fabric'){
 		exclude(group: "net.fabricmc.fabric-api")
 	}
 	// LevelZ
-    modCompileOnly ('maven.modrinth:levelz:1.4.9+1.20') {
+    modCompileOnly ('maven.modrinth:levelz:2.0.6+1.21.1') {
 		exclude(group: "net.fabricmc.fabric-api")
 	}
 	// EMI
-    modCompileOnly ('maven.modrinth:emi:1.1.7+1.21+fabric') {
+    modCompileOnly ('maven.modrinth:emi:1.1.22+1.21.1+fabric') {
 		exclude(group: "net.fabricmc.fabric-api")
 	}
 	// REI
-    modCompileOnly "me.shedaniel:RoughlyEnoughItems-fabric:15.0.728"
+    modCompileOnly "me.shedaniel:RoughlyEnoughItems-fabric:16.0.799"
 	// Trinkets
-	modCompileOnly ("dev.onyxstudios.cardinal-components-api:cardinal-components-base:6.0.0-beta.3")
-	modCompileOnly ("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:6.0.0-beta.3")
-	modCompileOnly "dev.emi:trinkets:3.9.0"
+	modCompileOnly ("dev.onyxstudios.cardinal-components-api:cardinal-components-base:7.3.0")
+	modCompileOnly ("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:7.3.0")
+	modCompileOnly "dev.emi:trinkets:3.10.0"
 }
 
 processResources {
@@ -81,8 +84,10 @@ java {
 }
 
 jar {
+	inputs.property "archivesName", project.base.archivesName
+
 	from("LICENSE") {
-		rename { "${it}_${project.archivesBaseName}"}
+		rename { "${it}_${inputs.properties.archivesName}"}
 	}
 }
 
