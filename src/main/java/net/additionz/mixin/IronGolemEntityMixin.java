@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -34,6 +35,7 @@ import net.minecraft.world.World;
 @Mixin(IronGolemEntity.class)
 public abstract class IronGolemEntityMixin extends GolemEntity {
 
+    @Unique
     private int repairedAngryTick = 0;
 
     public IronGolemEntityMixin(EntityType<? extends GolemEntity> entityType, World world) {

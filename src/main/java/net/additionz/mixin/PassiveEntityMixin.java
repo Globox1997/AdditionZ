@@ -1,6 +1,7 @@
 package net.additionz.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -18,8 +19,11 @@ import net.minecraft.world.World;
 @Mixin(PassiveEntity.class)
 public abstract class PassiveEntityMixin extends PathAwareEntity implements PassiveAgeAccess {
 
+    @Unique
     private int passiveAge = 0;
+    @Unique
     private boolean gotDamaged = false;
+    @Unique
     private long damageTime;
 
     public PassiveEntityMixin(EntityType<? extends PathAwareEntity> entityType, World world) {

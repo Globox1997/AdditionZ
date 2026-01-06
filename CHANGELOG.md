@@ -1,6 +1,7 @@
 ### Added:
-- Added passive group spawn exclude list
+- 
 ### Fixed:
 - 
 ### Changed:
-- Changed config serializer to json
+- Updated to mc 1.21.1
+- Removed dexterity enchantment

@@ -16,7 +16,7 @@ import java.util.Optional;
 
 public class TrinketUtil {
 
-    private static final Identifier TEXTURE = Identifier.of("additionz", "textures/gui/trinket_slots.png");
+    private static final Identifier TEXTURE = AdditionMain.identifierOf("textures/gui/trinket_slots.png");
 
     public static void setTrinketSlotPosition(Slot slot, int trinketSlotCount, int maxColumn) {
 
@@ -35,9 +35,7 @@ public class TrinketUtil {
             if (trinkets.isEmpty()) {
                 return;
             }
-            Iterator<Map<String, TrinketInventory>> iterator = trinkets.get().getInventory().values().iterator();
-            while (iterator.hasNext()) {
-                Map<String, TrinketInventory> map = iterator.next();
+            for (Map<String, TrinketInventory> map : trinkets.get().getInventory().values()) {
                 trinketSlotCount += map.size();
             }
 

@@ -1,14 +1,5 @@
 package net.additionz.block.entity;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
-import org.jetbrains.annotations.Nullable;
-
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import net.additionz.AdditionMain;
 import net.additionz.block.screen.ChunkLoaderScreenHandler;
@@ -35,6 +26,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.ForcedChunkState;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class ChunkLoaderEntity extends BlockEntity implements Inventory, ExtendedScreenHandlerFactory<ChunkLoaderBlockPacket> {
 
@@ -339,9 +337,8 @@ public class ChunkLoaderEntity extends BlockEntity implements Inventory, Extende
 
     public static boolean isChunkLoadedByChunkLoader(ChunkLoaderEntity chunkLoaderEntity, ChunkPos chunkPos) {
         boolean containsChunk = false;
-        Iterator<Integer> iterator = chunkLoaderEntity.getChunkList().iterator();
-        while (iterator.hasNext()) {
-            if (chunkPos.equals(getChunkLoaderChunkPos(chunkLoaderEntity.getPos(), iterator.next()))) {
+        for (Integer integer : chunkLoaderEntity.getChunkList()) {
+            if (chunkPos.equals(getChunkLoaderChunkPos(chunkLoaderEntity.getPos(), integer))) {
                 containsChunk = true;
                 break;
             }

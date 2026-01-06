@@ -1,0 +1,25 @@
+{
+  "description": {
+    "translate": "enchantment.additionz.inaccuracy_curse"
+  },
+  "supported_items": "#c:ranged_weapon_tools",
+  "weight": 5,
+  "max_level": 3,
+  "min_cost": {
+    "base": 25,
+    "per_level_above_first": 25
+  },
+  "max_cost": {
+    "base": 75,
+    "per_level_above_first": 25
+  },
+  "anvil_cost": 8,
+  "slots": [
+    "mainhand",
+    "offhand"
+  ],
+  "effects": {},
+  "properties": {
+    "minecraft:is_curse": {}
+  }
+}

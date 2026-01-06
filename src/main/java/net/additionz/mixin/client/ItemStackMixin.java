@@ -35,10 +35,8 @@ public class ItemStackMixin {
             if (stack != null && !stack.getComponentChanges().isEmpty()) {
                 list.add(Text.translatable("text.additionz.component"));
 
-                Iterator<Entry<ComponentType<?>, Optional<?>>> iterator = stack.getComponentChanges().entrySet().iterator();
-                while (iterator.hasNext()) {
-                    Entry<ComponentType<?>, Optional<?>> entry = iterator.next();
-                    if (!entry.getValue().isPresent()) {
+                for (Entry<ComponentType<?>, Optional<?>> entry : stack.getComponentChanges().entrySet()) {
+                    if (entry.getValue().isEmpty()) {
                         continue;
                     }
 

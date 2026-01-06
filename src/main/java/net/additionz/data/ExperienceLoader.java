@@ -1,20 +1,17 @@
 package net.additionz.data;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Iterator;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
 import net.additionz.AdditionMain;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.registry.Registries;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class ExperienceLoader implements SimpleSynchronousResourceReloadListener {
 
@@ -22,7 +19,7 @@ public class ExperienceLoader implements SimpleSynchronousResourceReloadListener
 
     @Override
     public Identifier getFabricId() {
-        return Identifier.of("additionz", "experience_loader");
+        return AdditionMain.identifierOf("experience_loader");
     }
 
     @Override
@@ -33,9 +30,7 @@ public class ExperienceLoader implements SimpleSynchronousResourceReloadListener
                 InputStream stream = resourceRef.getInputStream();
                 JsonObject data = JsonParser.parseReader(new InputStreamReader(stream)).getAsJsonObject();
 
-                Iterator<String> iterator = data.keySet().iterator();
-                while (iterator.hasNext()) {
-                    String entityType = iterator.next();
+                for (String entityType : data.keySet()) {
                     if (Registries.ENTITY_TYPE.get(Identifier.of(entityType)).toString().equals("entity.minecraft.pig")) {
                         LOGGER.info("Resource {} was not loaded cause {} is not a valid entity identifier", id.toString(), entityType);
                         continue;

@@ -2,6 +2,7 @@ package net.additionz.mixin;
 
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -20,6 +21,7 @@ import net.minecraft.world.World;
 @Mixin(SpectralArrowEntity.class)
 public abstract class SpectralArrowEntityMixin extends PersistentProjectileEntity {
 
+    @Unique
     @Nullable
     private BlockPos lightPos = null;
 

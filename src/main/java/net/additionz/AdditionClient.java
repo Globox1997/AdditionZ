@@ -31,8 +31,8 @@ import net.minecraft.util.math.BlockPos;
 @Environment(EnvType.CLIENT)
 public class AdditionClient implements ClientModInitializer {
 
-    private static final Identifier ORE_TEXTURE = Identifier.of("additionz:textures/gui/ore_icon.png");
-    private static final Identifier TELEPORT_BARS_TEXTURE = Identifier.of("additionz:textures/gui/teleport_bars.png");
+    private static final Identifier ORE_TEXTURE = AdditionMain.identifierOf("textures/gui/ore_icon.png");
+    private static final Identifier TELEPORT_BARS_TEXTURE = AdditionMain.identifierOf("textures/gui/teleport_bars.png");
 
     private static int spyglassUsage = 0;
 
@@ -70,7 +70,7 @@ public class AdditionClient implements ClientModInitializer {
     private static boolean renderOreIcon(DrawContext context, MinecraftClient client) {
         if (AdditionMain.CONFIG.eagle_eyed_enchantment && client.player.isUsingSpyglass() && (client.player.experienceLevel > 0 || client.player.isCreative())
                 && client.player.getActiveItem().hasEnchantments()
-                && client.player.getActiveItem().getEnchantments().getEnchantments().stream().anyMatch(entry -> entry.matchesId(AdditionMain.EAGLE_EYED_ENCHANTMENT.getRegistry()))) {
+                && client.player.getActiveItem().getEnchantments().getEnchantments().stream().anyMatch(entry -> entry.matchesId(AdditionMain.EAGLE_EYED))) {
             HitResult hit = client.player.raycast(128, 0, false);
             BlockPos pos = ((BlockHitResult) hit).getBlockPos();
             if (hit.getType() == HitResult.Type.BLOCK) {

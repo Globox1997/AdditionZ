@@ -27,7 +27,7 @@ public class ProjectileEntityMixin {
     private float setVelocityMixin(float original) {
         if (AdditionMain.CONFIG.inaccuracy_curse_enchantment && owner != null && owner instanceof LivingEntity livingEntity) {
             Optional<RegistryEntry<Enchantment>> optional = livingEntity.getActiveItem().getEnchantments().getEnchantments().stream()
-                    .filter(entry -> entry.matchesId(AdditionMain.INACCURACY_CURSE_ENCHANTMENT.getRegistry())).findFirst();
+                    .filter(entry -> entry.matchesId(AdditionMain.INACCURACY_CURSE)).findFirst();
             if (optional.isPresent() && !optional.isEmpty()) {
                 return (float) EnchantmentHelper.getLevel(optional.get(), livingEntity.getActiveItem()) * 10f;
             }

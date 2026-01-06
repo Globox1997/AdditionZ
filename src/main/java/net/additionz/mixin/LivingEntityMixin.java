@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -51,6 +52,7 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
 
     @Shadow
     private int lastAttackedTime;
+    @Unique
     private double oldClimbingSpeed = 0D;
 
     private static final Identifier PATH_BOOST_ID = Identifier.of("additionz", "path_speed");
@@ -153,22 +155,6 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
             }
         }
 
-    }
-
-    @ModifyVariable(method = "applyClimbingSpeed", at = @At(value = "INVOKE_ASSIGN", target = "Ljava/lang/Math;max(DD)D", shift = Shift.AFTER), ordinal = 2)
-    private double applyClimbingSpeedMixin(double original) {
-        if (((LivingEntity) (Object) this).getWorld().isClient() && this.oldClimbingSpeed == original && AdditionMain.CONFIG.dexterity_enchantment
-                && !((LivingEntity) (Object) this).getEquippedStack(EquipmentSlot.FEET).isEmpty()) {
-            Optional<RegistryEntry<Enchantment>> optional = ((LivingEntity) (Object) this).getEquippedStack(EquipmentSlot.FEET).getEnchantments().getEnchantments().stream()
-                    .filter(entry -> entry.matchesId(AdditionMain.DEXTERITY_ENCHANTMENT.getRegistry())).findFirst();
-            if (optional.isPresent() && !optional.isEmpty()) {
-                double dexterityLevel = EnchantmentHelper.getLevel(optional.get(), ((LivingEntity) (Object) this).getEquippedStack(EquipmentSlot.FEET));
-                return original > 0 ? Math.min(original * 1.5D * dexterityLevel, dexterityLevel * 0.1176D) : original * 1.3D * dexterityLevel;
-            }
-
-        }
-        this.oldClimbingSpeed = original;
-        return original;
     }
 
     @ModifyVariable(method = "tickFallFlying", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/entity/LivingEntity;getFlag(I)Z"), ordinal = 0)

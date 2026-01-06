@@ -1,6 +1,7 @@
 package net.additionz.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -18,6 +19,8 @@ import net.minecraft.world.World;
 
 @Mixin(EvokerEntity.class)
 public abstract class EvokerEntityMixin extends SpellcastingIllagerEntity {
+
+    @Unique
     private boolean usedTotem = false;
 
     public EvokerEntityMixin(EntityType<? extends SpellcastingIllagerEntity> entityType, World world) {

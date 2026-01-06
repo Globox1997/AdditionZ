@@ -1,11 +1,5 @@
 package net.additionz.mixin;
 
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
 import net.additionz.AdditionMain;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.component.type.AttributeModifierSlot;
@@ -15,15 +9,17 @@ import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.ItemTags;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Enchantments.class)
 public class EnchantmentsMixin {
 
     @Inject(method = "bootstrap", at = @At("TAIL"))
     private static void bootstrapMixin(Registerable<Enchantment> registry, CallbackInfo info) {
-        register(registry, AdditionMain.DEXTERITY_ENCHANTMENT, Enchantment.builder(Enchantment.definition(registry.getRegistryLookup(RegistryKeys.ITEM).getOrThrow(ItemTags.LEG_ARMOR_ENCHANTABLE), 5,
-                3, Enchantment.leveledCost(25, 25), Enchantment.leveledCost(75, 25), 8, AttributeModifierSlot.LEGS)));
-
         register(registry, AdditionMain.BLOCK_PIERCE_ENCHANTMENT, Enchantment.builder(Enchantment.definition(registry.getRegistryLookup(RegistryKeys.ITEM).getOrThrow(ItemTags.BOW_ENCHANTABLE), 5, 3,
                 Enchantment.leveledCost(25, 25), Enchantment.leveledCost(75, 25), 8, AttributeModifierSlot.MAINHAND)));
 

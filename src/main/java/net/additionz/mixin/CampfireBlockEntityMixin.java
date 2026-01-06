@@ -1,6 +1,7 @@
 package net.additionz.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -18,6 +19,7 @@ import net.minecraft.world.World;
 @Mixin(value = CampfireBlockEntity.class, priority = 1001)
 public abstract class CampfireBlockEntityMixin {
 
+    @Unique
     private int rainBurnTime = 0;
 
     @Inject(method = "litServerTick", at = @At("TAIL"))

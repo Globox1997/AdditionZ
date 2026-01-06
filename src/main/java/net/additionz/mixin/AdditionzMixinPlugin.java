@@ -26,7 +26,8 @@ public class AdditionzMixinPlugin implements IMixinConfigPlugin {
             return false;
         }
         if ((mixinClassName.contains("SurvivalTrinketSlotMixin") || mixinClassName.contains("TrinketScreenManagerMixin") || mixinClassName.contains("ScreenHandlerMixin")
-                || mixinClassName.contains("InventoryScreenMixin") || mixinClassName.contains("CreativeInventoryScreenMixin")) && !FabricLoader.getInstance().isModLoaded("trinkets")) {
+                || mixinClassName.contains("InventoryScreenMixin") || mixinClassName.contains("CreativeInventoryScreenMixin"))) {
+            // && !FabricLoader.getInstance().isModLoaded("trinkets")
             return false;
         }
         if (mixinClassName.contains("JukeboxBlockEntityMixin") && FabricLoader.getInstance().isModLoaded("amendments")) {

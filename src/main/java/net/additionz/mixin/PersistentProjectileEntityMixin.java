@@ -1,17 +1,5 @@
 package net.additionz.mixin;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import org.jetbrains.annotations.Nullable;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
 import net.additionz.AdditionMain;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -25,6 +13,17 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Mixin(PersistentProjectileEntity.class)
 public abstract class PersistentProjectileEntityMixin {
@@ -45,8 +44,8 @@ public abstract class PersistentProjectileEntityMixin {
     @Inject(method = "Lnet/minecraft/entity/projectile/PersistentProjectileEntity;<init>(Lnet/minecraft/entity/EntityType;Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/world/World;Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;)V", at = @At("TAIL"))
     protected void PersistentProjectileEntityInitMixin(EntityType<? extends PersistentProjectileEntity> type, LivingEntity owner, World world, ItemStack stack, @Nullable ItemStack shotFrom,
                                                        CallbackInfo info) {
-        if (AdditionMain.CONFIG.block_pearcing_enchantment) {
-            Optional<RegistryEntry<Enchantment>> optional = stack.getEnchantments().getEnchantments().stream().filter(entry -> entry.matchesId(AdditionMain.BLOCK_PIERCE_ENCHANTMENT.getRegistry()))
+        if (AdditionMain.CONFIG.block_pierce_enchantment) {
+            Optional<RegistryEntry<Enchantment>> optional = stack.getEnchantments().getEnchantments().stream().filter(entry -> entry.matchesId(AdditionMain.BLOCK_PIERCE))
                     .findFirst();
             if (optional.isPresent() && !optional.isEmpty()) {
                 this.blockPierceLevel = EnchantmentHelper.getLevel(optional.get(), stack);

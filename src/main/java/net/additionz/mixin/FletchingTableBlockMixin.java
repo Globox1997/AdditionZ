@@ -1,6 +1,7 @@
 package net.additionz.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -23,6 +24,7 @@ import net.minecraft.world.World;
 @Mixin(value = FletchingTableBlock.class, priority = 1001)
 public abstract class FletchingTableBlockMixin extends CraftingTableBlock {
 
+    @Unique
     private static final Text SCREEN_TITLE = Text.translatable("container.fletching");
 
     public FletchingTableBlockMixin(Settings settings) {

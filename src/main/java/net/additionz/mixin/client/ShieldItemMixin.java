@@ -1,10 +1,5 @@
 package net.additionz.mixin.client;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.spongepowered.asm.mixin.Mixin;
-
 import net.additionz.AdditionMain;
 import net.additionz.network.packet.StampedePacket;
 import net.fabricmc.api.EnvType;
@@ -24,27 +19,32 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
+
+import java.util.List;
+import java.util.Optional;
 
 @Environment(EnvType.CLIENT)
 @Mixin(ShieldItem.class)
 public abstract class ShieldItemMixin extends Item {
 
+    @Unique
     private int stampedeCooldown = 0;
 
     public ShieldItemMixin(Settings settings) {
         super(settings);
     }
 
-    @SuppressWarnings("resource")
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if (world.isClient && AdditionMain.CONFIG.stampede_enchantment && stack.hasEnchantments()
-                && stack.getEnchantments().getEnchantments().stream().anyMatch(entry -> entry.matchesId(AdditionMain.STAMPEDE_ENCHANTMENT.getRegistry()))) {
+        if (world.isClient() && AdditionMain.CONFIG.stampede_enchantment && (selected || slot == 0) && stack.hasEnchantments()
+                && stack.getEnchantments().getEnchantments().stream().anyMatch(entry -> entry.matchesId(AdditionMain.STAMPEDE))) {
             if (stampedeCooldown <= 0) {
                 if (entity instanceof PlayerEntity playerEntity) {
                     if (playerEntity.isBlocking() && playerEntity.isOnGround() && MinecraftClient.getInstance().options.sprintKey.isPressed()) {
                         Optional<RegistryEntry<Enchantment>> optional = stack.getEnchantments().getEnchantments().stream()
-                                .filter(entry -> entry.matchesId(AdditionMain.STAMPEDE_ENCHANTMENT.getRegistry())).findFirst();
+                                .filter(entry -> entry.matchesId(AdditionMain.STAMPEDE)).findFirst();
                         if (optional.isPresent() && !optional.isEmpty()) {
                             int enchantmentLevel = EnchantmentHelper.getLevel(optional.get(), stack);
                             Vec3d rotationVec3d = playerEntity.getRotationVector().multiply(1.0D, 0.1D, 1.0D).normalize();
@@ -59,13 +59,13 @@ public abstract class ShieldItemMixin extends Item {
                 if (stampedeCooldown >= 110) {
                     List<Entity> list = world.getOtherEntities(entity, entity.getBoundingBox());
                     if (!list.isEmpty()) {
-                        for (int i = 0; i < list.size(); i++)
-                            if (list.get(i) instanceof LivingEntity) {
+                        for (Entity value : list)
+                            if (value instanceof LivingEntity) {
                                 Optional<RegistryEntry<Enchantment>> optional = stack.getEnchantments().getEnchantments().stream()
-                                        .filter(entry -> entry.matchesId(AdditionMain.STAMPEDE_ENCHANTMENT.getRegistry())).findFirst();
+                                        .filter(entry -> entry.matchesId(AdditionMain.STAMPEDE)).findFirst();
                                 if (optional.isPresent() && !optional.isEmpty()) {
                                     int enchantmentLevel = EnchantmentHelper.getLevel(optional.get(), stack);
-                                    ClientPlayNetworking.send(new StampedePacket(list.get(i).getId(), enchantmentLevel, slot == 0));
+                                    ClientPlayNetworking.send(new StampedePacket(value.getId(), enchantmentLevel, slot == 0));
                                     entity.setVelocity(0.0D, 0.0D, 0.0D);
                                     stampedeCooldown = 109;
                                 }

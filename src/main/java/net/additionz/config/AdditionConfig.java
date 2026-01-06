@@ -16,7 +16,7 @@ public class AdditionConfig implements ConfigData {
     public boolean feather_falling_trample = true;
     public boolean enderman_particles = true;
     @ConfigEntry.Gui.RequiresRestart
-    public boolean block_pearcing_enchantment = true;
+    public boolean block_pierce_enchantment = true;
     @ConfigEntry.Gui.RequiresRestart
     public boolean stampede_enchantment = true;
     @ConfigEntry.Gui.RequiresRestart

@@ -35,7 +35,7 @@ public abstract class SpyglassItemMixin extends Item {
         super.usageTick(world, user, stack, remainingUseTicks);
 
         if (world.isClient() && user instanceof PlayerEntity player && AdditionMain.CONFIG.eagle_eyed_enchantment && (player.experienceLevel > 0 || player.isCreative()) && stack.hasEnchantments()
-                && stack.getEnchantments().getEnchantments().stream().anyMatch(entry -> entry.matchesId(AdditionMain.EAGLE_EYED_ENCHANTMENT.getRegistry()))) {
+                && stack.getEnchantments().getEnchantments().stream().anyMatch(entry -> entry.matchesId(AdditionMain.EAGLE_EYED))) {
             HitResult hit = user.raycast(128, 0, false);
             BlockPos pos = ((BlockHitResult) hit).getBlockPos();
 
