@@ -110,9 +110,9 @@ public class AdditionConfig implements ConfigData {
 
     public static class PassiveEntityConfig {
         @Comment("Default = -24000")
-        public int baby_to_adult_time = -24000;
+        public int baby_to_adult_time = -12000;
         @Comment("PassiveAgeTime : this = Age")
-        public int passive_age_calculation = 24000;
+        public int passive_age_calculation = 12000;
         @Comment("Baby = Age 0")
         public int passive_max_age = 3;
     }
