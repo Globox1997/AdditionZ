@@ -21,11 +21,9 @@ public class AdditionConfig implements ConfigData {
     public boolean stampede_enchantment = true;
     @ConfigEntry.Gui.RequiresRestart
     public boolean eagle_eyed_enchantment = true;
-    @ConfigEntry.Gui.RequiresRestart
-    public boolean dexterity_enchantment = true;
     @Comment("Disable when LevelZ mod installed")
     @ConfigEntry.Gui.RequiresRestart
-    public boolean inaccuracy_curse_enchantment = AdditionMain.isLevelzLoaded ? false : true;
+    public boolean inaccuracy_curse_enchantment = !AdditionMain.isLevelzLoaded;
     public boolean polar_star = true;
     @Comment("Only visible through spy glass")
     public boolean other_stars = true;
@@ -103,7 +101,7 @@ public class AdditionConfig implements ConfigData {
     @Comment("Mobs like animals get spawned with a higher chance in a group")
     public boolean passive_entity_group_spawn = true;
     @Comment("Exclude entities e.g.: minecraft:villager")
-    public List<String> passive_entity_group_spawn_exclude = new ArrayList<String>(List.of("adventurez:ender_whale"));
+    public List<String> passive_entity_group_spawn_exclude = new ArrayList<>(List.of("adventurez:ender_whale"));
 
     public boolean passive_entity_modifications = false;
 
