@@ -32,6 +32,8 @@ import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.attribute.ClampedEntityAttribute;
+import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.*;
@@ -45,6 +47,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.resource.featuretoggle.FeatureFlags;
@@ -97,6 +100,9 @@ public class AdditionMain implements ModInitializer {
     public static final RecipeType<FletchingRecipe> FLETCHING_RECIPE = RecipeType.register("fletching");
     public static final RecipeSerializer<FletchingRecipe> FLETCHING_SERIALIZER = RecipeSerializer.register("fletching", new FletchingRecipe.Serializer());
     public static ScreenHandlerType<FletchingScreenHandler> FLETCHING = new ScreenHandlerType<>(FletchingScreenHandler::new, FeatureFlags.VANILLA_FEATURES);
+
+    public static final RegistryEntry<EntityAttribute> GENERIC_RANGE_ATTACK_DAMAGE = Registry.registerReference(Registries.ATTRIBUTE, Identifier.ofVanilla("generic.range_attack_damage"),
+            new ClampedEntityAttribute("attribute.name.generic.range_attack_damage", 2.0, 0.0, 2048.0));
 
     public static final Identifier AGE_INFO = identifierOf("age_info");
 

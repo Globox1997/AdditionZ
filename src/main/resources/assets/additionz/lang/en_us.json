@@ -100,5 +100,7 @@
     "emi.category.additionz.fletching": "Fletching",
     "category.additionz.fletching": "Fletching",
 
-    "tag.minecraft.spyglasses": "Spyglasses"
+    "tag.minecraft.spyglasses": "Spyglasses",
+
+    "attribute.name.generic.range_attack_damage": "Range Attack Damage"
 }
