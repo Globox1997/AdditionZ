@@ -7,6 +7,7 @@ import net.additionz.block.entity.ChunkLoaderEntity;
 import net.additionz.block.screen.ChunkLoaderScreenHandler;
 import net.additionz.config.AdditionConfig;
 import net.additionz.data.ExperienceLoader;
+import net.additionz.data.TradeOfferLoader;
 import net.additionz.item.TeleportPotion;
 import net.additionz.item.TeleportScrollItem;
 import net.additionz.misc.FletchingRecipe;
@@ -60,6 +61,7 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradeOffers;
 import net.minecraft.village.TradedItem;
+import net.minecraft.village.VillagerProfession;
 
 import java.util.*;
 
@@ -68,6 +70,7 @@ public class AdditionMain implements ModInitializer {
     public static AdditionConfig CONFIG = new AdditionConfig();
 
     public static final Map<EntityType<?>, Integer> ENTITY_EXPERIENCE_MAP = new HashMap<>();
+    public static final Map<VillagerProfession, Map<Integer, List<TradeOfferLoader.TradeOfferData>>> TRADE_MAP = new HashMap<>();
 
     public static final TagKey<Block> PATH_BLOCKS = TagKey.of(RegistryKeys.BLOCK, identifierOf("path_blocks"));
     public static final TagKey<Item> PASSIVE_AGE_ITEMS = TagKey.of(RegistryKeys.ITEM, identifierOf("passive_age_items"));
@@ -179,6 +182,7 @@ public class AdditionMain implements ModInitializer {
         Registry.register(Registries.SCREEN_HANDLER, identifierOf("chunk_loader"), CHUNK_LOADER_SCREEN_HANDLER);
 
         ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ExperienceLoader());
+        ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new TradeOfferLoader());
     }
 
     public static boolean tryUseTotemOfNonBreaking(PlayerEntity playerEntity, ItemStack itemStack) {

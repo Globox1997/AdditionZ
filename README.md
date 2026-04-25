@@ -41,9 +41,39 @@ The "addition" field is not necessary!
 
 Since v1.2.2 you can now change entity experience drops with a simple datapack.
 File must be stored under `data/modid/entity_experience`.
-````json
+```json
 {
     "minecraft:zombie": 200,
     "minecraft:skeleton": 100
+}
+```
+
+Since v1.3.5 you can now add villager trades with a simple datapack.
+```json
+{
+  "toolsmith": {
+    "1": [
+      {
+        "type": "buy",
+        "item": "minecraft:coal",
+        "price": 1,
+        "count": 15,
+        "maxUses": 16,
+        "priceMultiplier": 0.05,
+        "experience": 2,
+        "playerExperience": 5
+      },
+      {
+        "type": "sell",
+        "item": "minecraft:stone_pickaxe",
+        "price": 1,
+        "count": 1,
+        "maxUses": 12,
+        "priceMultiplier": 0.05,
+        "experience": 1,
+        "playerExperience": 3
+      }
+    ]
+  }
 }
 ```

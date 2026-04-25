@@ -45,6 +45,7 @@
     "SpyglassItemMixin",
     "StrayEntityMixin",
     "SweetBerryBushBlockMixin",
+    "TradeOfferMixin",
     "TridentItemMixin",
     "VillagerBreedTaskMixin",
     "VillagerEntityMixin",

@@ -1,5 +1,5 @@
 ### Added:
-- Added range attack damage attribute
+- Added villager trade datapack system
 ### Fixed:
 - 
 ### Changed:

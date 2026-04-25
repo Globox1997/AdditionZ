@@ -1,21 +1,10 @@
 package net.additionz.mixin;
 
-import org.jetbrains.annotations.Nullable;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
 import net.additionz.AdditionMain;
 import net.additionz.access.VillagerAccess;
-import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityDimensions;
-import net.minecraft.entity.EntityPose;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
+import net.additionz.data.TradeOfferLoader;
+import net.additionz.util.TradeUtil;
+import net.minecraft.entity.*;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -27,9 +16,22 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.village.TradeOffer;
+import net.minecraft.village.TradeOfferList;
+import net.minecraft.village.VillagerProfession;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.List;
 
 @Mixin(VillagerEntity.class)
 public abstract class VillagerEntityMixin extends MerchantEntity implements VillagerAccess {
@@ -105,6 +107,30 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Vill
     @Inject(method = "initialize", at = @At("RETURN"))
     private void initializeMixin(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, CallbackInfoReturnable<EntityData> info) {
         this.dataTracker.set(MALE, world.getRandom().nextFloat() <= 0.5F);
+    }
+
+    @Inject(method = "fillRecipes", at = @At("TAIL"))
+    private void fillRecipesMixin(CallbackInfo info) {
+        VillagerEntity villagerEntity = (VillagerEntity) (Object) this;
+
+        VillagerProfession profession = villagerEntity.getVillagerData().getProfession();
+        int level = villagerEntity.getVillagerData().getLevel();
+
+        List<TradeOffer> extraOffers = TradeOfferLoader.getTradesForProfession(profession, level);
+
+        TradeOfferList offers = villagerEntity.getOffers();
+        if (AdditionMain.CONFIG.remove_vanilla_villager_trades) {
+            offers.clear();
+        }
+        if (extraOffers.isEmpty()) {
+            return;
+        }
+        offers.addAll(extraOffers);
+    }
+
+    @Inject(method = "afterUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/village/TradeOffer;shouldRewardPlayerExperience()Z"), cancellable = true)
+    private void afterUsingMixin(TradeOffer offer, CallbackInfo info) {
+        TradeUtil.afterTradeHelper(this, offer, info);
     }
 
     @Override

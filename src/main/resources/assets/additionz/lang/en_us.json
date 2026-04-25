@@ -58,6 +58,7 @@
     "text.autoconfig.additionz.option.ladder_climb_speeding": "Ladder Climb Speeding",
     "text.autoconfig.additionz.option.phantom_tick_time": "Phantom Tick Time",
     "text.autoconfig.additionz.option.trinket_slot_arrangement": "Trinket Slot Arrangement",
+    "text.autoconfig.additionz.option.remove_vanilla_villager_trades": "Remove Vanilla Villager Trades",
 
     "text.autoconfig.additionz.option.passive_entity_group_spawn": "Passive Entity Group Spawn",
     "text.autoconfig.additionz.option.passive_entity_group_spawn_exclude": "Passive Entity Group Spawn Exclude",
@@ -100,7 +101,9 @@
     "emi.category.additionz.fletching": "Fletching",
     "category.additionz.fletching": "Fletching",
 
-    "tag.minecraft.spyglasses": "Spyglasses",
+    "tag.item.minecraft.spyglasses": "Spyglasses",
+    "tag.block.additionz.path_blocks": "Path Blocks",
+    "tag.item.additionz.passive_age_items": "Passive Age Items",
 
     "attribute.name.generic.range_attack_damage": "Range Attack Damage"
 }
