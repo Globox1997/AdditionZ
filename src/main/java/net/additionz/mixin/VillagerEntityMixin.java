@@ -3,7 +3,7 @@ package net.additionz.mixin;
 import net.additionz.AdditionMain;
 import net.additionz.access.VillagerAccess;
 import net.additionz.data.TradeOfferLoader;
-import net.additionz.util.TradeUtil;
+import net.additionz.util.ExperienceUtil;
 import net.minecraft.entity.*;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -130,7 +130,7 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Vill
 
     @Inject(method = "afterUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/village/TradeOffer;shouldRewardPlayerExperience()Z"), cancellable = true)
     private void afterUsingMixin(TradeOffer offer, CallbackInfo info) {
-        TradeUtil.afterTradeHelper(this, offer, info);
+        ExperienceUtil.afterTradeHelper(this, offer, info);
     }
 
     @Override

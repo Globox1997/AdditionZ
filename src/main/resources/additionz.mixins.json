@@ -17,6 +17,7 @@
     "EndermanEntityMixin",
     "EvokerEntityMixin",
     "FarmlandBlockMixin",
+    "FishingBobberEntityMixin",
     "FletchingTableBlockMixin",
     "GlassBottleItemMixin",
     "GuardianEntityMixin",

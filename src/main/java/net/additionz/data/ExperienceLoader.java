@@ -42,6 +42,42 @@ public class ExperienceLoader implements SimpleSynchronousResourceReloadListener
                 LOGGER.error("Error occurred while loading resource {}. {}", id.toString(), e.toString());
             }
         });
+        AdditionMain.BREEDING_EXPERIENCE_MAP.clear();
+        resourceManager.findResources("breeding_experience", id -> id.getPath().endsWith(".json")).forEach((id, resourceRef) -> {
+            try {
+                InputStream stream = resourceRef.getInputStream();
+                JsonObject data = JsonParser.parseReader(new InputStreamReader(stream)).getAsJsonObject();
+
+                for (String entityType : data.keySet()) {
+                    if (Registries.ENTITY_TYPE.get(Identifier.of(entityType)).toString().equals("entity.minecraft.pig")) {
+                        LOGGER.info("Resource {} was not loaded cause {} is not a valid entity identifier", id.toString(), entityType);
+                        continue;
+                    }
+                    AdditionMain.BREEDING_EXPERIENCE_MAP.put(Registries.ENTITY_TYPE.get(Identifier.of(entityType)), data.get(entityType).getAsInt());
+
+                }
+            } catch (Exception e) {
+                LOGGER.error("Error occurred while loading resource {}. {}", id.toString(), e.toString());
+            }
+        });
+        AdditionMain.FISHING_EXPERIENCE_MAP.clear();
+        resourceManager.findResources("fishing_experience", id -> id.getPath().endsWith(".json")).forEach((id, resourceRef) -> {
+            try {
+                InputStream stream = resourceRef.getInputStream();
+                JsonObject data = JsonParser.parseReader(new InputStreamReader(stream)).getAsJsonObject();
+
+                for (String itemId : data.keySet()) {
+                    if (Registries.ITEM.get(Identifier.of(itemId)).getDefaultStack().isEmpty()) {
+                        LOGGER.info("Resource {} was not loaded cause {} is not a valid item identifier", id.toString(), itemId);
+                        continue;
+                    }
+                    AdditionMain.FISHING_EXPERIENCE_MAP.put(Registries.ITEM.get(Identifier.of(itemId)), data.get(itemId).getAsInt());
+
+                }
+            } catch (Exception e) {
+                LOGGER.error("Error occurred while loading resource {}. {}", id.toString(), e.toString());
+            }
+        });
     }
 
 }

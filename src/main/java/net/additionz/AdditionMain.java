@@ -70,6 +70,8 @@ public class AdditionMain implements ModInitializer {
     public static AdditionConfig CONFIG = new AdditionConfig();
 
     public static final Map<EntityType<?>, Integer> ENTITY_EXPERIENCE_MAP = new HashMap<>();
+    public static final Map<EntityType<?>, Integer> BREEDING_EXPERIENCE_MAP = new HashMap<>();
+    public static final Map<Item, Integer> FISHING_EXPERIENCE_MAP = new HashMap<>();
     public static final Map<VillagerProfession, Map<Integer, List<TradeOfferLoader.TradeOfferData>>> TRADE_MAP = new HashMap<>();
 
     public static final TagKey<Block> PATH_BLOCKS = TagKey.of(RegistryKeys.BLOCK, identifierOf("path_blocks"));

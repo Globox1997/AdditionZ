@@ -48,7 +48,26 @@ File must be stored under `data/modid/entity_experience`.
 }
 ```
 
+Since v1.3.5 you can now change the breeding experience with a simple datapack.
+File must be stored under `data/modid/breeding_experience`.
+```json
+{
+    "minecraft:cow": 5,
+    "minecraft:chicken": 2
+}
+```
+
+Since v1.3.5 you can now change the fishing experience with a simple datapack.
+File must be stored under `data/modid/fishing_experience`.
+```json
+{
+    "minecraft:cod": 5,
+    "minecraft:saddle": 2
+}
+```
+
 Since v1.3.5 you can now add villager trades with a simple datapack.
+File must be stored under `data/modid/villager_trades`.
 ```json
 {
   "toolsmith": {
