@@ -45,7 +45,7 @@ public class ExperienceUtil {
                 int experience = AdditionMain.FISHING_EXPERIENCE_MAP.get(itemEntity.getStack().getItem());
 
                 if (AdditionMain.isLevelzLoaded) {
-                    LevelExperienceOrbEntity.spawn((ServerWorld) world, entity.getPos(), AdditionMain.FISHING_EXPERIENCE_MAP.get(itemEntity.getStack().getItem()));
+                    LevelExperienceOrbEntity.spawn((ServerWorld) world, entity.getPos(), experience);
                 }
                 return world.spawnEntity(new ExperienceOrbEntity(world, entity.getX(), entity.getY() + 0.5, entity.getZ() + 0.5, experience));
             }
