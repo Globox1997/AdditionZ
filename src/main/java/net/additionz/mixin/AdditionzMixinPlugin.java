@@ -33,7 +33,10 @@ public class AdditionzMixinPlugin implements IMixinConfigPlugin {
         if (mixinClassName.contains("JukeboxBlockEntityMixin") && FabricLoader.getInstance().isModLoaded("amendments")) {
             return false;
         }
-        if (mixinClassName.contains("FishingBobberEntityCompatMixin") && !FabricLoader.getInstance().isModLoaded("fishingreal")) {
+        if (mixinClassName.contains("FishingBobberEntityCompatMixin") && (!FabricLoader.getInstance().isModLoaded("levelz") || !FabricLoader.getInstance().isModLoaded("fishingreal"))) {
+            return false;
+        }
+        if (mixinClassName.contains("TideFishingHookMixin") && (!FabricLoader.getInstance().isModLoaded("levelz") || !FabricLoader.getInstance().isModLoaded("tide"))) {
             return false;
         }
 

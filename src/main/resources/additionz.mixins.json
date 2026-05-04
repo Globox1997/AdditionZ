@@ -17,7 +17,6 @@
     "EndermanEntityMixin",
     "EvokerEntityMixin",
     "FarmlandBlockMixin",
-    "FishingBobberEntityCompatMixin",
     "FishingBobberEntityMixin",
     "FletchingTableBlockMixin",
     "GlassBottleItemMixin",
@@ -53,7 +52,9 @@
     "VillagerEntityMixin",
     "WaterCreatureEntityMixin",
     "accessor.MobEntityAccess",
-    "accessor.SlotAccess"
+    "accessor.SlotAccess",
+    "compat.FishingBobberEntityCompatMixin",
+    "compat.TideFishingHookMixin"
   ],
   "client": [
     "client.CreativeInventoryScreenMixin",

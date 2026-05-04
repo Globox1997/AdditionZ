@@ -1,4 +1,4 @@
-package net.additionz.mixin;
+package net.additionz.mixin.compat;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import net.additionz.AdditionMain;

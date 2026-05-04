@@ -55,6 +55,10 @@ dependencies {
 	modCompileOnly ("dev.onyxstudios.cardinal-components-api:cardinal-components-base:7.3.0")
 	modCompileOnly ("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:7.3.0")
 	modCompileOnly "dev.emi:trinkets:3.10.0"
+	// Tide
+	modCompileOnly ('maven.modrinth:tide:jSHnEpEZ') {
+		exclude(group: "net.fabricmc.fabric-api")
+	}
 }
 
 processResources {
