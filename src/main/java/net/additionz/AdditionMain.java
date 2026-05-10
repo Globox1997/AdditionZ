@@ -90,7 +90,6 @@ public class AdditionMain implements ModInitializer {
     public static final Identifier INACCURACY_CURSE = identifierOf("inaccuracy_curse");
     public static final RegistryKey<Enchantment> INACCURACY_CURSE_ENCHANTMENT = RegistryKey.of(RegistryKeys.ENCHANTMENT, INACCURACY_CURSE);
 
-
     public static final Item TOTEM_OF_NON_BREAKING = new Item(new Item.Settings().maxCount(1).rarity(Rarity.UNCOMMON));
     public static final Item TELEPORT_SCROLL = new TeleportScrollItem(new Item.Settings().maxCount(16));
     public static final Item TELEPORT_POTION = new TeleportPotion(new Item.Settings().maxCount(16));

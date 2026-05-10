@@ -1,6 +1,6 @@
 ### Added:
 - 
 ### Fixed:
-- 
+- Fixed arrow shooting
 ### Changed:
-- Tide 2 compat
+- 

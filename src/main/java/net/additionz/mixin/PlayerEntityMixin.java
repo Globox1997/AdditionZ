@@ -1,5 +1,6 @@
 package net.additionz.mixin;
 
+import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -26,6 +27,11 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ElytraAc
 
     public PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
+    }
+
+    @Inject(method = "createPlayerAttributes", at = @At("RETURN"))
+    private static void createPlayerAttributesMixin(CallbackInfoReturnable<DefaultAttributeContainer.Builder> info) {
+        info.getReturnValue().add(AdditionMain.GENERIC_RANGE_ATTACK_DAMAGE);
     }
 
     @Inject(method = "checkFallFlying", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;startFallFlying()V"), cancellable = true)
