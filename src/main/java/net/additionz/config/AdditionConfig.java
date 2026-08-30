@@ -104,18 +104,7 @@ public class AdditionConfig implements ConfigData {
     @Comment("Exclude entities e.g.: minecraft:villager")
     public List<String> passive_entity_group_spawn_exclude = new ArrayList<>(List.of("adventurez:ender_whale"));
 
-    public boolean passive_entity_modifications = false;
-
-    @ConfigEntry.Gui.CollapsibleObject
-    public PassiveEntityConfig passiveEntityConfig = new PassiveEntityConfig();
-
-    public static class PassiveEntityConfig {
-        @Comment("Default = -24000")
-        public int baby_to_adult_time = -12000;
-        @Comment("PassiveAgeTime : this = Age")
-        public int passive_age_calculation = 12000;
-        @Comment("Baby = Age 0")
-        public int passive_max_age = 3;
-    }
+    @Comment("Time in ticks: baby animal grows")
+    public int baby_grow_time = 12000;
 
 }

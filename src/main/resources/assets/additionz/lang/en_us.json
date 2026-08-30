@@ -63,10 +63,7 @@
     "text.autoconfig.additionz.option.passive_entity_group_spawn": "Passive Entity Group Spawn",
     "text.autoconfig.additionz.option.passive_entity_group_spawn_exclude": "Passive Entity Group Spawn Exclude",
     "text.autoconfig.additionz.option.passive_entity_modifications": "Passive Entity Modifications",
-    "text.autoconfig.additionz.option.passiveEntityConfig": "Passive Entity Modifications",
-    "text.autoconfig.additionz.option.passiveEntityConfig.baby_to_adult_time": "Baby To Adult Time",
-    "text.autoconfig.additionz.option.passiveEntityConfig.passive_age_calculation": "Passive Age Calculation",
-    "text.autoconfig.additionz.option.passiveEntityConfig.passive_max_age": "Passive Max Age",
+    "text.autoconfig.additionz.option.baby_grow_time": "Baby To Mature To Adult Time",
 
     "enchantment.additionz.block_pierce": "Block Pierce",
     "enchantment.additionz.stampede": "Stampede",
@@ -86,8 +83,8 @@
     "block.additionz.chunk_loader": "Chunk Loader",
     "block.additionz.chunk_loader.message": "Chunk loaded by other chunk loader",
 
-    "entity.additionz.age.tooltip": "Age %d",
-    "entity.additionz.age_jade.tooltip": " Age %d",
+    "entity.additionz.age.tooltip": "Teenager",
+    "entity.additionz.age_jade.tooltip": "Teenager",
 
     "config.waila.plugin_additionz": "AdditionZ",
     "config.waila.plugin_additionz.age_info": "Age Info",

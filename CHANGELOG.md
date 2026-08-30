@@ -1,6 +1,6 @@
 ### Added:
 - 
 ### Fixed:
-- Fixed arrow shooting
-### Changed:
 - 
+### Changed:
+- Changed baby grow settings to teenager animal phase

@@ -61,6 +61,7 @@
     "client.HandledScreenMixin",
     "client.InventoryScreenMixin",
     "client.ItemStackMixin",
+    "client.LivingEntityRendererMixin",
     "client.ShieldItemMixin",
     "client.SurvivalTrinketSlotMixin",
     "client.TrinketScreenManagerMixin",

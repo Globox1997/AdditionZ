@@ -1,19 +1,5 @@
 package net.additionz.mixin;
 
-import java.util.Iterator;
-import java.util.Optional;
-
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
-import org.spongepowered.asm.mixin.injection.At.Shift;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
-
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.additionz.AdditionMain;
 import net.additionz.access.AttackTimeAccess;
@@ -46,16 +32,27 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.At.Shift;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
+
+import java.util.Optional;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity implements AttackTimeAccess {
 
     @Shadow
     private int lastAttackedTime;
-    @Unique
-    private double oldClimbingSpeed = 0D;
 
-    private static final Identifier PATH_BOOST_ID = Identifier.of("additionz", "path_speed");
+    @Unique
+    private static final Identifier PATH_BOOST_ID = AdditionMain.identifierOf("path_speed");
 
     public LivingEntityMixin(EntityType<?> type, World world) {
         super(type, world);
@@ -77,7 +74,7 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
         if (AdditionMain.CONFIG.chainmail_spike_protection && (source.equals(this.getDamageSources().cactus()) || source.equals(this.getDamageSources().sweetBerryBush()))
                 && (Object) this instanceof LivingEntity LivingEntity
                 && (LivingEntity.getEquippedStack(EquipmentSlot.HEAD).isOf(Items.CHAINMAIL_HELMET) || LivingEntity.getEquippedStack(EquipmentSlot.CHEST).isOf(Items.CHAINMAIL_CHESTPLATE)
-                        || LivingEntity.getEquippedStack(EquipmentSlot.LEGS).isOf(Items.CHAINMAIL_LEGGINGS) || LivingEntity.getEquippedStack(EquipmentSlot.FEET).isOf(Items.CHAINMAIL_BOOTS))) {
+                || LivingEntity.getEquippedStack(EquipmentSlot.LEGS).isOf(Items.CHAINMAIL_LEGGINGS) || LivingEntity.getEquippedStack(EquipmentSlot.FEET).isOf(Items.CHAINMAIL_BOOTS))) {
             info.setReturnValue(false);
         }
     }
@@ -103,14 +100,8 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
 
     @Inject(method = "dropLoot", at = @At(value = "INVOKE", target = "Lnet/minecraft/loot/LootTable;generateLoot(Lnet/minecraft/loot/context/LootContextParameterSet;JLjava/util/function/Consumer;)V"), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
     protected void dropLootMixin(DamageSource source, boolean causedByPlayer, CallbackInfo info, RegistryKey<LootTable> registryKey, LootTable lootTable, LootContextParameterSet.Builder builder,
-            LootContextParameterSet lootContextParameterSet) {
-        if (AdditionMain.CONFIG.passive_entity_modifications && (Object) this instanceof PassiveEntity passiveEntity) {
-
-            int realPassiveAge = (int) Math.round(Math.floor(((PassiveAgeAccess) passiveEntity).getPassiveAge() / AdditionMain.CONFIG.passiveEntityConfig.passive_age_calculation)) + 1;
-            if (realPassiveAge > AdditionMain.CONFIG.passiveEntityConfig.passive_max_age) {
-                realPassiveAge = AdditionMain.CONFIG.passiveEntityConfig.passive_max_age;
-            }
-
+                                 LootContextParameterSet lootContextParameterSet) {
+        if (this instanceof PassiveAgeAccess passiveAgeAccess && (passiveAgeAccess.isTeenager() || ((Object) this instanceof PassiveEntity passiveEntity && passiveEntity.isBaby()))) {
             ObjectArrayList<ItemStack> objectArrayList = lootTable.generateLoot(lootContextParameterSet);
 
             float lootingChance = 0.0F;
@@ -118,14 +109,12 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
             if (causedByPlayer && source.getSource() != null && source.getSource() instanceof LivingEntity livingEntity) {
                 Optional<RegistryEntry<Enchantment>> optional = livingEntity.getMainHandStack().getEnchantments().getEnchantments().stream()
                         .filter(entry -> entry.matchesId(Enchantments.LOOTING.getRegistry())).findFirst();
-                if (optional.isPresent() && !optional.isEmpty()) {
+                if (optional.isPresent()) {
                     lootingChance = 0.15F * EnchantmentHelper.getLevel(optional.get(), livingEntity.getMainHandStack());
                 }
             }
 
-            Iterator<ItemStack> listIterator = objectArrayList.iterator();
-            while (listIterator.hasNext()) {
-                ItemStack itemStack = listIterator.next();
+            for (ItemStack itemStack : objectArrayList) {
                 if (itemStack.getCount() == 0) {
                     continue;
                 }
