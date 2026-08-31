@@ -75,7 +75,6 @@ public class AdditionMain implements ModInitializer {
     public static final Map<VillagerProfession, Map<Integer, List<TradeOfferLoader.TradeOfferData>>> TRADE_MAP = new HashMap<>();
 
     public static final TagKey<Block> PATH_BLOCKS = TagKey.of(RegistryKeys.BLOCK, identifierOf("path_blocks"));
-    public static final TagKey<Item> PASSIVE_AGE_ITEMS = TagKey.of(RegistryKeys.ITEM, identifierOf("passive_age_items"));
     public static final TagKey<Item> SPYGLASSES = TagKey.of(RegistryKeys.ITEM, Identifier.of("minecraft", "spyglasses"));
 
     public static final Identifier BLOCK_PIERCE = identifierOf("block_pierce");

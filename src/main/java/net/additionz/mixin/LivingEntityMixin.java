@@ -5,7 +5,6 @@ import net.additionz.AdditionMain;
 import net.additionz.access.AttackTimeAccess;
 import net.additionz.access.PassiveAgeAccess;
 import net.additionz.mixin.accessor.MobEntityAccess;
-import net.minecraft.component.DataComponentTypes;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
@@ -104,13 +103,13 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
         if (this instanceof PassiveAgeAccess passiveAgeAccess && (passiveAgeAccess.isImmature() || ((Object) this instanceof PassiveEntity passiveEntity && passiveEntity.isBaby()))) {
             ObjectArrayList<ItemStack> objectArrayList = lootTable.generateLoot(lootContextParameterSet);
 
-            float lootingChance = 0.0F;
+            float lootingChance = 0.5F;
 
             if (causedByPlayer && source.getSource() != null && source.getSource() instanceof LivingEntity livingEntity) {
                 Optional<RegistryEntry<Enchantment>> optional = livingEntity.getMainHandStack().getEnchantments().getEnchantments().stream()
                         .filter(entry -> entry.matchesId(Enchantments.LOOTING.getRegistry())).findFirst();
                 if (optional.isPresent()) {
-                    lootingChance = 0.15F * EnchantmentHelper.getLevel(optional.get(), livingEntity.getMainHandStack());
+                    lootingChance += 0.15F * EnchantmentHelper.getLevel(optional.get(), livingEntity.getMainHandStack());
                 }
             }
 
@@ -118,10 +117,11 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
                 if (itemStack.getCount() == 0) {
                     continue;
                 }
-
-                if (itemStack.get(DataComponentTypes.FOOD) != null || itemStack.isIn(AdditionMain.PASSIVE_AGE_ITEMS)) {
-                    itemStack.setCount(1 + (lootingChance > 0.001F ? (this.getWorld().getRandom().nextFloat() <= lootingChance ? 1 : 0) : 0));
+                if (this.getWorld().getRandom().nextFloat() > lootingChance) {
+                    continue;
                 }
+                itemStack.setCount(itemStack.getCount() / 2);
+
                 this.dropStack(itemStack);
             }
             info.cancel();
