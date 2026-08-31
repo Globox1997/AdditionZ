@@ -3,6 +3,7 @@ package net.additionz.mixin;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -25,7 +26,9 @@ public class MobSpawnerLogicMixin {
     @Shadow
     private int spawnCount;
 
+    @Unique
     private int totalSpawnCount = 0;
+    @Unique
     private int deactivationTicks = 0;
 
     @Inject(method = "readNbt", at = @At("TAIL"))
