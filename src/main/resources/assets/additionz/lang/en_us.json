@@ -83,8 +83,8 @@
     "block.additionz.chunk_loader": "Chunk Loader",
     "block.additionz.chunk_loader.message": "Chunk loaded by other chunk loader",
 
-    "entity.additionz.age.tooltip": "Teenager",
-    "entity.additionz.age_jade.tooltip": "Teenager",
+    "entity.additionz.age.tooltip": "Immature",
+    "entity.additionz.age_jade.tooltip": "Immature",
 
     "config.waila.plugin_additionz": "AdditionZ",
     "config.waila.plugin_additionz.age_info": "Age Info",

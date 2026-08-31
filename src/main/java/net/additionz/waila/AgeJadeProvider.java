@@ -19,7 +19,7 @@ public enum AgeJadeProvider implements IEntityComponentProvider {
 
     @Override
     public void appendTooltip(ITooltip tooltip, EntityAccessor accessor, IPluginConfig config) {
-        if (((PassiveAgeAccess) accessor.getEntity()).isTeenager()) {
+        if (((PassiveAgeAccess) accessor.getEntity()).isImmature()) {
             tooltip.append(Text.translatable("entity.additionz.age_jade.tooltip"));
         }
     }

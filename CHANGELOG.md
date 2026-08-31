@@ -3,4 +3,4 @@
 ### Fixed:
 - 
 ### Changed:
-- Changed baby grow settings to teenager animal phase
+- Changed baby grow settings to immature animal phase

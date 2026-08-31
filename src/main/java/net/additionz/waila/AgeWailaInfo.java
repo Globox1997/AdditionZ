@@ -17,7 +17,7 @@ public class AgeWailaInfo extends AgeFeature implements IEntityComponentProvider
     @Override
     public void appendBody(ITooltip tooltip, IEntityAccessor accessor, IPluginConfig config) {
         IEntityComponentProvider.super.appendBody(tooltip, accessor, config);
-        if (config.getBoolean(AdditionMain.AGE_INFO) && ((PassiveAgeAccess) accessor.getEntity()).isTeenager()) {
+        if (config.getBoolean(AdditionMain.AGE_INFO) && ((PassiveAgeAccess) accessor.getEntity()).isImmature()) {
             tooltip.addLine(Text.translatable("entity.additionz.age.tooltip"));
         }
     }

@@ -24,7 +24,7 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
 
     @Inject(method = "scale", at = @At("HEAD"))
     private void scaleMixin(T entity, MatrixStack matrices, float amount, CallbackInfo info) {
-        if (entity instanceof PassiveAgeAccess passiveAgeAccess && passiveAgeAccess.isTeenager()) {
+        if (entity instanceof PassiveAgeAccess passiveAgeAccess && passiveAgeAccess.isImmature()) {
             matrices.scale(0.8F, 0.8F, 0.8F);
         }
     }

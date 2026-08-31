@@ -29,7 +29,7 @@ public abstract class PassiveEntityMixin extends PathAwareEntity implements Pass
     protected abstract void initDataTracker(DataTracker.Builder builder);
 
     @Unique
-    private static final TrackedData<Boolean> TEENAGER = DataTracker.registerData(PassiveEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final TrackedData<Boolean> IMMATURE = DataTracker.registerData(PassiveEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
     @Unique
     private int passiveAge = 0;
@@ -45,7 +45,7 @@ public abstract class PassiveEntityMixin extends PathAwareEntity implements Pass
 
     @Inject(method = "initDataTracker", at = @At("TAIL"))
     private void initDataTrackerMixin(DataTracker.Builder builder, CallbackInfo info) {
-        builder.add(TEENAGER, false);
+        builder.add(IMMATURE, false);
     }
 
     @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
@@ -57,7 +57,7 @@ public abstract class PassiveEntityMixin extends PathAwareEntity implements Pass
     @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
     private void readCustomDataFromNbtMixin(NbtCompound nbt, CallbackInfo info) {
         this.passiveAge = nbt.getInt("PassiveAge");
-        this.dataTracker.set(TEENAGER, this.passiveAge < 0 && this.passiveAge > -AdditionMain.CONFIG.baby_grow_time);
+        this.dataTracker.set(IMMATURE, this.passiveAge < 0 && this.passiveAge > -AdditionMain.CONFIG.baby_grow_time);
         this.gotDamaged = nbt.getBoolean("GotDamaged");
     }
 
@@ -70,44 +70,16 @@ public abstract class PassiveEntityMixin extends PathAwareEntity implements Pass
     private void tickMovementMixin(CallbackInfo info) {
         if (!this.getWorld().isClient()) {
 
-            if (this.passiveAge < 0) {
+            if (this.passiveAge < 0 && AdditionMain.CONFIG.baby_grow_time != 0) {
                 this.passiveAge += 1;
 
-                if (this.passiveAge > -AdditionMain.CONFIG.baby_grow_time && !this.getDataTracker().get(TEENAGER)) {
-                    this.getDataTracker().set(TEENAGER, true);
+                if (this.passiveAge > -AdditionMain.CONFIG.baby_grow_time && !this.getDataTracker().get(IMMATURE)) {
+                    this.getDataTracker().set(IMMATURE, true);
                 }
                 if (this.passiveAge == 0) {
-                    this.getDataTracker().set(TEENAGER, false);
+                    this.getDataTracker().set(IMMATURE, false);
                 }
             }
-//            else if(!this.getDataTracker().get(TEENAGER)){
-//
-//            }
-//            if (this.getDataTracker().get(TEENAGER)) {
-//
-//            }
-//
-//            if (this.isBaby() || this.getDataTracker().get(TEENAGER)) {
-//                this.passiveAge += 1;
-//
-//                if () {
-//
-//                }
-//            } else if () {
-//
-//            }
-
-//            if (this.isBaby()) {
-////                if (this.getWorld().getTime() % 20 == 0)
-////                    System.out.println("OK: " + this.passiveAge + " : " + this.getDataTracker().get(TEENAGER) + " : " + (this.passiveAge > -AdditionMain.CONFIG.baby_grow_time));
-//                this.passiveAge += 1;
-//                if (!this.getDataTracker().get(TEENAGER) && this.passiveAge < 0 && this.passiveAge > -AdditionMain.CONFIG.baby_grow_time) {
-//                    this.getDataTracker().set(TEENAGER, true);
-//                }
-//            } else {
-////                if( this.getDataTracker().set(TEENAGER, false))
-////                this.getDataTracker().set(TEENAGER, false);
-//            }
             if (AdditionMain.CONFIG.heal_passive_entity_over_time_ticks > 0) {
                 if ((this.getWorld().getTime() - this.damageTime) % AdditionMain.CONFIG.heal_passive_entity_over_time_ticks == 0)
                     if (this.getMaxHealth() > this.getHealth() && this.gotDamaged) {
@@ -129,9 +101,9 @@ public abstract class PassiveEntityMixin extends PathAwareEntity implements Pass
     }
 
     @Override
-    public boolean isTeenager() {
+    public boolean isImmature() {
         if (this.getWorld().isClient()) {
-            return this.dataTracker.get(TEENAGER);
+            return this.dataTracker.get(IMMATURE);
         } else {
             return this.passiveAge < 0 && this.passiveAge > -AdditionMain.CONFIG.baby_grow_time;
         }

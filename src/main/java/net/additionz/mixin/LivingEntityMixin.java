@@ -101,7 +101,7 @@ public abstract class LivingEntityMixin extends Entity implements AttackTimeAcce
     @Inject(method = "dropLoot", at = @At(value = "INVOKE", target = "Lnet/minecraft/loot/LootTable;generateLoot(Lnet/minecraft/loot/context/LootContextParameterSet;JLjava/util/function/Consumer;)V"), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
     protected void dropLootMixin(DamageSource source, boolean causedByPlayer, CallbackInfo info, RegistryKey<LootTable> registryKey, LootTable lootTable, LootContextParameterSet.Builder builder,
                                  LootContextParameterSet lootContextParameterSet) {
-        if (this instanceof PassiveAgeAccess passiveAgeAccess && (passiveAgeAccess.isTeenager() || ((Object) this instanceof PassiveEntity passiveEntity && passiveEntity.isBaby()))) {
+        if (this instanceof PassiveAgeAccess passiveAgeAccess && (passiveAgeAccess.isImmature() || ((Object) this instanceof PassiveEntity passiveEntity && passiveEntity.isBaby()))) {
             ObjectArrayList<ItemStack> objectArrayList = lootTable.generateLoot(lootContextParameterSet);
 
             float lootingChance = 0.0F;
